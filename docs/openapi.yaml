@@ -1,0 +1,1072 @@
+openapi: 3.0.3
+info:
+  title: 钢结构商务报价系统 API
+  version: 0.1.0
+  description: |
+    钢结构商务报价系统 OpenAPI 接口文档（框架版 v0.1）。
+    覆盖四层架构：L1 基础数据 / L2 引擎枢纽 / L3 项目 / L4 输出。
+
+    ## 🔑 关键约束
+    - **所有价格类 / 定额类查询接口必须强制传入 `quotationDate`（报价日期）。**
+      该参数在价格/定额相关端点均为 `required: true`，并在 Repository 基类二次校验非空，
+      空值返回 `400 ILLEGAL_ARGUMENT`。
+    - 价格版本匹配规则：取 `effective_date <= quotationDate` 的最新生效版本。
+
+    ## 输出层（五种输出）
+    - OUT-1 报价单、OUT-2 成本明细表、OUT-3 构件汇总表、OUT-4 材料汇总表、OUT-5 版本对比分析表。
+
+    ## 状态说明
+    - ✅ 已定义接口：成本计算、版本匹配、五种输出、代表性实体 CRUD。
+    - ⏳ TODO(SPEC)：其余实体 CRUD 按相同模式补全（见文末「待补全接口清单」）。
+  contact:
+    name: Steel Pricing Team
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: 本地开发环境
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: L1-BaseData
+    description: 基础数据层（钢材价格/定额/人工/辅材等主数据）
+  - name: L2-Engine
+    description: 构件分类与费用匹配引擎枢纽层
+  - name: L3-Project
+    description: 项目层（客户/项目/版本/构件/成本结果）
+  - name: L4-Output
+    description: 输出层（五种输出 + 模板）
+  - name: CostCalc
+    description: 成本计算（核心业务）
+  - name: VersionMatch
+    description: 价格/定额版本匹配（按报价日期）
+  - name: Common
+    description: 公共模型与约定
+
+paths:
+
+  # ===========================================================================
+  # L1 基础数据层 — 代表性 CRUD（钢材价格版本 + 定额版本，含强制 quotationDate 查询）
+  # ===========================================================================
+  /base/steel-price-versions:
+    get:
+      tags: [L1-BaseData]
+      summary: 查询钢材价格版本列表
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+        - name: effectiveOnOrBefore
+          in: query
+          description: 返回生效日期 ≤ 该日期的版本（可选）
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponseSteelPriceVersion'
+        '400': { $ref: '#/components/responses/BadRequest' }
+    post:
+      tags: [L1-BaseData]
+      summary: 新建钢材价格版本
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SteelPriceVersionCreate'
+      responses:
+        '201': { $ref: '#/components/responses/Created' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /base/steel-price-versions/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdPath'
+    get:
+      tags: [L1-BaseData]
+      summary: 查询单个钢材价格版本
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SteelPriceVersion' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [L1-BaseData]
+      summary: 更新钢材价格版本
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SteelPriceVersionCreate' }
+      responses:
+        '200': { $ref: '#/components/responses/OK' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [L1-BaseData]
+      summary: 逻辑删除钢材价格版本
+      responses:
+        '204': { description: 删除成功 }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /base/steel-prices/query-by-quotation-date:
+    get:
+      tags: [L1-BaseData]
+      summary: 🔑 按报价日期查询生效钢材价格（强制 quotationDate）
+      description: |
+        强制约束 R001：`quotationDate` 必填，Repository 基类校验非空。
+        匹配规则 R002：取 `effective_date <= quotationDate` 的最新版本下的价格行。
+      parameters:
+        - $ref: '#/components/parameters/QuotationDateRequired'
+        - name: materialGradeId
+          in: query
+          schema: { type: integer, format: int64 }
+        - name: sectionProfileId
+          in: query
+          schema: { type: integer, format: int64 }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/SteelPrice' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /base/quota-versions:
+    get:
+      tags: [L1-BaseData]
+      summary: 查询定额版本列表
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PageResponseQuotaVersion' }
+    post:
+      tags: [L1-BaseData]
+      summary: 新建定额版本
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/QuotaVersionCreate' }
+      responses:
+        '201': { $ref: '#/components/responses/Created' }
+
+  /base/quota-libraries/query-by-quotation-date:
+    get:
+      tags: [L1-BaseData]
+      summary: 🔑 按报价日期查询生效定额库（强制 quotationDate）
+      description: 强制约束 R001：`quotationDate` 必填。
+      parameters:
+        - $ref: '#/components/parameters/QuotationDateRequired'
+        - name: componentCategoryId
+          in: query
+          schema: { type: integer, format: int64 }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/QuotaLibrary' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  # 其他 L1 字典/价格表 CRUD 模式相同：⏳ TODO(SPEC) 补全
+  # /base/labor-rates, /base/aux-material-prices, /base/freight-rates,
+  # /base/coating-standards, /base/welding-standards, /base/tax-rate-configs,
+  # /base/suppliers, /base/units, /base/material-grades, /base/section-profiles,
+  # /base/fastener-specs, /base/steel-prices, /base/quota-libraries, /base/quota-details
+
+  # ===========================================================================
+  # L2 引擎枢纽层 — 规则 CRUD（代表：构件类别、费用匹配规则、价格版本匹配规则）
+  # ===========================================================================
+  /engine/component-categories:
+    get:
+      tags: [L2-Engine]
+      summary: 查询构件类别树
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ComponentCategory' }
+    post:
+      tags: [L2-Engine]
+      summary: 新建构件类别
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ComponentCategoryCreate' }
+      responses:
+        '201': { $ref: '#/components/responses/Created' }
+
+  /engine/component-categories/{id}:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    put:
+      tags: [L2-Engine]
+      summary: 更新构件类别
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/ComponentCategoryCreate' } } }
+      responses:
+        '200': { $ref: '#/components/responses/OK' }
+    delete:
+      tags: [L2-Engine]
+      summary: 逻辑删除构件类别
+      responses: { '204': { description: 删除成功 } }
+
+  /engine/cost-matching-rules:
+    get:
+      tags: [L2-Engine]
+      summary: 查询费用匹配规则（类别→费用项）
+      parameters:
+        - name: categoryId
+          in: query
+          schema: { type: integer, format: int64 }
+      responses:
+        '200':
+          description: 成功
+          content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/CostMatchingRule' } } } }
+    post:
+      tags: [L2-Engine]
+      summary: 新建费用匹配规则
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/CostMatchingRuleCreate' } } } }
+      responses: { '201': { $ref: '#/components/responses/Created' } }
+
+  /engine/price-version-matching-rules:
+    get:
+      tags: [L2-Engine]
+      summary: 查询价格版本匹配规则
+      responses:
+        '200':
+          description: 成功
+          content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/PriceVersionMatchingRule' } } } }
+    post:
+      tags: [L2-Engine]
+      summary: 新建价格版本匹配规则
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PriceVersionMatchingRuleCreate' } } } }
+      responses: { '201': { $ref: '#/components/responses/Created' } }
+
+  # 其他 L2 CRUD：⏳ TODO(SPEC) 补全
+  # /engine/cost-items, /engine/quota-matching-rules, /engine/calculation-formulas,
+  # /engine/rate-tables, /engine/weight-calc-rules, /engine/loss-rate-configs,
+  # /engine/classification-rules
+
+  # ===========================================================================
+  # L3 项目层 — 代表性 CRUD（客户/项目/版本/构件明细）
+  # ===========================================================================
+  /projects:
+    get:
+      tags: [L3-Project]
+      summary: 查询报价项目列表
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+        - name: customerId
+          in: query
+          schema: { type: integer, format: int64 }
+        - name: status
+          in: query
+          schema: { type: string, enum: [DRAFT, QUOTING, CONFIRMED, ARCHIVED] }
+      responses:
+        '200':
+          description: 成功
+          content: { application/json: { schema: { $ref: '#/components/schemas/PageResponseProject' } } }
+    post:
+      tags: [L3-Project]
+      summary: 新建报价项目
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ProjectCreate' } } } }
+      responses: { '201': { $ref: '#/components/responses/Created' } }
+
+  /projects/{id}:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L3-Project]
+      summary: 查询项目详情
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/Project' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [L3-Project]
+      summary: 更新项目
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ProjectCreate' } } } }
+      responses: { '200': { $ref: '#/components/responses/OK' } }
+    delete:
+      tags: [L3-Project]
+      summary: 逻辑删除项目
+      responses: { '204': { description: 删除成功 } }
+
+  /projects/{projectId}/versions:
+    parameters: [ { name: projectId, in: path, required: true, schema: { type: integer, format: int64 } } ]
+    get:
+      tags: [L3-Project]
+      summary: 查询项目版本列表
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/ProjectVersion' } } } } }
+    post:
+      tags: [L3-Project]
+      summary: 新建项目版本
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ProjectVersionCreate' } } } }
+      responses: { '201': { $ref: '#/components/responses/Created' } }
+
+  /projects/{projectId}/versions/{versionId}/component-details:
+    parameters:
+      - { name: projectId, in: path, required: true, schema: { type: integer, format: int64 } }
+      - { name: versionId, in: path, required: true, schema: { type: integer, format: int64 } }
+    get:
+      tags: [L3-Project]
+      summary: 查询版本下构件明细
+      parameters: [ { $ref: '#/components/parameters/PageParam' }, { $ref: '#/components/parameters/PageSizeParam' } ]
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/PageResponseComponentDetail' } } } }
+    post:
+      tags: [L3-Project]
+      summary: 新增构件明细
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ComponentDetailCreate' } } } }
+      responses: { '201': { $ref: '#/components/responses/Created' } }
+
+  # 其他 L3 CRUD：⏳ TODO(SPEC) 补全
+  # /customers, /projects/{id}/members, /component-lists, /component-materials,
+  # /cost-calc-results, /cost-calc-details, /cost-summaries, /price-adjustments,
+  # /calc-tasks, /calc-logs
+
+  # ===========================================================================
+  # 成本计算（核心业务）
+  # ===========================================================================
+  /calc/projects/{projectId}/versions/{versionId}/calculate:
+    parameters:
+      - { name: projectId, in: path, required: true, schema: { type: integer, format: int64 } }
+      - { name: versionId, in: path, required: true, schema: { type: integer, format: int64 } }
+    post:
+      tags: [CostCalc]
+      summary: 触发成本计算（全量/单构件）
+      description: |
+        以「项目版本 + 报价日期」为输入，调用 L2 引擎：分类 → 费用匹配 → 定额匹配 →
+        价格版本匹配（按 quotationDate）→ 公式计算 → 写入 cost_calc_result / detail → 汇总。
+        异步执行，返回 calc_task_id。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CalcRequest' }
+      responses:
+        '202':
+          description: 已接受，异步计算
+          content: { application/json: { schema: { $ref: '#/components/schemas/CalcTaskAck' } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /calc/tasks/{taskId}:
+    parameters: [ { $ref: '#/components/parameters/TaskIdPath' } ]
+    get:
+      tags: [CostCalc]
+      summary: 查询计算任务状态
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/CalcTask' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /calc/projects/{projectId}/versions/{versionId}/results:
+    parameters:
+      - { name: projectId, in: path, required: true, schema: { type: integer, format: int64 } }
+      - { name: versionId, in: path, required: true, schema: { type: integer, format: int64 } }
+    get:
+      tags: [CostCalc]
+      summary: 查询版本成本计算结果
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/CostCalcResult' } } } } }
+
+  /calc/projects/{projectId}/versions/{versionId}/summary:
+    parameters:
+      - { name: projectId, in: path, required: true, schema: { type: integer, format: int64 } }
+      - { name: versionId, in: path, required: true, schema: { type: integer, format: int64 } }
+    get:
+      tags: [CostCalc]
+      summary: 查询版本费用汇总
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/CostSummary' } } } }
+
+  # ===========================================================================
+  # 版本匹配（按报价日期）
+  # ===========================================================================
+  /version-matching/steel-price:
+    get:
+      tags: [VersionMatch]
+      summary: 🔑 匹配生效钢材价格版本（强制 quotationDate）
+      description: |
+        R002：取 `effective_date <= quotationDate` 的最新版本。
+        Repository 基类强制校验 quotationDate 非空。
+      parameters:
+        - $ref: '#/components/parameters/QuotationDateRequired'
+        - name: ruleCode
+          in: query
+          description: 匹配规则编码（可空，空用默认规则）
+          schema: { type: string }
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/SteelPriceVersion' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /version-matching/quota:
+    get:
+      tags: [VersionMatch]
+      summary: 🔑 匹配生效定额版本（强制 quotationDate）
+      parameters:
+        - $ref: '#/components/parameters/QuotationDateRequired'
+        - name: ruleCode
+          in: query
+          schema: { type: string }
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/QuotaVersion' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /version-matching/preview:
+    post:
+      tags: [VersionMatch]
+      summary: 预览报价日期匹配的全部生效版本
+      description: 给定 quotationDate，返回钢材价格版本、定额版本、人工/辅材/运费生效行，供报价前确认基准。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/VersionMatchPreviewRequest' }
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/VersionMatchPreview' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  # ===========================================================================
+  # L4 输出层 — 五种输出接口（OUT-1 ~ OUT-5）
+  # ===========================================================================
+  /outputs/templates:
+    get:
+      tags: [L4-Output]
+      summary: 查询输出模板列表
+      parameters:
+        - name: outputType
+          in: query
+          schema: { type: string, enum: [QUOTATION, COST_BREAKDOWN, COMPONENT_SUMMARY, MATERIAL_SUMMARY, VERSION_COMPARISON] }
+      responses:
+        '200': { description: 成功, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/OutputTemplate' } } } } }
+    post:
+      tags: [L4-Output]
+      summary: 新建输出模板
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/OutputTemplateCreate' } } } }
+      responses: { '201': { $ref: '#/components/responses/Created' } }
+
+  # OUT-1 报价单
+  /outputs/quotations/generate:
+    post:
+      tags: [L4-Output]
+      summary: 生成报价单（OUT-1）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRequest' } } } }
+      responses:
+        '202': { description: 已接受, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRecordAck' } } } }
+
+  /outputs/quotations/{docId}:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 查询报价单详情（含明细行）
+      responses: { '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/QuotationDoc' } } } } }
+
+  /outputs/quotations/{docId}/file:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 下载报价单文件（OUT-1）
+      responses:
+        '200': { description: 文件流, content: { application/octet-stream: { schema: { type: string, format: binary } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # OUT-2 成本明细表
+  /outputs/cost-breakdowns/generate:
+    post:
+      tags: [L4-Output]
+      summary: 生成成本明细表（OUT-2）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRequest' } } } }
+      responses: { '202': { description: 已接受, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRecordAck' } } } } }
+  /outputs/cost-breakdowns/{id}/file:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 下载成本明细表（OUT-2）
+      responses: { '200': { description: 文件流, content: { application/octet-stream: { schema: { type: string, format: binary } } } } }
+
+  # OUT-3 构件汇总表
+  /outputs/component-summaries/generate:
+    post:
+      tags: [L4-Output]
+      summary: 生成构件汇总表（OUT-3）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRequest' } } } }
+      responses: { '202': { description: 已接受, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRecordAck' } } } } }
+  /outputs/component-summaries/{id}/file:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 下载构件汇总表（OUT-3）
+      responses: { '200': { description: 文件流, content: { application/octet-stream: { schema: { type: string, format: binary } } } } }
+
+  # OUT-4 材料汇总表
+  /outputs/material-summaries/generate:
+    post:
+      tags: [L4-Output]
+      summary: 生成材料汇总表（OUT-4）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRequest' } } } }
+      responses: { '202': { description: 已接受, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRecordAck' } } } } }
+  /outputs/material-summaries/{id}/file:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 下载材料汇总表（OUT-4）
+      responses: { '200': { description: 文件流, content: { application/octet-stream: { schema: { type: string, format: binary } } } } }
+
+  # OUT-5 版本对比分析表
+  /outputs/version-comparisons/generate:
+    post:
+      tags: [L4-Output]
+      summary: 生成版本对比分析表（OUT-5）
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/VersionComparisonRequest' } } } }
+      responses: { '202': { description: 已接受, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRecordAck' } } } } }
+  /outputs/version-comparisons/{id}/file:
+    parameters: [ { $ref: '#/components/parameters/IdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 下载版本对比分析表（OUT-5）
+      responses: { '200': { description: 文件流, content: { application/octet-stream: { schema: { type: string, format: binary } } } } }
+
+  /outputs/records/{recordId}:
+    parameters: [ { $ref: '#/components/parameters/RecordIdPath' } ]
+    get:
+      tags: [L4-Output]
+      summary: 查询输出记录状态
+      responses: { '200': { description: 成功, content: { application/json: { schema: { $ref: '#/components/schemas/OutputRecord' } } } } }
+
+components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      description: 主键ID
+      schema: { type: integer, format: int64 }
+    TaskIdPath:
+      name: taskId
+      in: path
+      required: true
+      schema: { type: integer, format: int64 }
+    RecordIdPath:
+      name: recordId
+      in: path
+      required: true
+      schema: { type: integer, format: int64 }
+    PageParam:
+      name: page
+      in: query
+      schema: { type: integer, default: 1, minimum: 1 }
+    PageSizeParam:
+      name: pageSize
+      in: query
+      schema: { type: integer, default: 20, minimum: 1, maximum: 200 }
+    QuotationDateRequired:
+      name: quotationDate
+      in: query
+      required: true
+      description: 🔑 报价日期（必填）。Repository 基类校验非空，空值返回 400。
+      schema: { type: string, format: date }
+
+  responses:
+    OK:
+      description: 成功
+      content: { application/json: { schema: { $ref: '#/components/schemas/ApiResponse' } } }
+    Created:
+      description: 创建成功
+      content: { application/json: { schema: { $ref: '#/components/schemas/ApiResponse' } } }
+    BadRequest:
+      description: 请求参数错误（如价格/定额查询未传 quotationDate）
+      content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } }
+    NotFound:
+      description: 资源不存在
+      content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } }
+
+  schemas:
+
+    # ---------- 公共模型 ----------
+    AuditFields:
+      type: object
+      properties:
+        createdAt: { type: string, format: date-time, description: 创建时间 }
+        updatedAt: { type: string, format: date-time, description: 更新时间 }
+        createdBy: { type: string, description: 创建人 }
+        updatedBy: { type: string, description: 更新人 }
+        deleted: { type: integer, default: 0, description: 逻辑删除标识(0-未删除 1-已删除) }
+
+    ApiResponse:
+      type: object
+      properties:
+        code: { type: integer, example: 0 }
+        message: { type: string, example: success }
+        data: { type: object, nullable: true }
+
+    ErrorResponse:
+      type: object
+      properties:
+        code: { type: string, example: ILLEGAL_ARGUMENT }
+        message: { type: string, example: quotationDate 不能为空 }
+        timestamp: { type: string, format: date-time }
+
+    PageMeta:
+      type: object
+      properties:
+        page: { type: integer }
+        pageSize: { type: integer }
+        total: { type: integer }
+
+    # ---------- L1 基础数据 ----------
+    SteelPriceVersion:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            versionNo: { type: string }
+            versionName: { type: string }
+            effectiveDate: { type: string, format: date, description: 生效日期 }
+            expireDate: { type: string, format: date }
+            supplierId: { type: integer, format: int64 }
+            status: { type: integer }
+    SteelPriceVersionCreate:
+      type: object
+      required: [versionNo, effectiveDate]
+      properties:
+        versionNo: { type: string }
+        versionName: { type: string }
+        effectiveDate: { type: string, format: date }
+        expireDate: { type: string, format: date }
+        supplierId: { type: integer, format: int64 }
+        remark: { type: string }
+    PageResponseSteelPriceVersion:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/SteelPriceVersion' } }
+        meta: { $ref: '#/components/schemas/PageMeta' }
+    SteelPrice:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            priceVersionId: { type: integer, format: int64 }
+            materialGradeId: { type: integer, format: int64 }
+            sectionProfileId: { type: integer, format: int64 }
+            priceType: { type: string }
+            unitPrice: { type: number, format: double }
+            currency: { type: string }
+            unit: { type: string }
+
+    QuotaVersion:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            versionNo: { type: string }
+            versionName: { type: string }
+            effectiveDate: { type: string, format: date }
+            expireDate: { type: string, format: date }
+            status: { type: integer }
+    QuotaVersionCreate:
+      type: object
+      required: [versionNo, effectiveDate]
+      properties:
+        versionNo: { type: string }
+        versionName: { type: string }
+        effectiveDate: { type: string, format: date }
+        expireDate: { type: string, format: date }
+        remark: { type: string }
+    PageResponseQuotaVersion:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/QuotaVersion' } }
+        meta: { $ref: '#/components/schemas/PageMeta' }
+    QuotaLibrary:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            quotaVersionId: { type: integer, format: int64 }
+            quotaCode: { type: string }
+            quotaName: { type: string }
+            componentCategoryId: { type: integer, format: int64 }
+            unit: { type: string }
+            baseQuotation: { type: number, format: double }
+
+    # ---------- L2 引擎 ----------
+    ComponentCategory:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            code: { type: string }
+            name: { type: string }
+            parentId: { type: integer, format: int64, nullable: true }
+            level: { type: integer }
+            categoryGroup: { type: string }
+            status: { type: integer }
+    ComponentCategoryCreate:
+      type: object
+      required: [code, name]
+      properties:
+        code: { type: string }
+        name: { type: string }
+        parentId: { type: integer, format: int64, nullable: true }
+        categoryGroup: { type: string }
+        remark: { type: string }
+    CostMatchingRule:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            categoryId: { type: integer, format: int64 }
+            costItemId: { type: integer, format: int64 }
+            formulaId: { type: integer, format: int64, nullable: true }
+            rateValue: { type: number, format: double, nullable: true }
+            priority: { type: integer }
+            status: { type: integer }
+    CostMatchingRuleCreate:
+      type: object
+      required: [categoryId, costItemId]
+      properties:
+        categoryId: { type: integer, format: int64 }
+        costItemId: { type: integer, format: int64 }
+        formulaId: { type: integer, format: int64, nullable: true }
+        rateValue: { type: number, format: double, nullable: true }
+        priority: { type: integer }
+    PriceVersionMatchingRule:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            ruleCode: { type: string }
+            ruleName: { type: string }
+            priceVersionId: { type: integer, format: int64, nullable: true }
+            quotaVersionId: { type: integer, format: int64, nullable: true }
+            matchStrategy: { type: string, default: LATEST_BEFORE }
+            tieBreaker: { type: string, default: VERSION_NO_DESC }
+            status: { type: integer }
+    PriceVersionMatchingRuleCreate:
+      type: object
+      required: [ruleCode, ruleName]
+      properties:
+        ruleCode: { type: string }
+        ruleName: { type: string }
+        priceVersionId: { type: integer, format: int64, nullable: true }
+        quotaVersionId: { type: integer, format: int64, nullable: true }
+        matchStrategy: { type: string }
+        tieBreaker: { type: string }
+
+    # ---------- L3 项目 ----------
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            projectCode: { type: string }
+            projectName: { type: string }
+            customerId: { type: integer, format: int64 }
+            projectType: { type: string }
+            status: { type: string, enum: [DRAFT, QUOTING, CONFIRMED, ARCHIVED] }
+            quotationDate: { type: string, format: date }
+            ownerUserId: { type: string }
+    ProjectCreate:
+      type: object
+      required: [projectCode, projectName, customerId]
+      properties:
+        projectCode: { type: string }
+        projectName: { type: string }
+        customerId: { type: integer, format: int64 }
+        projectType: { type: string }
+        quotationDate: { type: string, format: date }
+        ownerUserId: { type: string }
+        remark: { type: string }
+    PageResponseProject:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/Project' } }
+        meta: { $ref: '#/components/schemas/PageMeta' }
+    ProjectVersion:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            projectId: { type: integer, format: int64 }
+            versionNo: { type: string }
+            quotationDate: { type: string, format: date, description: 报价日期(成本计算基准日) }
+            totalCost: { type: number, format: double }
+            totalPrice: { type: number, format: double }
+            versionStatus: { type: string, enum: [DRAFT, CALCULATED, CONFIRMED] }
+            isCurrent: { type: integer }
+    ProjectVersionCreate:
+      type: object
+      required: [versionNo, quotationDate]
+      properties:
+        versionNo: { type: string }
+        quotationDate: { type: string, format: date, description: 🔑 报价日期必填 }
+        remark: { type: string }
+    ComponentDetail:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            componentListId: { type: integer, format: int64 }
+            componentCode: { type: string }
+            componentName: { type: string }
+            categoryId: { type: integer, format: int64 }
+            sectionProfileId: { type: integer, format: int64 }
+            materialGradeId: { type: integer, format: int64 }
+            length: { type: number, format: double }
+            quantity: { type: integer }
+            unitWeight: { type: number, format: double }
+            totalWeight: { type: number, format: double }
+    ComponentDetailCreate:
+      type: object
+      required: [componentListId, componentCode]
+      properties:
+        componentListId: { type: integer, format: int64 }
+        componentCode: { type: string }
+        componentName: { type: string }
+        categoryId: { type: integer, format: int64 }
+        sectionProfileId: { type: integer, format: int64 }
+        materialGradeId: { type: integer, format: int64 }
+        length: { type: number, format: double }
+        quantity: { type: integer, default: 1 }
+        unitWeight: { type: number, format: double }
+        dimensionJson: { type: object }
+    PageResponseComponentDetail:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/ComponentDetail' } }
+        meta: { $ref: '#/components/schemas/PageMeta' }
+
+    # ---------- 成本计算 ----------
+    CalcRequest:
+      type: object
+      required: [quotationDate, calcType]
+      properties:
+        quotationDate:
+          type: string
+          format: date
+          description: 🔑 报价日期（必填，成本计算基准日，Repository 基类校验）
+        calcType:
+          type: string
+          enum: [FULL, SINGLE, RECALC]
+          description: FULL-全量 / SINGLE-单构件 / RECALC-重算
+        componentDetailIds:
+          type: array
+          items: { type: integer, format: int64 }
+          description: calcType=SINGLE 时指定构件明细ID列表
+        ruleCode:
+          type: string
+          description: 价格版本匹配规则编码（可空）
+    CalcTaskAck:
+      type: object
+      properties:
+        taskId: { type: integer, format: int64 }
+        status: { type: string, example: PENDING }
+    CalcTask:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            projectVersionId: { type: integer, format: int64 }
+            quotationDate: { type: string, format: date }
+            taskType: { type: string }
+            status: { type: string, enum: [PENDING, RUNNING, SUCCESS, FAILED] }
+            progress: { type: integer }
+            startTime: { type: string, format: date-time }
+            endTime: { type: string, format: date-time }
+            errorMsg: { type: string, nullable: true }
+    CostCalcResult:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            componentDetailId: { type: integer, format: int64 }
+            projectVersionId: { type: integer, format: int64 }
+            quotationDate: { type: string, format: date }
+            matchedPriceVersionId: { type: integer, format: int64 }
+            matchedQuotaVersionId: { type: integer, format: int64 }
+            materialCost: { type: number, format: double }
+            laborCost: { type: number, format: double }
+            machineCost: { type: number, format: double }
+            auxMaterialCost: { type: number, format: double }
+            coatingCost: { type: number, format: double }
+            transportCost: { type: number, format: double }
+            managementCost: { type: number, format: double }
+            profit: { type: number, format: double }
+            tax: { type: number, format: double }
+            totalCost: { type: number, format: double }
+    CostSummary:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            projectVersionId: { type: integer, format: int64 }
+            totalMaterialCost: { type: number, format: double }
+            totalLaborCost: { type: number, format: double }
+            totalMachineCost: { type: number, format: double }
+            totalAuxCost: { type: number, format: double }
+            totalCoatingCost: { type: number, format: double }
+            totalTransportCost: { type: number, format: double }
+            totalManagementCost: { type: number, format: double }
+            totalProfit: { type: number, format: double }
+            totalTax: { type: number, format: double }
+            totalCost: { type: number, format: double }
+            totalPrice: { type: number, format: double }
+
+    # ---------- 版本匹配 ----------
+    VersionMatchPreviewRequest:
+      type: object
+      required: [quotationDate]
+      properties:
+        quotationDate:
+          type: string
+          format: date
+          description: 🔑 报价日期（必填）
+        ruleCode: { type: string, nullable: true }
+    VersionMatchPreview:
+      type: object
+      properties:
+        quotationDate: { type: string, format: date }
+        steelPriceVersion: { $ref: '#/components/schemas/SteelPriceVersion' }
+        quotaVersion: { $ref: '#/components/schemas/QuotaVersion' }
+        laborRates:
+          type: array
+          items: { type: object }
+        auxMaterialPrices:
+          type: array
+          items: { type: object }
+
+    # ---------- L4 输出 ----------
+    OutputTemplate:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            templateCode: { type: string }
+            templateName: { type: string }
+            outputType: { type: string, enum: [QUOTATION, COST_BREAKDOWN, COMPONENT_SUMMARY, MATERIAL_SUMMARY, VERSION_COMPARISON] }
+            fileFormat: { type: string, enum: [XLSX, PDF, DOCX] }
+            templatePath: { type: string }
+            isDefault: { type: integer }
+            status: { type: integer }
+    OutputTemplateCreate:
+      type: object
+      required: [templateCode, templateName, outputType, fileFormat]
+      properties:
+        templateCode: { type: string }
+        templateName: { type: string }
+        outputType: { type: string, enum: [QUOTATION, COST_BREAKDOWN, COMPONENT_SUMMARY, MATERIAL_SUMMARY, VERSION_COMPARISON] }
+        fileFormat: { type: string, enum: [XLSX, PDF, DOCX] }
+        templatePath: { type: string }
+        configJson: { type: object }
+        isDefault: { type: integer }
+    OutputRequest:
+      type: object
+      required: [projectVersionId, outputType]
+      properties:
+        projectVersionId: { type: integer, format: int64 }
+        outputType: { type: string, enum: [QUOTATION, COST_BREAKDOWN, COMPONENT_SUMMARY, MATERIAL_SUMMARY] }
+        templateId: { type: integer, format: int64, nullable: true }
+        fileFormat: { type: string, enum: [XLSX, PDF, DOCX], default: XLSX }
+        paramJson: { type: object, description: 输出参数（过滤条件等） }
+    VersionComparisonRequest:
+      allOf:
+        - $ref: '#/components/schemas/OutputRequest'
+        - type: object
+          required: [versionAId, versionBId]
+          properties:
+            versionAId: { type: integer, format: int64 }
+            versionBId: { type: integer, format: int64 }
+            dimension: { type: string, enum: [TOTAL, COST_ITEM, COMPONENT, MATERIAL], default: TOTAL }
+    OutputRecordAck:
+      type: object
+      properties:
+        recordId: { type: integer, format: int64 }
+        status: { type: string, example: PENDING }
+    OutputRecord:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            projectVersionId: { type: integer, format: int64 }
+            outputType: { type: string }
+            templateId: { type: integer, format: int64 }
+            fileFormat: { type: string }
+            filePath: { type: string }
+            fileSize: { type: integer, format: int64 }
+            outputStatus: { type: string, enum: [PENDING, SUCCESS, FAILED] }
+            errorMsg: { type: string, nullable: true }
+            outputTime: { type: string, format: date-time }
+    QuotationDoc:
+      allOf:
+        - $ref: '#/components/schemas/AuditFields'
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            projectVersionId: { type: integer, format: int64 }
+            quotationNo: { type: string }
+            quotationDate: { type: string, format: date }
+            customerId: { type: integer, format: int64 }
+            projectName: { type: string }
+            totalCost: { type: number, format: double }
+            totalPrice: { type: number, format: double }
+            taxAmount: { type: number, format: double }
+            totalPriceWithTax: { type: number, format: double }
+            docStatus: { type: string, enum: [DRAFT, ISSUED, ARCHIVED] }
+            lines:
+              type: array
+              items: { type: object }
+
+# =============================================================================
+# ⏳ TODO(SPEC) 待补全接口清单（按相同 CRUD 模式补全）
+# L1: labor-rates / aux-material-prices / freight-rates / coating-standards /
+#     welding-standards / tax-rate-configs / suppliers / units / material-grades /
+#     section-profiles / fastener-specs / steel-prices / quota-libraries / quota-details
+#     (其中价格/定额查询类端点 quotationDate 必填)
+# L2: cost-items / quota-matching-rules / calculation-formulas / rate-tables /
+#     weight-calc-rules / loss-rate-configs / classification-rules
+# L3: customers / project-members / component-lists / component-materials /
+#     cost-calc-details / cost-summaries / price-adjustments / calc-tasks / calc-logs
+# L4: output-params / output-records (CRUD) / distribution-records
+# =============================================================================
