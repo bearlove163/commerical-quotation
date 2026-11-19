@@ -1,7 +1,7 @@
 """
-SteelBid Pro 自动化 Xun 巡检与规则核验引擎 (Automated Xun Inspector)
+SteelBid Pro 自动化 xUnit 规则巡检与合规测试引擎 (Automated xUnit Inspector)
 
-实现 AGENTS.md 第 9 节规定的五大核心巡检领域：
+遵循 xUnit 自动化测试与断言架构，实现 AGENTS.md 第 9 节规定的五大核心巡检领域：
 1. 架构与 Git 隔离巡检 (Worktree 隔离、3位序列号命名、无散落临时文件)
 2. 标杆财务与工程量对账巡检 (7,118.10t, 8313.76万报价, 7637.54万成本零漂移)
 3. 询价时效与材料快照合规巡检 (材料行情有效性、询价偏差阈值)
@@ -9,14 +9,17 @@ SteelBid Pro 自动化 Xun 巡检与规则核验引擎 (Automated Xun Inspector)
 5. 倒轧制作费安全阈值巡检 (制作费 >= 600元/t 安全红线监控)
 
 使用方法:
-    uv run --with openpyxl python -m src.utils.xun_inspector
+    uv run --with openpyxl python -m src.utils.xunit_inspector
+    uv run --with openpyxl python -m src.utils.xunit_inspector --xml
 """
 
 from decimal import Decimal
 from pathlib import Path
 import re
 import sys
+import time
 from typing import Dict, List, Tuple, Optional
+import xml.etree.ElementTree as ET
 
 from src.core.closed_form_solver import solve_domestic_two_invoice
 from src.core.balancing_engine import BalancingEngine
@@ -24,8 +27,8 @@ from src.services.raw_excel_importer import RawExcelImporter
 from src.services.quota_service import QuotaService
 
 
-class XunInspector:
-    """全项目自动化规则巡检器"""
+class XUnitInspector:
+    """全项目自动化 xUnit 规则与架构巡检器"""
 
     def __init__(self, root_dir: Optional[Path] = None):
         self.root_dir = root_dir or Path.cwd()
@@ -34,10 +37,11 @@ class XunInspector:
     def log_check(self, item_name: str, passed: bool, message: str):
         self.results.append((item_name, passed, message))
 
-    def run_all_checks(self) -> bool:
-        """执行全套 Xun 巡检规程"""
+    def run_all_checks(self, export_xml: bool = True) -> bool:
+        """执行全套 xUnit 巡检规程"""
+        start_time = time.time()
         print("=" * 75)
-        print("  SteelBid Pro · 自动化 Xun 巡检与规则合规审计引擎 (Xun Inspector)")
+        print("  SteelBid Pro · 自动化 xUnit 规则巡检与合规审计引擎 (xUnit Inspector)")
         print("=" * 75)
 
         self._check_git_and_worktree_isolation()
@@ -52,14 +56,19 @@ class XunInspector:
         total = len(self.results)
         passed_count = sum(1 for _, p, _ in self.results if p)
         failed_count = total - passed_count
+        elapsed = time.time() - start_time
 
-        print(f"\n【巡检明细清单】(共执行 {total} 项规则核验):")
+        print(f"\n【xUnit 巡检明细清单】(共执行 {total} 项规则核验):")
         for name, passed, msg in self.results:
             badge = "✅ [PASS]" if passed else "❌ [FAIL]"
             print(f"  {badge} {name:<32} : {msg}")
 
         print("-" * 75)
-        print(f"【巡检汇总结论】: 通过: {passed_count}/{total} 项 | 异常: {failed_count} 项")
+        print(f"【xUnit 巡检汇总结论】: 通过: {passed_count}/{total} 项 | 异常: {failed_count} 项 | 耗时: {elapsed:.2f}s")
+
+        if export_xml:
+            self._export_xunit_xml(elapsed)
+
         if failed_count == 0:
             print("🌟 恭喜！系统 100% 符合 AGENTS.md 全部技术宪法与工程规则，允许进入下一阶段或提交代码。")
             print("=" * 75)
@@ -68,6 +77,28 @@ class XunInspector:
             print("⚠️ 警告！发现违反项目 Rule 的违规项，请根据上述提示整改后再行提交！")
             print("=" * 75)
             return False
+
+    def _export_xunit_xml(self, elapsed: float):
+        """导出标准 xUnit / JUnit XML 自动化测试报告"""
+        export_dir = self.root_dir / "data" / "exports"
+        export_dir.mkdir(parents=True, exist_ok=True)
+        xml_file = export_dir / "xunit_patrol_report.xml"
+
+        total = len(self.results)
+        failures = sum(1 for _, p, _ in self.results if not p)
+
+        testsuites = ET.Element("testsuites", name="SteelBidPro_xUnit_Patrol", tests=str(total), failures=str(failures), time=f"{elapsed:.3f}")
+        testsuite = ET.SubElement(testsuites, "testsuite", name="MasterRules_Inspection", tests=str(total), failures=str(failures), time=f"{elapsed:.3f}")
+
+        for name, passed, msg in self.results:
+            tc = ET.SubElement(testsuite, "testcase", classname="rules.MasterRules", name=name, time="0.001")
+            if not passed:
+                failure = ET.SubElement(tc, "failure", message=msg)
+                failure.text = msg
+
+        tree = ET.ElementTree(testsuites)
+        tree.write(xml_file, encoding="utf-8", xml_declaration=True)
+        print(f"📄 xUnit 标准 XML 报告已输出: {xml_file.relative_to(self.root_dir)}")
 
     def _check_git_and_worktree_isolation(self):
         """规则 1：Git 仓库与 Worktree 物理隔离巡检"""
@@ -150,8 +181,7 @@ class XunInspector:
             self.log_check("内部测算总成本精确吻合", False, f"成本漂移: {cost_total} != 76375361.03")
 
     def _check_closed_form_loopless_precision(self):
-        """规则 5：代数闭式无环计算与分母安全边际巡检 (询价/循检)"""
-        # 测试极端参数分母保护
+        """规则 5：代数闭式无环计算与分母安全边际巡检"""
         c_fab_net = Decimal("5761.42")
         c_trans_net = Decimal("302.85")
         c_install_net = Decimal("1579.38")
@@ -218,8 +248,13 @@ class XunInspector:
             self.log_check("GUI与API资产交付完整性", False, "部分展现层或 API 接口资产缺失")
 
 
+# 别名兼容
+xunit_inspector = XUnitInspector
+XunInspector = XUnitInspector
+
+
 def main():
-    inspector = XunInspector()
+    inspector = XUnitInspector()
     success = inspector.run_all_checks()
     sys.exit(0 if success else 1)
 

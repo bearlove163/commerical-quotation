@@ -314,15 +314,15 @@ $$C_{\text{overseas\_install}} = C_{\text{manday\_labor}} + C_{\text{travel\_vis
 
 ---
 
-## 9. 自动化 Xun 巡检与规则核验机制 (Automated Xun Inspection & Patrol System) ⭐
+## 9. 自动化 xUnit 架构与规则合规巡检机制 (Automated xUnit Testing & Patrol System) ⭐
 
-为杜绝人为失误、定额漂移与代码违规合入，系统在 `src/utils/xun_inspector.py` 中固化了全自动化的 **Xun 巡检引擎**。所有 Agent 或开发者在提交代码、派生版本或合并分支前，必须强制运行如下巡检指令：
+为杜绝人为失误、定额漂移与代码违规合入，系统在 `src/utils/xunit_inspector.py` 中固化了全自动化的 **xUnit 规则巡检与合规测试引擎**。所有 Agent 或开发者在提交代码、派生版本或合并分支前，必须强制运行如下 xUnit 巡检指令：
 
 ```bash
-uv run --with openpyxl python -m src.utils.xun_inspector
+uv run --with openpyxl python -m src.utils.xunit_inspector
 ```
 
-### 9.1 Xun 巡检五大核心规程
+### 9.1 xUnit 自动化巡检五大核心规程
 1. **架构与工程纪律巡检 (Architecture & Git Patrol)**：
    - 检查根目录 `.gitignore` 是否绝对排除 `worktrees/`，确保所有并行副本严禁进入 Git 追踪；
    - 检查 `docs/changelogs/` 下所有 plan 与 walkthrough 文件名，必须严格遵循 3 位递增数字序列号（如 `001_`、`006_`）；
@@ -373,7 +373,8 @@ uv run --with openpyxl python -m src.utils.xun_inspector
 - **Rule 18 (文档与代码同步交付 Docs as Code)**：新增修改必须同步更新 `docs/` 设计规范与 changelogs。
 
 ### 【第五维度：自动化巡检与准入铁律】
-- **Rule 19 (自动化 Xun 巡检阻断原则 ⭐)**：在版本提审、对外出标或分支合并前，必须执行 `xun_inspector` 自动化巡检，12 项规程未全部 PASS 严禁交付出标。
+- **Rule 19 (自动化 xUnit 巡检与测试阻断原则 ⭐)**：在版本提审、对外出标或分支合并前，必须执行 `xunit_inspector` 自动化巡检与 pytest 回归，12 项规程未全部 PASS 严禁交付出标。
+
 
 ---
 
