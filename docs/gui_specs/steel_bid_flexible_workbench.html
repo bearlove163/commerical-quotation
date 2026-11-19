@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SteelBid Pro · 中间算量明细多维灵活工作台</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .badge-pill { padding: 2px 7px; border-radius: 9999px; font-size: 11px; font-weight: 500; }
+    .col-hide { display: none !important; }
+    .row-selected { background-color: #eff6ff !important; border-left: 3px solid #2563eb; }
+    /* 紧凑可编辑单元格样式 */
+    .editable-cell:hover { background-color: #f8fafc; outline: 1px dashed #93c5fd; cursor: text; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased font-sans flex flex-col h-screen overflow-hidden text-[12px]">
+
+  <!-- 1. 顶部项目状态栏 (Top Banner) -->
+  <header class="bg-slate-900 text-white h-10 flex items-center justify-between px-3 shrink-0 border-b border-slate-800 shadow-sm select-none">
+    <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-1.5 font-bold tracking-wider text-blue-400 text-xs">
+        <span class="inline-block w-2.5 h-2.5 bg-blue-500 rounded-xs"></span>
+        <span class="text-sm">SteelBid Pro</span>
+        <span class="text-slate-400 font-normal">| 算量组价工作台</span>
+      </div>
+      <div class="h-3.5 w-px bg-slate-700"></div>
+      <div class="flex items-center space-x-2 text-xs">
+        <span class="text-amber-300 font-semibold">湛江北站站房钢结构工程</span>
+        <span class="badge-pill bg-blue-900 text-blue-200 border border-blue-700">国内两票制 (EPC全包 13%+9%)</span>
+        <span class="badge-pill bg-emerald-900 text-emerald-200 border border-emerald-700">基线 V1.1 (已递标)</span>
+      </div>
+    </div>
+    <div class="flex items-center space-x-3 text-xs text-slate-300">
+      <span>材料快照: <b class="text-white">MAT-2026-01-15</b></span>
+      <span>定额版本: <b class="text-white">NORM-2026-V1</b></span>
+      <div class="h-3.5 w-px bg-slate-700"></div>
+      <span class="text-slate-400">自算量: <b class="text-amber-300 font-mono">7,118.10 t</b></span>
+      <span class="text-slate-400">投标报价: <b class="text-emerald-400 font-mono">83,137,633 元</b></span>
+    </div>
+  </header>
+
+  <!-- 2. 主体分栏区 (Main Multi-Column Layout) -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- 左侧微型导航 (Left Slim Nav) -->
+    <aside class="w-12 bg-slate-800 flex flex-col items-center py-2 shrink-0 border-r border-slate-700 space-y-3 select-none text-slate-400">
+      <button title="总览驾驶舱" class="w-8 h-8 rounded flex items-center justify-center hover:bg-slate-700 hover:text-white transition">📊</button>
+      <button title="项目与版本" class="w-8 h-8 rounded flex items-center justify-center hover:bg-slate-700 hover:text-white transition">📁</button>
+      <button title="定额数据库" class="w-8 h-8 rounded flex items-center justify-center hover:bg-slate-700 hover:text-white transition">🗄️</button>
+      <button title="算量工作台(当前)" class="w-8 h-8 rounded flex items-center justify-center bg-blue-600 text-white shadow-xs">📐</button>
+      <button title="组价计算引擎" class="w-8 h-8 rounded flex items-center justify-center hover:bg-slate-700 hover:text-white transition">⚙️</button>
+      <button title="清单映射与倒轧" class="w-8 h-8 rounded flex items-center justify-center hover:bg-slate-700 hover:text-white transition">📑</button>
+      <button title="报表输出" class="w-8 h-8 rounded flex items-center justify-center hover:bg-slate-700 hover:text-white transition">📈</button>
+    </aside>
+
+    <!-- 中间核心工作区：灵活明细是关键 (Middle Flexible Takeoff Detail Canvas) -->
+    <main class="flex-1 flex flex-col overflow-hidden bg-white">
+
+      <!-- 工具栏 1：多维度视图切换 + 筛选过滤器 (View Toggles & Filters) -->
+      <div class="h-11 bg-slate-50 border-b border-slate-200 px-3 flex items-center justify-between shrink-0 gap-2 select-none">
+        
+        <!-- 四大多维视图一键切换 Tab -->
+        <div class="flex items-center space-x-1 bg-slate-200/80 p-0.5 rounded text-xs">
+          <button onclick="switchViewMode('flat')" id="btn-view-flat" class="px-2.5 py-1 rounded bg-white text-blue-700 font-bold shadow-2xs">
+            📋 平铺工作表
+          </button>
+          <button onclick="switchViewMode('tree')" id="btn-view-tree" class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-medium transition">
+            🌳 WBS层级展开
+          </button>
+          <button onclick="switchViewMode('cost')" id="btn-view-cost" class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-medium transition">
+            🔍 三阶段成本穿透 ⭐
+          </button>
+          <button onclick="switchViewMode('bq')" id="btn-view-bq" class="px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-medium transition">
+            📑 甲方清单对照
+          </button>
+        </div>
+
+        <!-- 筛选与搜索控件 -->
+        <div class="flex items-center space-x-2 text-xs">
+          <!-- 截面族过滤 -->
+          <div class="flex items-center space-x-1">
+            <span class="text-slate-500">截面:</span>
+            <select id="filter-shape" onchange="applyFilters()" class="border border-slate-300 rounded px-1.5 py-0.5 bg-white text-xs font-mono">
+              <option value="ALL">全部截面族</option>
+              <option value="CROSS">CROSS 十字柱</option>
+              <option value="BOX">BOX 箱型柱</option>
+              <option value="PIPE">PIPE 圆管柱</option>
+              <option value="GRID">GRID 网架</option>
+              <option value="TRUSS">TRUSS 桁架</option>
+            </select>
+          </div>
+
+          <!-- 材质过滤 -->
+          <div class="flex items-center space-x-1">
+            <span class="text-slate-500">材质:</span>
+            <select id="filter-grade" onchange="applyFilters()" class="border border-slate-300 rounded px-1.5 py-0.5 bg-white text-xs font-mono">
+              <option value="ALL">全部材质</option>
+              <option value="Q355B">Q355B</option>
+              <option value="Q345GJC">Q345GJC</option>
+              <option value="Q420GJC">Q420GJC</option>
+              <option value="Q235B">Q235B</option>
+            </select>
+          </div>
+
+          <!-- 即时模糊搜索框 -->
+          <div class="relative">
+            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="搜索编号/规格..." class="w-32 border border-slate-300 rounded pl-2 pr-5 py-0.5 text-xs focus:w-44 focus:border-blue-500 focus:outline-hidden transition-all">
+            <span class="absolute right-1.5 top-1 text-slate-400">🔍</span>
+          </div>
+
+          <!-- 列显示自定义按钮 -->
+          <button onclick="toggleColumnCustomizer()" class="px-2 py-0.5 border border-slate-300 rounded hover:bg-slate-100 text-slate-600 flex items-center space-x-1" title="自定义列显隐">
+            <span>⚙️</span><span>列设置</span>
+          </button>
+
+          <!-- 手工录入快速弹窗按钮 -->
+          <button onclick="openTakeoffDialog()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-2.5 py-0.5 rounded shadow-2xs transition">
+            + 手工录入
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 动态列设置弹出抽屉 (Column Customizer Dropdown) -->
+      <div id="col-customizer-box" class="bg-white border border-slate-300 rounded shadow-lg p-2.5 absolute right-24 top-20 z-40 text-xs hidden w-64 space-y-2">
+        <div class="font-bold text-slate-700 border-b pb-1 flex justify-between">
+          <span>动态配置明细列显隐</span>
+          <button onclick="toggleColumnCustomizer()" class="text-slate-400 hover:text-slate-700">✕</button>
+        </div>
+        <div class="space-y-1 font-sans">
+          <label class="flex items-center space-x-1.5 cursor-pointer">
+            <input type="checkbox" id="chk-col-geo" checked onchange="toggleColumnGroup('col-geo', this.checked)">
+            <span>几何推导列 (截面分类/最大板厚)</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer">
+            <input type="checkbox" id="chk-col-norm" checked onchange="toggleColumnGroup('col-norm', this.checked)">
+            <span>定额拉取列 (材料快照出厂价/制作定额)</span>
+          </label>
+          <label class="flex items-center space-x-1.5 cursor-pointer">
+            <input type="checkbox" id="chk-col-price" checked onchange="toggleColumnGroup('col-price', this.checked)">
+            <span>商务结算列 (综合单价 CJ / 投标合价)</span>
+          </label>
+        </div>
+        <div class="text-[11px] text-slate-400 pt-1 border-t">勾选后表格列瞬间自动伸缩</div>
+      </div>
+
+      <!-- 中间明细主体表格 (The Middle Grid) -->
+      <div class="flex-1 overflow-auto bg-slate-50 relative">
+        <table class="w-full border-collapse text-left font-mono text-[11px] select-text">
+          <thead class="bg-slate-200/90 text-slate-700 sticky top-0 z-20 shadow-2xs font-sans font-semibold border-b border-slate-300">
+            <tr>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-10 text-center">#</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-24">构件编号</th>
+              <th class="py-1.5 px-2 border-r border-slate-300">构件名称</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-36">截面规格 (可双击编辑)</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-16">材质</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-14 text-right">件数</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-20 text-right">单件重(t)</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 w-24 text-right font-bold text-slate-900 bg-slate-200">总重量(t)</th>
+              
+              <!-- 动态组 1: 几何推导 -->
+              <th class="py-1.5 px-2 border-r border-slate-300 col-geo">截面族</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 col-geo text-right">板厚(mm)</th>
+              
+              <!-- 动态组 2: 定额自动拉取 -->
+              <th class="py-1.5 px-2 border-r border-slate-300 col-norm text-right">材料出厂价</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 col-norm text-right">制作基价</th>
+              <th class="py-1.5 px-2 border-r border-slate-300 col-norm text-right">安装基价</th>
+
+              <!-- 动态组 3: 商务结算综合单价 -->
+              <th class="py-1.5 px-2 border-r border-slate-300 col-price text-right font-bold text-blue-900 bg-blue-100/50">综合单价 CJ</th>
+              <th class="py-1.5 px-2 col-price text-right font-bold text-slate-900 bg-blue-100/30">投标合价(元)</th>
+            </tr>
+          </thead>
+          <tbody id="grid-tbody" class="divide-y divide-slate-200 bg-white">
+            <!-- 动态渲染数据行 -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 表格底部快速汇总条 (Footer Summary Bar) -->
+      <div class="h-8 bg-slate-100 border-t border-slate-300 px-3 flex items-center justify-between text-xs font-mono text-slate-700 shrink-0">
+        <div class="flex items-center space-x-3">
+          <span>当前显示: <b id="lbl-shown-count" class="text-blue-700">13</b> 构件项</span>
+          <span>筛选匹配吨位: <b id="lbl-shown-weight" class="text-amber-800">7,524.34 t</b></span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span>制造净直接费: <b id="lbl-shown-fab-sum">41,208,350 元</b></span>
+          <span>现场安装净直接费: <b id="lbl-shown-ins-sum">11,883,820 元</b></span>
+          <span class="text-blue-900 font-bold font-sans">对应投标总额: <b id="lbl-shown-bid-sum">74,210,500 元</b></span>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- 右侧上下文面板：可一键折叠 (Right Context Panel - Quota Live Inspector) -->
+    <aside id="right-panel" class="w-72 bg-white border-l border-slate-200 flex flex-col shrink-0 overflow-hidden select-none transition-all">
+      <div class="p-2 bg-slate-900 text-white font-semibold text-xs flex justify-between items-center">
+        <span>⚡ 当前构件定额自动拉取透视</span>
+        <button onclick="toggleRightPanel()" class="text-slate-400 hover:text-white" title="收起/展开右栏">◀▶</button>
+      </div>
+
+      <div class="p-3 overflow-y-auto flex-1 space-y-3 text-xs">
+        <!-- 构件基本概况 -->
+        <div class="bg-slate-50 p-2 rounded border border-slate-200">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">选中构件</div>
+          <div id="inspector-comp-name" class="font-bold text-slate-800 text-sm mt-0.5">KZ-1 实腹十字柱</div>
+          <div id="inspector-comp-spec" class="font-mono text-blue-700 text-xs">1300*600*80*80 (Q355B)</div>
+          <div id="inspector-comp-weight" class="text-slate-500 font-mono text-[11px] mt-0.5">总重: 500.16 t | 件数: 48 件</div>
+        </div>
+
+        <!-- 自动拉取材料快照 -->
+        <div class="bg-blue-50/60 p-2 rounded border border-blue-200">
+          <div class="text-[10px] text-blue-800 uppercase tracking-wider font-bold flex justify-between">
+            <span>材料价格库 (MAT-2026-01-15)</span>
+            <span class="text-emerald-600 font-normal">已拉取 ✓</span>
+          </div>
+          <div class="flex justify-between font-mono mt-1">
+            <span class="text-slate-600">出厂除税网价:</span>
+            <b id="inspector-mat-price" class="text-blue-900">4,982.30 元/t</b>
+          </div>
+          <div class="text-[10px] text-slate-400">厚度 80mm Q355B 特厚板</div>
+        </div>
+
+        <!-- 自动拉取微工序定额 -->
+        <div class="bg-emerald-50/60 p-2 rounded border border-emerald-200">
+          <div class="text-[10px] text-emerald-800 uppercase tracking-wider font-bold flex justify-between">
+            <span>车间制作解耦定额 (FAB)</span>
+            <span class="text-emerald-600 font-normal">微工序拉取 ✓</span>
+          </div>
+          <div class="space-y-0.5 font-mono text-[11px] mt-1 text-slate-700">
+            <div class="flex justify-between"><span>· 切割下料+组装:</span><span>150.00 元/t</span></div>
+            <div class="flex justify-between"><span>· 埋弧焊接+探伤:</span><span>160.00 元/t</span></div>
+            <div class="flex justify-between"><span>· 板厚调价(>78mm):</span><span id="inspector-thick-adj" class="text-amber-700 font-bold">+140.00 元/t</span></div>
+            <div class="flex justify-between"><span>· 立体空间预拼装:</span><span>50.00 元/t</span></div>
+            <div class="border-t border-emerald-200 pt-0.5 flex justify-between font-bold text-emerald-900">
+              <span>制作直接费小计:</span>
+              <span id="inspector-fab-subtotal">500.00 元/t</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 自动拉取安装定额 -->
+        <div class="bg-purple-50/60 p-2 rounded border border-purple-200">
+          <div class="text-[10px] text-purple-800 uppercase tracking-wider font-bold flex justify-between">
+            <span>现场高空安装定额 (INS)</span>
+            <span class="text-purple-600 font-normal">套用成功 ✓</span>
+          </div>
+          <div class="space-y-0.5 font-mono text-[11px] mt-1 text-slate-700">
+            <div class="flex justify-between"><span>· 地面拼对+倒运:</span><span>80.00 元/t</span></div>
+            <div class="flex justify-between"><span>· 高空就位吊装:</span><span id="inspector-erect-cost">618.05 元/t</span></div>
+            <div class="flex justify-between"><span>· 机械措施分摊:</span><span>769.33 元/t</span></div>
+            <div class="border-t border-purple-200 pt-0.5 flex justify-between font-bold text-purple-900">
+              <span>现场安装直接费:</span>
+              <span id="inspector-ins-subtotal">1,579.38 元/t</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 闭式求解价格指示 -->
+        <div class="bg-slate-800 text-white p-2.5 rounded font-mono text-xs space-y-1">
+          <div class="text-[10px] text-slate-400 font-sans">闭式代数综合单价 (含两票税金及利润):</div>
+          <div id="inspector-cj" class="text-base font-bold text-amber-300">9,933.25 元/t</div>
+          <div class="text-[10px] text-slate-400 pt-1 border-t border-slate-700 flex justify-between">
+            <span>制造票13%: <b id="inspector-tax13">925.10</b></span>
+            <span>安装票9%: <b id="inspector-tax9">221.40</b></span>
+          </div>
+        </div>
+
+        <!-- 快速覆写按钮 -->
+        <button onclick="alert('已开启特异性构件定额覆写权限！所有修改将带星号留痕审计。')" class="w-full border border-slate-300 hover:bg-slate-100 text-slate-700 py-1 rounded text-xs">
+          ✍️ 手工微调定额参数 (留痕审计)
+        </button>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- 3. 前端交互与灵活渲染脚本 -->
+  <script>
+    // 湛江北站标杆构件数据集
+    const BENCHMARK_DATA = [
+      { id: 1, zone: "A区·主体结构", sys: "钢柱系统", code: "KZ-1", name: "实腹十字柱", spec: "1300*600*80*80", grade: "Q355B", qty: 48, weight: 500.16, shape: "CROSS", thick: 80, bq_code: "010101", bq_name: "实腹钢柱", mat_price: 4982.30, base_fab: 360.00, thick_adj: 140.00, erect_cost: 618.05, cj: 9933.25, total_bid: 4968214.30 },
+      { id: 2, zone: "A区·主体结构", sys: "钢柱系统", code: "KZ-1A", name: "十字柱底节", spec: "1400*700*90*90", grade: "Q355B", qty: 48, weight: 564.18, shape: "CROSS", thick: 90, bq_code: "010101", bq_name: "实腹钢柱", mat_price: 4982.30, base_fab: 360.00, thick_adj: 140.00, erect_cost: 618.05, cj: 9933.25, total_bid: 5604139.75 },
+      { id: 3, zone: "A区·主体结构", sys: "钢柱系统", code: "FZ-1", name: "箱型方钢柱", spec: "800*800*40*40", grade: "Q355B", qty: 36, weight: 380.50, shape: "BOX", thick: 40, bq_code: "010102", bq_name: "空腹方钢柱", mat_price: 4546.33, base_fab: 325.00, thick_adj: 40.00, erect_cost: 520.00, cj: 9060.90, total_bid: 3447672.45 },
+      { id: 4, zone: "A区·主体结构", sys: "钢柱系统", code: "FZ-2", name: "箱型角柱", spec: "700*700*35*35", grade: "Q355B", qty: 36, weight: 376.50, shape: "BOX", thick: 35, bq_code: "010102", bq_name: "空腹方钢柱", mat_price: 4546.33, base_fab: 325.00, thick_adj: 0.00, erect_cost: 520.00, cj: 9015.40, total_bid: 3394298.10 },
+      { id: 5, zone: "A区·主体结构", sys: "钢柱系统", code: "YZ-1", name: "空腹圆管柱", spec: "P650*20", grade: "Q345GJC", qty: 32, weight: 426.00, shape: "PIPE", thick: 20, bq_code: "010103", bq_name: "空腹圆钢柱", mat_price: 4820.00, base_fab: 285.00, thick_adj: 0.00, erect_cost: 480.00, cj: 9280.60, total_bid: 3953535.60 },
+      { id: 6, zone: "B区·屋盖结构", sys: "空间网架", code: "WJ-CH1", name: "网架上弦管", spec: "P219*12", grade: "Q355B", qty: 650, weight: 1120.00, shape: "GRID", thick: 12, bq_code: "010104", bq_name: "钢网架", mat_price: 3982.00, base_fab: 405.00, thick_adj: 0.00, erect_cost: 680.00, cj: 9450.80, total_bid: 10584896.00 },
+      { id: 7, zone: "B区·屋盖结构", sys: "空间网架", code: "WJ-CH2", name: "网架下弦管", spec: "P180*10", grade: "Q355B", qty: 580, weight: 980.00, shape: "GRID", thick: 10, bq_code: "010104", bq_name: "钢网架", mat_price: 3982.00, base_fab: 405.00, thick_adj: 0.00, erect_cost: 680.00, cj: 9450.80, total_bid: 9261784.00 },
+      { id: 8, zone: "B区·屋盖结构", sys: "空间网架", code: "WJ-BALL", name: "焊接空心球", spec: "WS450*22", grade: "Q355B", qty: 1280, weight: 472.00, shape: "GRID", thick: 22, bq_code: "010104", bq_name: "钢网架", mat_price: 4300.00, base_fab: 520.00, thick_adj: 0.00, erect_cost: 680.00, cj: 10120.00, total_bid: 4776640.00 },
+      { id: 9, zone: "B区·屋盖结构", sys: "主受力桁架", code: "HJ-M1", name: "空间主桁架", spec: "P400*20", grade: "Q420GJC", qty: 120, weight: 658.00, shape: "TRUSS", thick: 20, bq_code: "010105", bq_name: "桁架", mat_price: 5300.00, base_fab: 385.00, thick_adj: 0.00, erect_cost: 720.00, cj: 10220.91, total_bid: 6725358.78 },
+      { id: 10, zone: "C区·屋面系统", sys: "天窗系统", code: "TC-1", name: "天窗钢构架", spec: "P159*6", grade: "Q355B", qty: 420, weight: 777.00, shape: "PIPE", thick: 6, bq_code: "010106", bq_name: "天窗", mat_price: 3982.00, base_fab: 320.00, thick_adj: 0.00, erect_cost: 550.00, cj: 9008.67, total_bid: 6999736.59 },
+      { id: 11, zone: "C区·屋面系统", sys: "围护檩条", code: "LT-1", name: "高频焊H型钢檩", spec: "H250*125*6*9", grade: "Q355B", qty: 850, weight: 425.00, shape: "H_BEAM", thick: 9, bq_code: "010107", bq_name: "钢檩条", mat_price: 3982.00, base_fab: 290.00, thick_adj: 0.00, erect_cost: 490.00, cj: 8868.81, total_bid: 3769244.25 },
+      { id: 12, zone: "D区·辅助工程", sys: "马道梯台", code: "MD-1", name: "检修钢马道", spec: "HN200*100*5.5*8", grade: "Q235B", qty: 310, weight: 315.00, shape: "H_BEAM", thick: 8, bq_code: "010108", bq_name: "钢马道", mat_price: 3948.00, base_fab: 310.00, thick_adj: 0.00, erect_cost: 520.00, cj: 9398.77, total_bid: 2960612.55 },
+      { id: 13, zone: "D区·辅助工程", sys: "马道梯台", code: "GT-1", name: "疏散钢梯及门斗", spec: "L125*10", grade: "Q355B", qty: 240, weight: 530.00, shape: "UNKNOWN", thick: 10, bq_code: "010109", bq_name: "钢梯与门斗", mat_price: 3982.00, base_fab: 280.00, thick_adj: 0.00, erect_cost: 450.00, cj: 7720.35, total_bid: 4091785.50 }
+    ];
+
+    let currentViewMode = 'flat';
+    let selectedRowId = 1;
+
+    // 页面加载自动渲染
+    window.onload = function() {
+      renderTable();
+    };
+
+    // 视图模式切换
+    function switchViewMode(mode) {
+      currentViewMode = mode;
+      const btnMap = { flat: 'btn-view-flat', tree: 'btn-view-tree', cost: 'btn-view-cost', bq: 'btn-view-bq' };
+      for (const [k, btnId] of Object.entries(btnMap)) {
+        const btn = document.getElementById(btnId);
+        if (k === mode) {
+          btn.className = 'px-2.5 py-1 rounded bg-white text-blue-700 font-bold shadow-2xs';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-medium transition';
+        }
+      }
+      renderTable();
+    }
+
+    // 表格核心渲染逻辑
+    function renderTable() {
+      const tbody = document.getElementById('grid-tbody');
+      tbody.innerHTML = '';
+
+      const shapeFilter = document.getElementById('filter-shape').value;
+      const gradeFilter = document.getElementById('filter-grade').value;
+      const searchTxt = document.getElementById('filter-search').value.toLowerCase().trim();
+
+      // 过滤数据集
+      const filtered = BENCHMARK_DATA.filter(item => {
+        if (shapeFilter !== 'ALL' && item.shape !== shapeFilter) return false;
+        if (gradeFilter !== 'ALL' && item.grade !== gradeFilter) return false;
+        if (searchTxt && !item.code.toLowerCase().includes(searchTxt) && !item.name.toLowerCase().includes(searchTxt) && !item.spec.toLowerCase().includes(searchTxt)) return false;
+        return true;
+      });
+
+      // 更新汇总指标
+      document.getElementById('lbl-shown-count').innerText = filtered.length;
+      const sumWeight = filtered.reduce((acc, x) => acc + x.weight, 0);
+      const sumBid = filtered.reduce((acc, x) => acc + x.total_bid, 0);
+      document.getElementById('lbl-shown-weight').innerText = sumWeight.toFixed(2) + ' t';
+      document.getElementById('lbl-shown-bid-sum').innerText = sumBid.toLocaleString('zh-CN', {maximumFractionDigits: 0}) + ' 元';
+
+      if (currentViewMode === 'tree') {
+        // WBS 层级折叠视图
+        renderTreeMode(filtered, tbody);
+      } else if (currentViewMode === 'cost') {
+        // 三阶段成本穿透视图
+        renderCostPenetrationMode(filtered, tbody);
+      } else if (currentViewMode === 'bq') {
+        // 甲方清单对照视图
+        renderBQAlignmentMode(filtered, tbody);
+      } else {
+        // 纯平铺工作表视图
+        renderFlatMode(filtered, tbody);
+      }
+    }
+
+    // 1. 平铺视图渲染
+    function renderFlatMode(items, tbody) {
+      items.forEach((item, idx) => {
+        const isSelected = item.id === selectedRowId;
+        const isThickAlert = item.thick >= 80;
+        const tr = document.createElement('tr');
+        tr.className = `hover:bg-slate-50 cursor-pointer ${isSelected ? 'row-selected' : ''}`;
+        tr.onclick = () => selectRow(item);
+
+        tr.innerHTML = `
+          <td class="py-1 px-2 border-r border-slate-200 text-center text-slate-400">${idx + 1}</td>
+          <td class="py-1 px-2 border-r border-slate-200 font-bold text-blue-700">${item.code}</td>
+          <td class="py-1 px-2 border-r border-slate-200 font-sans">${item.name}</td>
+          <td class="py-1 px-2 border-r border-slate-200 font-bold text-slate-800 editable-cell" title="双击行内快速修改">${item.spec}</td>
+          <td class="py-1 px-2 border-r border-slate-200">${item.grade}</td>
+          <td class="py-1 px-2 border-r border-slate-200 text-right editable-cell">${item.qty}</td>
+          <td class="py-1 px-2 border-r border-slate-200 text-right">${(item.weight / item.qty).toFixed(3)}</td>
+          <td class="py-1 px-2 border-r border-slate-200 text-right font-bold text-slate-900 bg-slate-50/50">${item.weight.toFixed(2)}</td>
+          
+          <td class="py-1 px-2 border-r border-slate-200 col-geo">
+            <span class="badge-pill ${item.shape === 'CROSS' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-700'}">${item.shape}</span>
+          </td>
+          <td class="py-1 px-2 border-r border-slate-200 col-geo text-right ${isThickAlert ? 'text-amber-700 font-bold' : ''}">
+            ${item.thick} ${isThickAlert ? '⚠️' : ''}
+          </td>
+
+          <td class="py-1 px-2 border-r border-slate-200 col-norm text-right text-slate-600">${item.mat_price.toFixed(2)}</td>
+          <td class="py-1 px-2 border-r border-slate-200 col-norm text-right text-slate-600">${(item.base_fab + item.thick_adj).toFixed(2)}</td>
+          <td class="py-1 px-2 border-r border-slate-200 col-norm text-right text-slate-600">${(item.erect_cost + 80).toFixed(2)}</td>
+
+          <td class="py-1 px-2 border-r border-slate-200 col-price text-right font-bold text-blue-800 bg-blue-50/30">${item.cj.toFixed(2)}</td>
+          <td class="py-1 px-2 col-price text-right font-bold text-slate-900 bg-blue-50/20">${item.total_bid.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 2. WBS 层级分组树状视图
+    function renderTreeMode(items, tbody) {
+      // 按 zone 分组
+      const zones = {};
+      items.forEach(it => {
+        if (!zones[it.zone]) zones[it.zone] = [];
+        zones[it.zone].push(it);
+      });
+
+      for (const [zoneName, zItems] of Object.entries(zones)) {
+        const zoneWeight = zItems.reduce((acc, x) => acc + x.weight, 0);
+        const zoneBid = zItems.reduce((acc, x) => acc + x.total_bid, 0);
+
+        // 分组大头行
+        const headerTr = document.createElement('tr');
+        headerTr.className = 'bg-slate-200/70 font-sans font-bold text-slate-800 select-none';
+        headerTr.innerHTML = `
+          <td colspan="4" class="py-1.5 px-3 border-b border-slate-300">
+            <span class="text-blue-600 font-mono">▼</span> ${zoneName} (${zItems.length} 个构件项)
+          </td>
+          <td colspan="3" class="py-1.5 px-2 text-right border-b border-slate-300">区域小计吨位:</td>
+          <td class="py-1.5 px-2 text-right border-b border-slate-300 font-mono text-slate-900 font-bold">${zoneWeight.toFixed(2)} t</td>
+          <td colspan="5" class="py-1.5 px-2 text-right border-b border-slate-300">区域报价小计:</td>
+          <td class="py-1.5 px-2 text-right border-b border-slate-300 font-mono text-blue-900 font-bold">${zoneBid.toLocaleString('zh-CN', {maximumFractionDigits: 0})} 元</td>
+        `;
+        tbody.appendChild(headerTr);
+
+        // 成员行
+        renderFlatMode(zItems, tbody);
+      }
+    }
+
+    // 3. 三阶段成本穿透视图
+    function renderCostPenetrationMode(items, tbody) {
+      items.forEach((item, idx) => {
+        const isSelected = item.id === selectedRowId;
+        const tr = document.createElement('tr');
+        tr.className = `hover:bg-slate-50 cursor-pointer ${isSelected ? 'row-selected' : ''}`;
+        tr.onclick = () => selectRow(item);
+
+        tr.innerHTML = `
+          <td class="py-1 px-2 border-r border-slate-200 text-center text-slate-400">${idx + 1}</td>
+          <td class="py-1 px-2 border-r border-slate-200 font-bold text-blue-700">${item.code}</td>
+          <td class="py-1 px-2 border-r border-slate-200 font-sans font-medium">${item.name}</td>
+          <td class="py-1 px-2 border-r border-slate-200 font-bold text-slate-800">${item.spec}</td>
+          <td class="py-1 px-2 border-r border-slate-200">${item.grade}</td>
+          <td class="py-1 px-2 border-r border-slate-200 text-right">${item.qty}</td>
+          <td class="py-1 px-2 border-r border-slate-200 text-right">${(item.weight / item.qty).toFixed(3)}</td>
+          <td class="py-1 px-2 border-r border-slate-200 text-right font-bold text-slate-900">${item.weight.toFixed(2)}</td>
+
+          <!-- 穿透列展示 -->
+          <td colspan="3" class="py-1 px-2 border-r border-slate-200 font-mono text-[10px] text-slate-600 bg-emerald-50/40">
+            [制作] 主材:${item.mat_price} + 制作基价:${item.base_fab} + 板厚加价:${item.thick_adj}
+          </td>
+          <td colspan="2" class="py-1 px-2 border-r border-slate-200 font-mono text-[10px] text-slate-600 bg-purple-50/40">
+            [安装] 吊装:${item.erect_cost} + 机械分摊:769.33 + 拼装:80
+          </td>
+          <td class="py-1 px-2 text-right font-bold text-blue-800 bg-blue-100/50">${item.cj.toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 4. 甲方清单映射视图
+    function renderBQAlignmentMode(items, tbody) {
+      // 按 bq_code 分组
+      const bqGroups = {};
+      items.forEach(it => {
+        if (!bqGroups[it.bq_code]) bqGroups[it.bq_code] = { name: it.bq_name, items: [] };
+        bqGroups[it.bq_code].items.push(it);
+      });
+
+      for (const [bqCode, grp] of Object.entries(bqGroups)) {
+        const selfWeight = grp.items.reduce((acc, x) => acc + x.weight, 0);
+
+        const headerTr = document.createElement('tr');
+        headerTr.className = 'bg-amber-100/60 font-sans font-bold text-amber-950 border-b border-amber-200 select-none';
+        headerTr.innerHTML = `
+          <td colspan="4" class="py-1.5 px-3">
+            <span class="badge-pill bg-amber-700 text-white mr-1">${bqCode}</span> 甲方清单项: <b>${grp.name}</b>
+          </td>
+          <td colspan="3" class="py-1.5 px-2 text-right">内部映射自算量合计:</td>
+          <td class="py-1.5 px-2 text-right font-mono text-slate-900 font-bold">${selfWeight.toFixed(2)} t</td>
+          <td colspan="6" class="py-1.5 px-2 text-[11px] text-amber-800 font-normal">
+            对应 ${grp.items.length} 个内部物理原子构件 (自动加权平摊)
+          </td>
+        `;
+        tbody.appendChild(headerTr);
+
+        renderFlatMode(grp.items, tbody);
+      }
+    }
+
+    // 选中某一行，右侧定额透视联动刷新
+    function selectRow(item) {
+      selectedRowId = item.id;
+      renderTable(); // 刷新高亮
+
+      // 更新右侧面板
+      document.getElementById('inspector-comp-name').innerText = `${item.code} ${item.name}`;
+      document.getElementById('inspector-comp-spec').innerText = `${item.spec} (${item.grade})`;
+      document.getElementById('inspector-comp-weight').innerText = `总重: ${item.weight.toFixed(2)} t | 件数: ${item.qty} 件`;
+      document.getElementById('inspector-mat-price').innerText = `${item.mat_price.toFixed(2)} 元/t`;
+      document.getElementById('inspector-thick-adj').innerText = `+${item.thick_adj.toFixed(2)} 元/t`;
+      document.getElementById('inspector-fab-subtotal').innerText = `${(item.base_fab + item.thick_adj).toFixed(2)} 元/t`;
+      document.getElementById('inspector-erect-cost').innerText = `${item.erect_cost.toFixed(2)} 元/t`;
+      document.getElementById('inspector-ins-subtotal').innerText = `${(item.erect_cost + 80 + 769.33).toFixed(2)} 元/t`;
+      document.getElementById('inspector-cj').innerText = `${item.cj.toFixed(2)} 元/t`;
+    }
+
+    // 应用过滤器
+    function applyFilters() {
+      renderTable();
+    }
+
+    // 动态列显隐控制
+    function toggleColumnGroup(groupClass, isVisible) {
+      const cols = document.querySelectorAll('.' + groupClass);
+      cols.forEach(el => {
+        if (isVisible) el.classList.remove('col-hide');
+        else el.classList.add('col-hide');
+      });
+    }
+
+    function toggleColumnCustomizer() {
+      const box = document.getElementById('col-customizer-box');
+      box.classList.toggle('hidden');
+    }
+
+    function toggleRightPanel() {
+      const p = document.getElementById('right-panel');
+      p.classList.toggle('hidden');
+    }
+
+    function openTakeoffDialog() {
+      alert("点击打开 TakeoffDialog 精细录入向导！");
+    }
+  </script>
+</body>
+</html>
