@@ -38,3 +38,11 @@ def round_weight(val: Decimal) -> Decimal:
 def round_rate(val: Decimal) -> Decimal:
     """四舍五入至费率 (0.000001)"""
     return to_dec(val).quantize(PRECISION_RATE, rounding=ROUND_HALF_UP)
+
+
+# 别名兼容
+quantize_money = round_money
+quantize_price = round_price
+quantize_weight = round_weight
+quantize_rate = round_rate
+
