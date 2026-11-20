@@ -181,6 +181,38 @@ def test_section_families_master_data_and_auto_pull():
     assert "id=\"dlgAddSectionFamily\"" in html, "缺少新增截面族弹窗"
 
 
+def test_base_master_data_and_dialog_apis():
+    """验证基础数据中心资产、正交材料规则引擎及 Dialog 弹窗 API 契约"""
+    router = SteelBidApiRouter()
+
+    # 1. 全量基础数据中心资产
+    master = router.get_base_master_data()
+    assert len(master["fabrication_quotas"]) >= 47, "制作定额应完整承接原Excel 47+项"
+    assert len(master["installation_quotas"]) >= 65, "安装定额应完整承接原Excel 65+项"
+    assert len(master["machinery_rates"]) >= 190, "机械定额应完整承接原Excel 190+项"
+    assert len(master["logistics_matrix"]) >= 10, "调运运杂费矩阵应覆盖江门/中山/武汉等基地"
+    assert len(master["subcontract_products"]) >= 15, "专业分包字典应涵盖拉索/铸钢/楼承板/涂料/支座"
+    assert len(master["qualified_vendors"]) >= 8, "合格分包商名录库应覆盖各专业特级/一级厂商"
+
+    # 2. 正交材料规则引擎与调运费闭式测算 (Q690D TMCP 40mm Z25)
+    calc = router.calculate_material_landed_cost(
+        steel_grade="Q690D",
+        thickness=40.0,
+        fab_plant="江门制造基地",
+        steel_mill="湖南华菱湘钢",
+        process_state="TMCP",
+        impact_tier="D",
+        z_perf="Z25",
+        ut_level="UT_I"
+    )
+    assert calc["steel_grade"] == "Q690D"
+    assert calc["process_state"] == "TMCP"
+    assert calc["freight_cost"] == 185.0
+    assert calc["landed_cost"] > 9000.0
+    assert calc["equivalent_355b_benchmark"] > 6000.0
+
+
+
 
 
 

@@ -163,11 +163,20 @@
     <div class="flex items-center space-x-3">
       <!-- 快捷 Dialog 弹窗入口 -->
       <div class="flex items-center space-x-1.5 hidden lg:flex">
-        <button onclick="openDialog('dlgProject')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]">
-          <i class="fa-solid fa-building text-blue-400"></i><span>项目模式</span>
+        <button onclick="switchNavModule('database')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-2.5 py-1 rounded flex items-center space-x-1 text-[11px] shadow font-bold">
+          <i class="fa-solid fa-database text-amber-300"></i><span>③ 基础数据中心</span>
         </button>
-        <button onclick="openDialog('dlgQuota')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]">
-          <i class="fa-solid fa-gear text-amber-400"></i><span>微工序定额</span>
+        <button onclick="openMaterialMatrixDialog()" class="bg-slate-800 hover:bg-slate-700 text-blue-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]" title="材料正交价格与调运运费试算">
+          <i class="fa-solid fa-layer-group text-blue-400"></i><span>材料调运</span>
+        </button>
+        <button onclick="openSubcontractDialog()" class="bg-slate-800 hover:bg-slate-700 text-purple-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]" title="专业分包与外协选型">
+          <i class="fa-solid fa-link text-purple-400"></i><span>专业分包</span>
+        </button>
+        <button onclick="openQuotaManagementDialog('fab', 1)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]" title="7道制作微工序穿透">
+          <i class="fa-solid fa-sliders text-amber-400"></i><span>7道微工序</span>
+        </button>
+        <button onclick="openMachineryDialog()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]" title="区域起重机械调配">
+          <i class="fa-solid fa-truck-monster text-amber-400"></i><span>机械方案</span>
         </button>
         <button onclick="openDialog('dlgPricing')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1 rounded flex items-center space-x-1 text-[11px]">
           <i class="fa-solid fa-calculator text-emerald-400"></i><span>组价透视</span>
@@ -269,6 +278,35 @@
       <!-- ============================================== -->
       <section id="view-dashboard" class="flex-1 overflow-y-auto p-4 lg:p-6 space-y-5 pb-32" style="scroll-behavior: smooth;">
         
+        <!-- 全局高亮提醒: 基础数据中心与 Dialog 管理上线指引横幅 -->
+        <div class="p-3.5 bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white rounded-xl shadow-md flex flex-wrap items-center justify-between gap-3 border border-blue-500/30">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/30 border border-blue-400/50 flex items-center justify-center text-xl shrink-0 text-amber-300 shadow">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <div>
+              <div class="font-bold text-sm flex items-center space-x-2">
+                <span>钢结构全要素基础数据中心 & Dialog 管理引擎全面整合上线！</span>
+                <span class="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-mono font-bold">LIVE v2.1</span>
+              </div>
+              <div class="text-xs text-blue-100 mt-0.5">
+                原表定额（47项制作+65项安装+193项机械）、Mysteel 正交材料价格矩阵（TMCP免预热/Q690）、调运运费模型与 18 项专业分包字典已全部接入。
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="openMaterialMatrixDialog()" class="px-3 py-1.5 bg-blue-500/30 hover:bg-blue-500/50 text-white border border-blue-300/40 rounded-lg text-xs font-semibold transition">
+              <i class="fa-solid fa-layer-group mr-1"></i>材料调运测算
+            </button>
+            <button onclick="openSubcontractDialog()" class="px-3 py-1.5 bg-purple-500/30 hover:bg-purple-500/50 text-white border border-purple-300/40 rounded-lg text-xs font-semibold transition">
+              <i class="fa-solid fa-link mr-1"></i>专业分包选型
+            </button>
+            <button onclick="switchNavModule('database')" class="px-3.5 py-1.5 bg-white hover:bg-blue-50 text-blue-900 rounded-lg font-bold text-xs shadow transition flex items-center space-x-1.5">
+              <span>立即进入基础数据看板</span><i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
         <!-- ==================================================== -->
         <!-- 1. 顶部 Header: 岗位标识 + 口径切换下拉 + 数据时间戳 -->
         <!-- ==================================================== -->
@@ -832,17 +870,40 @@
       <!-- VIEW 3: ③ 基础数据中心 (Master Data & Quotas) ⭐ -->
       <!-- ============================================== -->
       <section id="view-database" class="flex-1 flex flex-col overflow-y-auto p-4 space-y-4 hidden">
-        <!-- 基础数据 6 大分类 Tab -->
+        <!-- 基础数据 8 大分类 Tab -->
         <div class="flex items-center space-x-2 border-b border-slate-200 pb-2 bg-white px-3 pt-2 rounded-t-xl shadow-2xs overflow-x-auto text-xs">
           <button onclick="switchDbTab('family')" id="dbTab-family" class="px-3 py-1.5 font-bold text-blue-600 border-b-2 border-blue-600 flex items-center space-x-1.5 shrink-0">
             <i class="fa-solid fa-shapes text-amber-500"></i>
             <span>1. 截面族规则设置 (Section Families) ⭐</span>
           </button>
-          <button onclick="switchDbTab('mat')" id="dbTab-mat" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">2. 材料价格库 (快照)</button>
-          <button onclick="switchDbTab('fab')" id="dbTab-fab" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">3. 车间制作定额 (7道微工序)</button>
-          <button onclick="switchDbTab('ins')" id="dbTab-ins" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">4. 现场安装定额 (6道微工序)</button>
-          <button onclick="switchDbTab('mach')" id="dbTab-mach" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">5. 机械台班与两票制费率</button>
-          <button onclick="switchDbTab('overseas')" id="dbTab-overseas" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">6. 海外标准费率 (人天开办费)</button>
+          <button onclick="switchDbTab('mat')" id="dbTab-mat" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-layer-group text-blue-600"></i>
+            <span>2. 正交材料规则与调运矩阵 (Mysteel & Logistics) ⭐</span>
+          </button>
+          <button onclick="switchDbTab('fab')" id="dbTab-fab" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-industry text-indigo-600"></i>
+            <span>3. 制作工序定额库 (原表54项全量)</span>
+          </button>
+          <button onclick="switchDbTab('ins')" id="dbTab-ins" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-helmet-safety text-emerald-600"></i>
+            <span>4. 现场安装定额库 (原表69项全量)</span>
+          </button>
+          <button onclick="switchDbTab('subcontract')" id="dbTab-subcontract" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-link text-purple-600"></i>
+            <span>5. 专业分包与外协字典 (拉索/铸钢/楼承板/涂料/支座) ⭐</span>
+          </button>
+          <button onclick="switchDbTab('vendors')" id="dbTab-vendors" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-building-circle-check text-teal-600"></i>
+            <span>6. 合格分包商名录库 (Vendor Registry)</span>
+          </button>
+          <button onclick="switchDbTab('mach')" id="dbTab-mach" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-truck-monster text-amber-600"></i>
+            <span>7. 区域大型起重机械库 (原表195项)</span>
+          </button>
+          <button onclick="switchDbTab('overseas')" id="dbTab-overseas" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
+            <i class="fa-solid fa-globe text-blue-500"></i>
+            <span>8. 海外标准费率 (人天开办费)</span>
+          </button>
         </div>
 
         <!-- 3.0 截面族规则与智能推导设置 (Section Families Master Settings) ⭐ -->
@@ -927,67 +988,402 @@
           </div>
         </div>
 
-        <!-- 3.1 材料价格库 -->
-        <div id="dbPanel-mat" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3 hidden">
-          <div class="flex justify-between items-center text-xs">
-            <div class="flex items-center space-x-2">
-              <span class="font-bold text-slate-800">当前活跃材料快照:</span>
-              <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono font-bold">MAT-2026-01-15 (已锁定)</span>
+        <!-- 3.1 正交材料规则矩阵与调运运杂费 (Mysteel & Logistics Engine) ⭐ -->
+        <div id="dbPanel-mat" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
+          <!-- 顶部规则说明与交互调测卡片 -->
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 bg-gradient-to-r from-blue-50 via-indigo-50 to-slate-50 border border-blue-200 rounded-xl">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-blue-600/10 border border-blue-300 flex items-center justify-center text-blue-600 shrink-0">
+                <i class="fa-solid fa-layer-group text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>正交材料规则引擎与钢厂-加工厂调运费闭式测算</span>
+                  <span class="bg-blue-100 text-blue-800 border border-blue-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">Rule 12/14 规范</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  基于六大正交原子维度（钢种族/强度级/冲击温度/TMCP控轧/连续板厚/性能加价），动态计算钢厂出厂价与构件加工厂运杂费，并支持逆向剥离等效基准。
+                </div>
+              </div>
             </div>
-            <span class="text-slate-400">出厂除税价 = (网价基价 + 材质加价 + 厚板加价) ÷ 1.13</span>
+            <button onclick="openMaterialMatrixDialog()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold shadow flex items-center space-x-1.5">
+              <i class="fa-solid fa-calculator"></i>
+              <span>唤起材料调运试算弹窗 (MaterialDialog)</span>
+            </button>
           </div>
 
-          <table class="w-full text-left border border-slate-200 text-xs font-mono">
-            <thead class="bg-slate-100 text-slate-600">
-              <tr>
-                <th class="p-2 border-b border-r">厚度区间(mm)</th>
-                <th class="p-2 border-b border-r">钢材材质</th>
-                <th class="p-2 border-b border-r text-right">网价基价(元/t)</th>
-                <th class="p-2 border-b border-r text-right">材质加价(元/t)</th>
-                <th class="p-2 border-b border-r text-right">厚板加价(元/t)</th>
-                <th class="p-2 border-b text-right font-bold text-blue-900">出厂除税价(元/t)</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              <tr><td class="p-2 border-r">6</td><td class="p-2 border-r font-sans">Q235B</td><td class="p-2 border-r text-right">4,460.00</td><td class="p-2 border-r text-right">0.00</td><td class="p-2 border-r text-right">0.00</td><td class="p-2 text-right font-bold text-blue-800">3,946.90</td></tr>
-              <tr><td class="p-2 border-r">10</td><td class="p-2 border-r font-sans">Q355B</td><td class="p-2 border-r text-right">4,500.00</td><td class="p-2 border-r text-right">0.00</td><td class="p-2 border-r text-right">0.00</td><td class="p-2 text-right font-bold text-blue-800">3,982.30</td></tr>
-              <tr><td class="p-2 border-r">16</td><td class="p-2 border-r font-sans">Q355B</td><td class="p-2 border-r text-right">4,300.00</td><td class="p-2 border-r text-right">0.00</td><td class="p-2 border-r text-right">0.00</td><td class="p-2 text-right font-bold text-blue-800">3,938.05</td></tr>
-              <tr class="bg-amber-50/60 font-semibold"><td class="p-2 border-r">80 (特厚板)</td><td class="p-2 border-r font-sans">Q355B</td><td class="p-2 border-r text-right">4,880.00</td><td class="p-2 border-r text-right">150.00</td><td class="p-2 border-r text-right">600.00</td><td class="p-2 text-right font-bold text-amber-800">4,982.30 ⚠</td></tr>
-              <tr><td class="p-2 border-r">80 (特厚板)</td><td class="p-2 border-r font-sans">Q345GJC</td><td class="p-2 border-r text-right">4,880.00</td><td class="p-2 border-r text-right">300.00</td><td class="p-2 border-r text-right">750.00</td><td class="p-2 text-right font-bold text-blue-800">5,247.79</td></tr>
-            </tbody>
-          </table>
-        </div>
+          <!-- 在线交互式测算仿真器 (Interactive Landed Cost Simulator) -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+            <div class="font-bold text-slate-800 text-xs flex items-center justify-between">
+              <span class="flex items-center space-x-1.5"><i class="fa-solid fa-flask text-indigo-600"></i><span>在线实时试算沙盒: 模拟任意材质、板厚、工艺与调运运费</span></span>
+              <span class="text-[11px] text-slate-400">公式: 到厂单价 = (出厂裸价 + 加价项) × (1+损耗率) + 调运运费 + 港口短驳费</span>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 text-xs">
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">1. 钢材牌号</label>
+                <select id="simMatGrade" onchange="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded font-semibold text-slate-800">
+                  <option value="Q235B">Q235B (碳素普板)</option>
+                  <option value="Q355B" selected>Q355B (低合金高强)</option>
+                  <option value="Q345GJC">Q345GJC (建筑高建钢)</option>
+                  <option value="Q390B">Q390B (中高强钢)</option>
+                  <option value="Q420B">Q420B (大跨度主钢)</option>
+                  <option value="Q420GJC">Q420GJC (湛江北站高建)</option>
+                  <option value="Q460E">Q460E (-40℃极寒高强)</option>
+                  <option value="Q550D">Q550D (超高强高耸塔)</option>
+                  <option value="Q690D">Q690D (超高强钢)</option>
+                  <option value="Q960E">Q960E (特种特高强)</option>
+                  <option value="Q355NH">Q355NH (耐候结构钢)</option>
+                  <option value="SUS304">SUS304 (不锈钢)</option>
+                  <option value="NM400">NM400 (耐磨板)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">2. 板厚 δ (mm)</label>
+                <input type="number" id="simMatThick" value="40" min="4" max="150" step="1" oninput="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded font-mono font-bold text-slate-800">
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">3. 治金/交货状态</label>
+                <select id="simMatProcess" onchange="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded text-slate-800">
+                  <option value="AR" selected>AR (热轧状态 · 基准)</option>
+                  <option value="CR">CR (控轧状态 · +60)</option>
+                  <option value="TMCP">TMCP (控轧控冷免预热 · +180) ⭐</option>
+                  <option value="N">N (离线正火 · +220)</option>
+                  <option value="N_T">N+T (正火加回火 · +280)</option>
+                  <option value="QT">QT (超高强调质 · +650)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">4. 冲击温度级别</label>
+                <select id="simMatTemp" onchange="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded text-slate-800">
+                  <option value="B" selected>B级 (+20℃ 常温基准)</option>
+                  <option value="C">C级 (0℃ · +40)</option>
+                  <option value="D">D级 (-20℃ · +100)</option>
+                  <option value="E">E级 (-40℃ · +180)</option>
+                  <option value="F">F级 (-60℃极寒 · +350)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">5. Z向抗撕裂性能</label>
+                <select id="simMatZ" onchange="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded text-slate-800">
+                  <option value="NONE" selected>无要求 (0元)</option>
+                  <option value="Z15">Z15 性能 (+150元/t)</option>
+                  <option value="Z25">Z25 性能 (+250元/t)</option>
+                  <option value="Z35">Z35 性能 (+350元/t)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">6. 构件承接加工厂</label>
+                <select id="simMatPlant" onchange="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded font-semibold text-blue-900">
+                  <option value="江门制造基地" selected>江门制造基地 (华南主基地)</option>
+                  <option value="中山制造基地">中山制造基地 (珠三角)</option>
+                  <option value="武汉加工中心">武汉加工中心 (华中枢纽)</option>
+                  <option value="湖州长兴基地">湖州长兴基地 (长三角)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-500 font-medium">7. 主供钢厂源</label>
+                <select id="simMatMill" onchange="runSimMaterialCalc()" class="w-full mt-1 p-1.5 bg-white border border-slate-300 rounded text-slate-800">
+                  <option value="AUTO" selected>就近最优钢厂 (自动匹配)</option>
+                  <option value="宝武湛江钢铁">宝武湛江钢铁 (东海岛基地)</option>
+                  <option value="韶钢松山">韶钢松山 (韶关)</option>
+                  <option value="湖南华菱湘钢">湖南华菱湘钢 (湘潭)</option>
+                  <option value="江苏沙钢">江苏沙钢 (张家港沿海散货)</option>
+                  <option value="宝武武钢基地">宝武武钢基地 (武汉青山)</option>
+                  <option value="河南舞阳钢铁">河南舞阳钢铁 (特厚板)</option>
+                </select>
+              </div>
+            </div>
 
-        <!-- 3.2 制作 7 道微工序 -->
-        <div id="dbPanel-fab" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3 hidden">
-          <div class="font-bold text-slate-800 text-xs">车间制作 7 道解耦微工序基准定额 (元/t · 企业技术委员会锁定)</div>
-          <div class="grid grid-cols-2 gap-3 text-xs font-mono">
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>1. 数控下料切割:</span><span class="font-bold">55.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>2. 胎架组立拼装:</span><span class="font-bold">95.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>3. 埋弧焊主焊缝焊接:</span><span class="font-bold">120.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>4. 焊缝探伤矫正与打磨:</span><span class="font-bold">40.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>5. 超厚板(≥80mm)加工加价:</span><span class="font-bold text-amber-700">140.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>6. 空间立体预拼装:</span><span class="font-bold">50.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>7. 工厂抛丸底中漆:</span><span class="font-bold">0.00 元/t (方案免除)</span></div>
-            <div class="p-2.5 bg-blue-50 rounded border border-blue-200 flex justify-between text-blue-900 font-bold"><span>制作直接费小计 (KZ-1):</span><span>500.00 元/t</span></div>
+            <!-- 仿真测算结果展示栏 -->
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-2.5 pt-2 border-t border-slate-200 text-xs">
+              <div class="p-2 bg-white rounded border border-slate-200">
+                <span class="text-slate-400 block text-[10px]">钢厂出厂裸价 (含工艺加价)</span>
+                <span class="font-bold text-slate-900 text-sm font-mono" id="simResExMill">¥ 4,830.00</span>
+              </div>
+              <div class="p-2 bg-white rounded border border-slate-200">
+                <span class="text-slate-400 block text-[10px]">采购定额损耗 (5%)</span>
+                <span class="font-bold text-slate-700 text-sm font-mono" id="simResLoss">¥ 241.50</span>
+              </div>
+              <div class="p-2 bg-white rounded border border-slate-200">
+                <span class="text-slate-400 block text-[10px]">调运运费 + 港口短驳</span>
+                <span class="font-bold text-amber-700 text-sm font-mono" id="simResFreight">¥ 175.00</span>
+              </div>
+              <div class="p-2 bg-blue-50 rounded border border-blue-300">
+                <span class="text-blue-600 block text-[10px] font-semibold">到厂综合含税结算价</span>
+                <span class="font-bold text-blue-900 text-base font-mono" id="simResLanded">¥ 5,246.50</span>
+              </div>
+              <div class="p-2 bg-indigo-50 rounded border border-indigo-300">
+                <span class="text-indigo-600 block text-[10px] font-semibold">到厂除税单价 (÷1.13)</span>
+                <span class="font-bold text-indigo-900 text-base font-mono" id="simResExVat">¥ 4,642.92</span>
+              </div>
+              <div class="p-2 bg-emerald-50 rounded border border-emerald-300">
+                <span class="text-emerald-700 block text-[10px] font-semibold">横向剥离等效355B基价</span>
+                <span class="font-bold text-emerald-900 text-base font-mono" id="simResBenchmark">¥ 4,500.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 钢厂至加工厂调运费矩阵对照表 -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-800 flex items-center space-x-1.5">
+                <i class="fa-solid fa-truck text-slate-500"></i>
+                <span>钢厂供應源至制造加工厂调运运杂费矩阵 (Mill-to-Fab Logistics Matrix)</span>
+              </span>
+              <span class="text-slate-400 text-[11px]">按真实运距、运输模式与港口倒运费综合标定</span>
+            </div>
+            <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-60 overflow-y-auto">
+              <table class="w-full text-left text-xs font-mono">
+                <thead class="bg-slate-100 text-slate-700 sticky top-0">
+                  <tr>
+                    <th class="p-2 border-b">加工制造基地</th>
+                    <th class="p-2 border-b">主供钢厂 / 港口</th>
+                    <th class="p-2 border-b text-right">运距 (km)</th>
+                    <th class="p-2 border-b">主导运输方式</th>
+                    <th class="p-2 border-b text-right text-amber-700 font-bold">调运运费 (元/t)</th>
+                    <th class="p-2 border-b text-right">短驳装卸费</th>
+                    <th class="p-2 border-b text-right font-bold text-blue-900">到厂综合调运成本</th>
+                    <th class="p-2 border-b font-sans">物流特点说明</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100" id="tbodyLogisticsMatrix">
+                  <!-- 动态渲染 -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <!-- 3.3 安装 6 道微工序 -->
-        <div id="dbPanel-ins" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3 hidden">
-          <div class="font-bold text-slate-800 text-xs">国内现场安装 6 道解耦微工序基准定额 (元/t)</div>
-          <div class="grid grid-cols-2 gap-3 text-xs font-mono">
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>1. 现场卸货及二次短驳倒运:</span><span class="font-bold">45.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>2. 地面拼装胎架拼焊:</span><span class="font-bold">80.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>3. 高空吊装就位 (十字钢柱):</span><span class="font-bold">618.05 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>4. 大型起重机械措施(履带吊+提升):</span><span class="font-bold text-blue-700">769.33 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>5. 高强螺栓初拧终拧施工:</span><span class="font-bold">60.00 元/t</span></div>
-            <div class="p-2.5 bg-slate-50 rounded border border-slate-200 flex justify-between"><span>6. 现场防火涂料与面漆涂装:</span><span class="font-bold">112.00 元/t</span></div>
-            <div class="p-2.5 bg-emerald-50 rounded border border-emerald-200 flex justify-between text-emerald-900 font-bold col-span-2"><span>现场安装综合直接费小计:</span><span>1,684.38 元/t</span></div>
+        <!-- 3.2 制作工序定额库 (原表 54 项全量承接) ⭐ -->
+        <div id="dbPanel-fab" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
+          <div class="flex flex-wrap justify-between items-center gap-2 p-3 bg-gradient-to-r from-indigo-50 to-slate-50 border border-indigo-200 rounded-xl">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-indigo-600/10 border border-indigo-300 flex items-center justify-center text-indigo-600 shrink-0">
+                <i class="fa-solid fa-industry text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>车间制作工序定额库 (47项原表基准 · 7道微工序细化解耦)</span>
+                  <span class="bg-indigo-100 text-indigo-800 border border-indigo-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">已锁定基线</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  涵盖柱墙类(16)、梁类(5)、桁架类(3)、小件类(11)、空间结构类(12)，穿透支持切割、组立、焊接、探伤矫正、预拼装、抛丸除锈与底漆7道工序独立调优。
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-xs">
+              <input type="text" id="filterFabKw" oninput="filterFabQuotasTable()" placeholder="搜索构件名称/部位..." class="px-2.5 py-1.5 border border-slate-300 rounded text-xs w-48">
+              <select id="filterFabCat" onchange="filterFabQuotasTable()" class="px-2.5 py-1.5 border border-slate-300 rounded text-xs bg-white">
+                <option value="">全部构件类别</option>
+                <option value="柱墙类">柱墙类 (16)</option>
+                <option value="梁类">梁类 (5)</option>
+                <option value="桁架类">桁架类 (3)</option>
+                <option value="小件类">小件类 (11)</option>
+                <option value="空间">空间结构类 (12)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-[500px] overflow-y-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-slate-100 text-slate-700 sticky top-0 shadow-2xs">
+                <tr>
+                  <th class="p-2 border-b">ID</th>
+                  <th class="p-2 border-b">构件大类</th>
+                  <th class="p-2 border-b">部位</th>
+                  <th class="p-2 border-b">构件规格 / 截面名称</th>
+                  <th class="p-2 border-b text-right">固定成本</th>
+                  <th class="p-2 border-b text-right">材料辅材机械</th>
+                  <th class="p-2 border-b text-right">人工成本</th>
+                  <th class="p-2 border-b text-right font-bold text-indigo-900">加工小计 (元/t)</th>
+                  <th class="p-2 border-b text-right">损耗率</th>
+                  <th class="p-2 border-b text-center font-sans">7道微工序穿透操作</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100" id="tbodyFabQuotas">
+                <!-- 动态渲染 -->
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- 3.4 海外标准费率 -->
+        <!-- 3.3 现场安装工序定额库 (原表 69 项全量承接) ⭐ -->
+        <div id="dbPanel-ins" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
+          <div class="flex flex-wrap justify-between items-center gap-2 p-3 bg-gradient-to-r from-emerald-50 to-slate-50 border border-emerald-200 rounded-xl">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-600/10 border border-emerald-300 flex items-center justify-center text-emerald-600 shrink-0">
+                <i class="fa-solid fa-helmet-safety text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>现场安装工序定额库 (65项原表基准 · 6道微工序直接费)</span>
+                  <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">已核验通过</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  涵盖多高层钢柱、箱梁、圆管柱、格构柱散装/安装、圆管桁架高空散拼、焊接球网架提升、马道检修道及檩条等全量工序。
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-xs">
+              <input type="text" id="filterInsKw" oninput="filterInsQuotasTable()" placeholder="搜索安装构件名称..." class="px-2.5 py-1.5 border border-slate-300 rounded text-xs w-56">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-[500px] overflow-y-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-slate-100 text-slate-700 sticky top-0 shadow-2xs">
+                <tr>
+                  <th class="p-2 border-b">序号</th>
+                  <th class="p-2 border-b">安装构件名称</th>
+                  <th class="p-2 border-b">部位</th>
+                  <th class="p-2 border-b text-right">人工直接费</th>
+                  <th class="p-2 border-b text-right">辅助材料</th>
+                  <th class="p-2 border-b text-right">机械措施费</th>
+                  <th class="p-2 border-b text-right">其他直接费</th>
+                  <th class="p-2 border-b text-right font-bold text-emerald-900">安装小计 (元/t)</th>
+                  <th class="p-2 border-b text-right text-slate-400">扣除电费基准</th>
+                  <th class="p-2 border-b text-center font-sans">操作</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100" id="tbodyInsQuotas">
+                <!-- 动态渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3.4 专业分包与外协字典 (拉索/铸钢/楼承板/涂料/支座/无损检测) ⭐ -->
+        <div id="dbPanel-subcontract" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
+          <div class="flex flex-wrap justify-between items-center gap-2 p-3 bg-gradient-to-r from-purple-50 to-slate-50 border border-purple-200 rounded-xl">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-purple-600/10 border border-purple-300 flex items-center justify-center text-purple-600 shrink-0">
+                <i class="fa-solid fa-link text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>专业分包产品字典库 (Subcontract & Specialty Products)</span>
+                  <span class="bg-purple-100 text-purple-800 border border-purple-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">18 项核心分包</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  沉淀高钒拉索、空间铸钢件、闭口楼承板、防腐与防火涂料、抗震球型支座及无损检测专项价格区间与技术要点。
+                </div>
+              </div>
+            </div>
+            <button onclick="openSubcontractDialog()" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold shadow flex items-center space-x-1.5">
+              <i class="fa-solid fa-cart-flatbed"></i>
+              <span>唤起分包选型弹窗 (SubcontractDialog)</span>
+            </button>
+          </div>
+
+          <!-- 分包产品类别快速筛选 -->
+          <div class="flex items-center space-x-2 overflow-x-auto text-xs pb-1" id="subcontractCatButtons">
+            <button onclick="filterSubcontractTable('')" class="px-3 py-1 rounded-full bg-purple-600 text-white font-bold shrink-0 subcat-btn active" data-cat="">全部产品 (18)</button>
+            <button onclick="filterSubcontractTable('CABLE')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn" data-cat="CABLE">拉索体系 (4)</button>
+            <button onclick="filterSubcontractTable('CAST_STEEL')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn" data-cat="CAST_STEEL">空间铸钢件 (2)</button>
+            <button onclick="filterSubcontractTable('DECKING')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn" data-cat="DECKING">楼承板体系 (3)</button>
+            <button onclick="filterSubcontractTable('COATING')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn" data-cat="COATING">防腐与防火涂装 (5)</button>
+            <button onclick="filterSubcontractTable('BEARING')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn" data-cat="BEARING">减隔震支座 (2)</button>
+            <button onclick="filterSubcontractTable('NDT')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn" data-cat="NDT">专项无损检测 (2)</button>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-[500px] overflow-y-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-slate-100 text-slate-700 sticky top-0 shadow-2xs">
+                <tr>
+                  <th class="p-2 border-b">编号</th>
+                  <th class="p-2 border-b font-sans">分包产品名称</th>
+                  <th class="p-2 border-b">规格型号</th>
+                  <th class="p-2 border-b">单位</th>
+                  <th class="p-2 border-b text-right font-bold text-purple-900">基准预算单价</th>
+                  <th class="p-2 border-b text-right text-slate-500">市场单价区间</th>
+                  <th class="p-2 border-b font-sans">核心技术参数</th>
+                  <th class="p-2 border-b font-sans">计价模式 / 推荐合格分包商</th>
+                  <th class="p-2 border-b text-center font-sans">操作</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100" id="tbodySubcontract">
+                <!-- 动态渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3.5 合格分包商名录库 (Vendor Registry) ⭐ -->
+        <div id="dbPanel-vendors" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
+          <div class="p-3 bg-gradient-to-r from-teal-50 to-slate-50 border border-teal-200 rounded-xl flex justify-between items-center">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-teal-600/10 border border-teal-300 flex items-center justify-center text-teal-600 shrink-0">
+                <i class="fa-solid fa-building-circle-check text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>合格分包商与供应商名录库 (Qualified Vendor Registry)</span>
+                  <span class="bg-teal-100 text-teal-800 border border-teal-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">行业一级/特级资质</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  沉淀具备大跨度公建站房施工业绩、特种设备制造资质与优良履约评级的专业供应商名录，支持在出标选型时一键比选与拉取折扣。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="cardsVendorsContainer">
+            <!-- 动态卡片渲染 -->
+          </div>
+        </div>
+
+        <!-- 3.6 区域大型起重机械库 (原表 195 项全量) ⭐ -->
+        <div id="dbPanel-mach" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
+          <div class="flex flex-wrap justify-between items-center gap-2 p-3 bg-gradient-to-r from-amber-50 to-slate-50 border border-amber-200 rounded-xl">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-amber-600/10 border border-amber-300 flex items-center justify-center text-amber-600 shrink-0">
+                <i class="fa-solid fa-truck-monster text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>区域大型起重机械与调运定额库 (原表193项全量收录)</span>
+                  <span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">6 大区域覆盖</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  涵盖 50t~650t 履带吊、25t~500t 汽车吊在华东、华北、东北、中南、西南、西北各区域的月租费、燃油消耗及进出场运输费。
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-xs">
+              <select id="filterMachRegion" onchange="filterMachRatesTable()" class="px-2.5 py-1.5 border border-slate-300 rounded text-xs bg-white">
+                <option value="">全部区域 (全国)</option>
+                <option value="中南" selected>中南区域 (湛江北站所在地)</option>
+                <option value="华东">华东区域</option>
+                <option value="华北">华北区域</option>
+                <option value="西南">西南区域</option>
+                <option value="西北">西北区域</option>
+                <option value="东北">东北区域</option>
+              </select>
+              <input type="text" id="filterMachKw" oninput="filterMachRatesTable()" placeholder="搜索吊车吨位型号..." class="px-2.5 py-1.5 border border-slate-300 rounded text-xs w-40">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-[500px] overflow-y-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="bg-slate-100 text-slate-700 sticky top-0 shadow-2xs">
+                <tr>
+                  <th class="p-2 border-b">记录ID</th>
+                  <th class="p-2 border-b font-sans">起重机械型号与吨位</th>
+                  <th class="p-2 border-b">核定区域</th>
+                  <th class="p-2 border-b text-right font-bold text-amber-900">月租费 + 油费 (元/月)</th>
+                  <th class="p-2 border-b text-right text-blue-800">进退场运费 (元/次)</th>
+                  <th class="p-2 border-b text-right text-slate-500">折算台班费 (按25天)</th>
+                  <th class="p-2 border-b text-center font-sans">操作</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100" id="tbodyMachRates">
+                <!-- 动态渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3.7 海外标准费率 (保持既有) -->
         <div id="dbPanel-overseas" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3 hidden">
           <div class="font-bold text-slate-800 text-xs">新兴国际市场标准费率 (吃住行 / PPE / 国际差旅 / 开办费 Preliminaries)</div>
           <div class="grid grid-cols-4 gap-2 text-xs font-mono">
@@ -996,23 +1392,7 @@
             <div class="p-2 bg-slate-50 rounded border"><b>Tier 3 欧美高端</b><div class="text-[11px] text-slate-500 mt-1">1,210 元/人天</div></div>
             <div class="p-2 bg-slate-50 rounded border"><b>Tier 4 非洲艰苦</b><div class="text-[11px] text-slate-500 mt-1">820 元/人天</div></div>
           </div>
-        </div>
-
-        <!-- 3.5 机械台班与费率 -->
-        <div id="dbPanel-mach" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3 hidden">
-          <div class="font-bold text-slate-800 text-xs">机械台班与两票制费率基准</div>
-          <div class="grid grid-cols-3 gap-3 text-xs font-mono">
-            <div class="p-2.5 bg-slate-50 rounded border">200t 履带吊: <b>6,500 元/台班</b></div>
-            <div class="p-2.5 bg-slate-50 rounded border">160t 汽车吊: <b>4,200 元/台班</b></div>
-            <div class="p-2.5 bg-slate-50 rounded border">液压提升泵站: <b>2,800 元/台班</b></div>
-            <div class="p-2.5 bg-blue-50 rounded border">企业管理费率: <b>8.5%</b></div>
-            <div class="p-2.5 bg-blue-50 rounded border">两票制专票税率: <b>13%制 + 9%安</b></div>
-            <div class="p-2.5 bg-amber-50 rounded border">倒轧制作费安全红线: <b>≥ 600 元/t</b></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================== -->
+        </div><!-- ============================================== -->
       <!-- VIEW 4: ④ 算量工作台 (Takeoff Workbench) ⭐    -->
       <!-- ============================================== -->
       <section id="view-takeoff" class="flex-1 flex flex-col overflow-hidden hidden">
@@ -2276,7 +2656,249 @@
       </div>
     </div>
   </div>
-<!-- 4. 全局交互逻辑脚本 (JavaScript Engine)    -->
+  <!-- ============================================================== -->
+  <!-- MODAL 9: 独立工序定额管理与7道微工序穿透重算 (dlgQuotaManagement) ⭐ -->
+  <!-- ============================================================== -->
+  <div id="dlgQuotaManagement" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-2xl overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-industry text-indigo-400"></i>
+          <span class="font-bold text-sm" id="modalQuotaTitle">工序定额管理与微工序调优</span>
+        </div>
+        <button onclick="closeDialog('dlgQuotaManagement')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-lg flex justify-between items-center">
+          <div>
+            <span class="text-indigo-900 font-bold text-sm" id="quotaTargetName">构件定额: 重钢钢柱焊接箱型</span>
+            <div class="text-[11px] text-indigo-700 mt-0.5" id="quotaTargetDesc">原表基准小计: 1,009.00 元/t (固定: 207 | 辅材机械: 329 | 人工: 473)</div>
+          </div>
+          <span class="bg-indigo-600 text-white font-mono font-bold px-2.5 py-1 rounded text-xs" id="quotaCurrentTotal">¥ 1,009.00 / t</span>
+        </div>
+
+        <div class="font-bold text-slate-800 text-xs">7 道制作微工序参数调优 (元/t · 支持修改并重算):</div>
+        <div class="grid grid-cols-2 gap-3" id="quotaMicroStepInputs">
+          <!-- 动态渲染 7 道微工序输入框 -->
+        </div>
+
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex justify-between items-center">
+          <span class="text-slate-600 font-bold">微工序调优后直接费试算合计:</span>
+          <span class="font-bold text-indigo-900 text-base font-mono" id="quotaAdjustedTotal">¥ 1,009.00 元/t</span>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgQuotaManagement')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">取消</button>
+        <button onclick="applyQuotaAdjustment()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded font-bold shadow">确认调优并暂存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 10: 独立材料价格正交矩阵与调运费试算弹窗 (dlgMaterialMatrix) ⭐ -->
+  <!-- ============================================================== -->
+  <div id="dlgMaterialMatrix" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-3xl overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-layer-group text-blue-400"></i>
+          <span class="font-bold text-sm">正交材料价格与钢厂调运费计算中心 (MaterialPriceDialog)</span>
+        </div>
+        <button onclick="closeDialog('dlgMaterialMatrix')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">材质等级 (Grade):</label>
+            <select id="dlgMatGrade" class="w-full mt-1 p-2 border rounded font-bold bg-white" onchange="runDlgMatCalc()">
+              <option value="Q235B">Q235B (普板基准)</option>
+              <option value="Q355B" selected>Q355B (高强主流)</option>
+              <option value="Q345GJC">Q345GJC (高建抗震)</option>
+              <option value="Q420GJC">Q420GJC (网架核心)</option>
+              <option value="Q690D">Q690D (超高强高耸)</option>
+              <option value="Q960E">Q960E (特特高强)</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">板件设计厚度 δ (mm):</label>
+            <input type="number" id="dlgMatThick" value="30" min="4" max="150" class="w-full mt-1 p-2 border rounded font-mono font-bold" oninput="runDlgMatCalc()">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">冶金交货状态 (Process):</label>
+            <select id="dlgMatProcess" class="w-full mt-1 p-2 border rounded bg-white" onchange="runDlgMatCalc()">
+              <option value="AR">AR (热轧状态)</option>
+              <option value="TMCP" selected>TMCP (控轧控冷免预热) ⭐</option>
+              <option value="N">N (离线正火)</option>
+              <option value="QT">QT (调质淬火回火)</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">承接制造加工厂:</label>
+            <select id="dlgMatPlant" class="w-full mt-1 p-2 border rounded font-bold text-blue-900 bg-white" onchange="runDlgMatCalc()">
+              <option value="江门制造基地" selected>江门制造基地 (华南标杆)</option>
+              <option value="中山制造基地">中山制造基地</option>
+              <option value="武汉加工中心">武汉加工中心</option>
+              <option value="湖州长兴基地">湖州长兴基地</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">Z向抗层状撕裂要求:</label>
+            <select id="dlgMatZ" class="w-full mt-1 p-2 border rounded bg-white" onchange="runDlgMatCalc()">
+              <option value="NONE">无要求 (0元)</option>
+              <option value="Z15">Z15 (+150元/t)</option>
+              <option value="Z25" selected>Z25 (+250元/t)</option>
+              <option value="Z35">Z35 (+350元/t)</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">超声探伤要求 (UT):</label>
+            <select id="dlgMatUt" class="w-full mt-1 p-2 border rounded bg-white" onchange="runDlgMatCalc()">
+              <option value="NONE">无探伤附加 (0元)</option>
+              <option value="UT_II">国标二级探伤 (+80元/t)</option>
+              <option value="UT_I" selected>国标一级探伤 (+120元/t)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+          <div class="font-bold text-slate-800 text-xs">测算分解结论 (闭式求解一步出数):</div>
+          <div class="grid grid-cols-4 gap-2 text-xs font-mono">
+            <div class="p-2 bg-white rounded border">出厂裸价: <b id="dlgResExMill">¥ 5,030.00</b></div>
+            <div class="p-2 bg-white rounded border">运费+短驳: <b id="dlgResFreight" class="text-amber-700">¥ 175.00</b></div>
+            <div class="p-2 bg-blue-50 rounded border border-blue-300">到厂含税价: <b id="dlgResLanded" class="text-blue-900">¥ 5,456.50</b></div>
+            <div class="p-2 bg-emerald-50 rounded border border-emerald-300">到厂除税价: <b id="dlgResExVat" class="text-emerald-900">¥ 4,828.76</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgMaterialMatrix')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+        <button onclick="applyDlgMaterialToTakeoff()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded font-bold shadow">选用并回填到算量明细</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 11: 独立专业分包与外协选型弹窗 (dlgSubcontractManagement) ⭐ -->
+  <!-- ============================================================== -->
+  <div id="dlgSubcontractManagement" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-3xl overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-link text-purple-400"></i>
+          <span class="font-bold text-sm">专业分包选型与包干报价管理 (SubcontractDialog)</span>
+        </div>
+        <button onclick="closeDialog('dlgSubcontractManagement')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="flex items-center space-x-2">
+          <label class="font-bold text-slate-700 shrink-0">选择分包大类:</label>
+          <select id="dlgSubCatSelect" onchange="renderDlgSubcontractItems()" class="p-2 border rounded font-bold bg-white text-xs">
+            <option value="ALL">全部专业分包项</option>
+            <option value="CABLE" selected>拉索体系 (高钒/PE/不锈钢)</option>
+            <option value="CAST_STEEL">空间铸钢件 (G20Mn5节点)</option>
+            <option value="DECKING">楼承板体系 (闭口/开口/桁架板)</option>
+            <option value="COATING">涂料系统 (富锌/云铁/氟碳/防火)</option>
+            <option value="BEARING">减隔震支座 (球型抗震/盆式)</option>
+            <option value="NDT">专项无损检测 (UT/MT)</option>
+          </select>
+        </div>
+
+        <div class="border border-slate-200 rounded-lg overflow-hidden max-h-72 overflow-y-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-100 text-slate-700 sticky top-0">
+              <tr>
+                <th class="p-2 border-b">选择</th>
+                <th class="p-2 border-b font-sans">分包项名称</th>
+                <th class="p-2 border-b">规格型号</th>
+                <th class="p-2 border-b">单位</th>
+                <th class="p-2 border-b text-right font-bold text-purple-900">基准单价</th>
+                <th class="p-2 border-b font-sans">推荐合格供应商</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100" id="tbodyDlgSubcontract">
+              <!-- 动态渲染 -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-3 bg-purple-50 border border-purple-200 rounded-lg flex justify-between items-center text-xs">
+          <div>
+            <span class="font-bold text-purple-900">当前选定分包项: </span>
+            <span id="dlgSelectedSubName" class="font-bold text-slate-800">高钒封闭索体系 Φ60mm</span>
+          </div>
+          <span class="font-mono font-bold text-purple-900 text-sm" id="dlgSelectedSubPrice">¥ 26,500.00 / t</span>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgSubcontractManagement')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+        <button onclick="applySubcontractSelection()" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded font-bold shadow">确认选型并绑定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 12: 独立区域起重机械与运杂费调配弹窗 (dlgMachineryManagement) ⭐ -->
+  <!-- ============================================================== -->
+  <div id="dlgMachineryManagement" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-2xl overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-truck-monster text-amber-400"></i>
+          <span class="font-bold text-sm">大型起重机械方案调配与运杂费试算 (MachineryDialog)</span>
+        </div>
+        <button onclick="closeDialog('dlgMachineryManagement')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">工程施工区域:</label>
+            <select id="dlgMachRegion" onchange="runDlgMachCalc()" class="w-full mt-1 p-2 border rounded font-bold bg-white text-xs">
+              <option value="中南" selected>中南区域 (广州/湛江)</option>
+              <option value="华东">华东区域 (江浙沪)</option>
+              <option value="华北">华北区域 (京津冀)</option>
+              <option value="西南">西南区域 (川渝)</option>
+              <option value="西北">西北区域</option>
+              <option value="东北">东北区域</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">拟选机械设备型号:</label>
+            <select id="dlgMachModel" onchange="runDlgMachCalc()" class="w-full mt-1 p-2 border rounded font-bold bg-white text-xs">
+              <option value="履带吊50T">履带吊 50T</option>
+              <option value="履带吊70T">履带吊 70T</option>
+              <option value="履带吊100T">履带吊 100T</option>
+              <option value="履带吊150T">履带吊 150T</option>
+              <option value="履带吊260T" selected>履带吊 260T (主吊机)</option>
+              <option value="履带吊400T">履带吊 400T (大件提升)</option>
+              <option value="汽车吊50T">汽车吊 50T (配合机)</option>
+              <option value="汽车吊100T">汽车吊 100T</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">工期月数 (月):</label>
+            <input type="number" id="dlgMachMonths" value="6" min="1" max="36" oninput="runDlgMachCalc()" class="w-full mt-1 p-2 border rounded font-mono font-bold">
+          </div>
+        </div>
+
+        <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl space-y-2">
+          <div class="font-bold text-amber-950 text-xs">机械措施方案综合费用测算:</div>
+          <div class="grid grid-cols-3 gap-2 text-xs font-mono">
+            <div class="p-2 bg-white rounded border">月租+油费: <b id="dlgResMachMonthly">¥ 97,800.00 / 月</b></div>
+            <div class="p-2 bg-white rounded border">进退场运费: <b id="dlgResMachMob">¥ 34,200.00 / 次</b></div>
+            <div class="p-2 bg-amber-100 rounded border border-amber-300">措施包干总额: <b id="dlgResMachTotal" class="text-amber-900">¥ 621,000.00</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgMachineryManagement')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+        <button onclick="applyMachineryPackage()" class="px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded font-bold shadow">确认机械方案并保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 全局交互逻辑脚本 (JavaScript Engine)    -->
   <!-- ========================================== -->
   <script>
     // 1. 全局状态存储
@@ -2295,14 +2917,21 @@
       wangvp: { name: '王振华', role: '集团分管副总', dept: '集团高管决策层', avatar: '王', color: 'bg-purple-600' }
     };
 
-    // 2. 初始化加载数据
-    fetch('data.json')
+    // 2. 初始化加载数据 (带时间戳防浏览器缓存)
+    fetch('data.json?t=' + new Date().getTime())
       .then(res => res.json())
       .then(data => {
         masterData = data;
         initCockpitView();
         renderSectionFamiliesTable();
         renderShapeFamilyOptions();
+        renderLogisticsMatrixTable();
+        renderFabricationQuotasTable();
+        renderInstallationQuotasTable();
+        renderSubcontractTable();
+        renderVendorsCards();
+        renderMachineryRatesTable();
+        runSimMaterialCalc();
         renderCurrentView();
         selectComponent(16);
       })
@@ -2385,6 +3014,8 @@
 
       if (moduleName === 'takeoff') {
         renderCurrentView();
+      } else if (moduleName === 'database') {
+        switchDbTab('mat');
       }
     }
 
@@ -2430,8 +3061,9 @@
     }
 
     // 6. 基础数据 Tab 切换与截面族后台设置
+    // 6. 基础数据 8 大 Tab 切换与动态渲染驱动
     function switchDbTab(tabKey) {
-      const tabs = ['family', 'mat', 'fab', 'ins', 'mach', 'overseas'];
+      const tabs = ['family', 'mat', 'fab', 'ins', 'subcontract', 'vendors', 'mach', 'overseas'];
       tabs.forEach(t => {
         const btn = document.getElementById('dbTab-' + t);
         const panel = document.getElementById('dbPanel-' + t);
@@ -2440,12 +3072,25 @@
           btn.className = 'px-3 py-1.5 font-bold text-blue-600 border-b-2 border-blue-600 flex items-center space-x-1.5 shrink-0';
           panel.classList.remove('hidden');
         } else {
-          btn.className = 'px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0';
+          btn.className = 'px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5';
           panel.classList.add('hidden');
         }
       });
       if (tabKey === 'family') {
         renderSectionFamiliesTable();
+      } else if (tabKey === 'mat') {
+        renderLogisticsMatrixTable();
+        runSimMaterialCalc();
+      } else if (tabKey === 'fab') {
+        renderFabricationQuotasTable();
+      } else if (tabKey === 'ins') {
+        renderInstallationQuotasTable();
+      } else if (tabKey === 'subcontract') {
+        renderSubcontractTable();
+      } else if (tabKey === 'vendors') {
+        renderVendorsCards();
+      } else if (tabKey === 'mach') {
+        renderMachineryRatesTable();
       }
     }
 
@@ -3812,6 +4457,475 @@
       `).join('');
     }
 
+  
+    // =========================================================================
+    // 基础数据中心动态渲染与 Dialog 管理引擎 (Base Data & Dialog Engine)
+    // =========================================================================
+
+    // 1. 调运运费矩阵渲染
+    function renderLogisticsMatrixTable() {
+      const tbody = document.getElementById('tbodyLogisticsMatrix');
+      if (!tbody) return;
+      const matrix = (masterData.master_data && masterData.master_data.logistics_matrix) || [];
+      if (!matrix.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-slate-400">暂无调运路线数据</td></tr>';
+        return;
+      }
+      tbody.innerHTML = matrix.map(r => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-2 font-bold text-slate-900 font-sans">${r.fab_plant}</td>
+          <td class="p-2 font-sans">${r.steel_mill}</td>
+          <td class="p-2 text-right">${r.distance_km} km</td>
+          <td class="p-2 font-sans">${r.transport_mode}</td>
+          <td class="p-2 text-right font-bold text-amber-700">¥ ${r.freight_per_ton.toFixed(2)}</td>
+          <td class="p-2 text-right">¥ ${r.handling_per_ton.toFixed(2)}</td>
+          <td class="p-2 text-right font-bold text-blue-900">¥ ${r.total_transfer_cost.toFixed(2)} / t</td>
+          <td class="p-2 text-slate-500 font-sans text-[11px]">${r.notes || '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 2. 材料到厂结算价与等效基准实时试算沙盒
+    function runSimMaterialCalc() {
+      const grade = document.getElementById('simMatGrade') ? document.getElementById('simMatGrade').value : 'Q355B';
+      const thick = parseFloat(document.getElementById('simMatThick') ? document.getElementById('simMatThick').value : 40) || 40;
+      const process = document.getElementById('simMatProcess') ? document.getElementById('simMatProcess').value : 'AR';
+      const temp = document.getElementById('simMatTemp') ? document.getElementById('simMatTemp').value : 'B';
+      const zPerf = document.getElementById('simMatZ') ? document.getElementById('simMatZ').value : 'NONE';
+      const plant = document.getElementById('simMatPlant') ? document.getElementById('simMatPlant').value : '江门制造基地';
+      const mill = document.getElementById('simMatMill') ? document.getElementById('simMatMill').value : 'AUTO';
+
+      const rules = (masterData.master_data && masterData.master_data.orthogonal_rules) || {
+        base_mill_prices: { Q235B: 4460, Q355B: 4500, Q345GJC: 4800, Q420GJC: 5250, Q690D: 6800, Q960E: 8800 },
+        strength_grade_markups: { 235: -50, 355: 0, 390: 150, 420: 300, 460: 500, 550: 900, 690: 1500, 960: 3500 },
+        impact_temp_markups: { A: 0, B: 0, C: 40, D: 100, E: 180, F: 350 },
+        process_state_markups: { AR: 0, CR: 60, TMCP: 180, N: 220, N_T: 280, QT: 650 },
+        thickness_tiers: [
+          { min: 0, max: 6, markup: 200 }, { min: 6.01, max: 14, markup: 0 }, { min: 14.01, max: 25, markup: 60 },
+          { min: 25.01, max: 40, markup: 150 }, { min: 40.01, max: 60, markup: 300 }, { min: 60.01, max: 80, markup: 550 },
+          { min: 80.01, max: 120, markup: 1000 }
+        ],
+        performance_markups: { Z15: 150, Z25: 250, Z35: 350, UT_II: 80, UT_I: 120 }
+      };
+
+      const baseMill = rules.base_mill_prices[grade] || 4500.0;
+      let gradeMarkup = 0;
+      const numMatches = grade.match(/\d+/);
+      if (numMatches && rules.strength_grade_markups[parseInt(numMatches[0])]) {
+        gradeMarkup = rules.strength_grade_markups[parseInt(numMatches[0])];
+      }
+      const tempMarkup = rules.impact_temp_markups[temp] || 0;
+      const processMarkup = rules.process_state_markups[process] || 0;
+      let thkMarkup = 0;
+      for (const t of rules.thickness_tiers) {
+        if (thick >= t.min && thick <= t.max) { thkMarkup = t.markup; break; }
+      }
+      const perfMarkup = rules.performance_markups[zPerf] || 0;
+
+      const exMillTotal = baseMill + gradeMarkup + tempMarkup + processMarkup + thkMarkup + perfMarkup;
+      const lossCost = exMillTotal * 0.05;
+
+      // 运费测算
+      const matrix = (masterData.master_data && masterData.master_data.logistics_matrix) || [];
+      let route = matrix.find(r => r.fab_plant === plant && (mill === 'AUTO' || r.steel_mill.includes(mill)));
+      if (!route) route = matrix.find(r => r.fab_plant === plant) || { freight_per_ton: 145, handling_per_ton: 30 };
+      const freightCost = route.freight_per_ton;
+      const handlingCost = route.handling_per_ton;
+
+      const landedCost = (exMillTotal + lossCost) + freightCost + handlingCost;
+      const landedExVat = landedCost / 1.13;
+      const eqBenchmark = ((landedCost - freightCost - handlingCost) / 1.05) - gradeMarkup - tempMarkup - processMarkup - thkMarkup - perfMarkup;
+
+      if (document.getElementById('simResExMill')) document.getElementById('simResExMill').innerText = '¥ ' + exMillTotal.toFixed(2);
+      if (document.getElementById('simResLoss')) document.getElementById('simResLoss').innerText = '¥ ' + lossCost.toFixed(2);
+      if (document.getElementById('simResFreight')) document.getElementById('simResFreight').innerText = '¥ ' + (freightCost + handlingCost).toFixed(2);
+      if (document.getElementById('simResLanded')) document.getElementById('simResLanded').innerText = '¥ ' + landedCost.toFixed(2);
+      if (document.getElementById('simResExVat')) document.getElementById('simResExVat').innerText = '¥ ' + landedExVat.toFixed(2);
+      if (document.getElementById('simResBenchmark')) document.getElementById('simResBenchmark').innerText = '¥ ' + eqBenchmark.toFixed(2);
+    }
+
+    // 3. 车间制作工序定额库渲染与过滤
+    function renderFabricationQuotasTable(filteredList) {
+      const tbody = document.getElementById('tbodyFabQuotas');
+      if (!tbody) return;
+      const list = filteredList || (masterData.master_data && masterData.master_data.fabrication_quotas) || [];
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="10" class="p-4 text-center text-slate-400">暂无制作定额数据</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(r => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-2 text-slate-400">${r.id}</td>
+          <td class="p-2 font-bold text-slate-800 font-sans"><span class="px-1.5 py-0.5 rounded bg-slate-100">${r.category}</span></td>
+          <td class="p-2 font-sans">${r.part}</td>
+          <td class="p-2 font-bold text-slate-900 font-sans">${r.name} <span class="text-slate-400 font-normal text-[10px]">(${r.full_name})</span></td>
+          <td class="p-2 text-right">¥ ${r.fixed_cost.toFixed(2)}</td>
+          <td class="p-2 text-right">¥ ${r.mat_mech_cost.toFixed(2)}</td>
+          <td class="p-2 text-right">¥ ${r.labor_cost.toFixed(2)}</td>
+          <td class="p-2 text-right font-bold text-indigo-900">¥ ${r.subtotal.toFixed(2)}</td>
+          <td class="p-2 text-right">${(r.loss_rate * 100).toFixed(1)}%</td>
+          <td class="p-2 text-center">
+            <button onclick="openQuotaManagementDialog('fab', ${r.id})" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded border border-indigo-200 text-xs font-sans font-semibold">
+              <i class="fa-solid fa-sliders text-[10px]"></i> 7道微工序
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterFabQuotasTable() {
+      const kw = (document.getElementById('filterFabKw') ? document.getElementById('filterFabKw').value : '').trim().toLowerCase();
+      const cat = (document.getElementById('filterFabCat') ? document.getElementById('filterFabCat').value : '').trim();
+      const all = (masterData.master_data && masterData.master_data.fabrication_quotas) || [];
+      const res = all.filter(r => {
+        const mCat = !cat || r.category.includes(cat);
+        const mKw = !kw || r.name.toLowerCase().includes(kw) || r.full_name.toLowerCase().includes(kw) || r.part.toLowerCase().includes(kw);
+        return mCat && mKw;
+      });
+      renderFabricationQuotasTable(res);
+    }
+
+    // 4. 现场安装工序定额库渲染与过滤
+    function renderInstallationQuotasTable(filteredList) {
+      const tbody = document.getElementById('tbodyInsQuotas');
+      if (!tbody) return;
+      const list = filteredList || (masterData.master_data && masterData.master_data.installation_quotas) || [];
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="10" class="p-4 text-center text-slate-400">暂无安装定额数据</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(r => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-2 text-slate-400">${r.seq || r.id}</td>
+          <td class="p-2 font-bold text-slate-900 font-sans">${r.name}</td>
+          <td class="p-2 font-sans">${r.part || '-'}</td>
+          <td class="p-2 text-right">¥ ${r.labor.toFixed(2)}</td>
+          <td class="p-2 text-right">¥ ${r.aux.toFixed(2)}</td>
+          <td class="p-2 text-right">¥ ${r.mech.toFixed(2)}</td>
+          <td class="p-2 text-right">¥ ${r.other.toFixed(2)}</td>
+          <td class="p-2 text-right font-bold text-emerald-900">¥ ${r.total.toFixed(2)}</td>
+          <td class="p-2 text-right text-slate-400">${r.deduct_elec > 0 ? '¥ ' + r.deduct_elec.toFixed(2) : '-'}</td>
+          <td class="p-2 text-center">
+            <button onclick="openQuotaManagementDialog('ins', ${r.id})" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded border border-emerald-200 text-xs font-sans font-semibold">
+              <i class="fa-solid fa-pen-to-square text-[10px]"></i> 调优
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterInsQuotasTable() {
+      const kw = (document.getElementById('filterInsKw') ? document.getElementById('filterInsKw').value : '').trim().toLowerCase();
+      const all = (masterData.master_data && masterData.master_data.installation_quotas) || [];
+      const res = all.filter(r => !kw || r.name.toLowerCase().includes(kw) || (r.part && r.part.toLowerCase().includes(kw)));
+      renderInstallationQuotasTable(res);
+    }
+
+    // 5. 专业分包产品字典库渲染与过滤
+    let activeSubCat = '';
+    function renderSubcontractTable(filteredList) {
+      const tbody = document.getElementById('tbodySubcontract');
+      if (!tbody) return;
+      let list = filteredList || (masterData.master_data && masterData.master_data.subcontract_products) || [];
+      if (activeSubCat) {
+        list = list.filter(p => p.category === activeSubCat);
+      }
+      tbody.innerHTML = list.map(p => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-2 text-slate-400">${p.id}</td>
+          <td class="p-2 font-bold text-slate-900 font-sans">${p.name}</td>
+          <td class="p-2">${p.spec}</td>
+          <td class="p-2 text-slate-500">${p.unit}</td>
+          <td class="p-2 text-right font-bold text-purple-900">¥ ${p.unit_price.toFixed(2)}</td>
+          <td class="p-2 text-right text-slate-500">¥ ${p.price_min.toFixed(0)} ~ ${p.price_max.toFixed(0)}</td>
+          <td class="p-2 text-slate-600 font-sans text-[11px]">${p.specs}</td>
+          <td class="p-2 font-sans text-[11px]">
+            <div class="text-slate-800 font-medium">${p.formula}</div>
+            <div class="text-purple-600 font-semibold mt-0.5">推荐: ${(p.vendors || []).join('、')}</div>
+          </td>
+          <td class="p-2 text-center">
+            <button onclick="openSubcontractDialog('${p.category}')" class="px-2 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded border border-purple-200 text-xs font-sans font-semibold">
+              <i class="fa-solid fa-check text-[10px]"></i> 选型
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterSubcontractTable(cat) {
+      activeSubCat = cat;
+      document.querySelectorAll('.subcat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = 'px-3 py-1 rounded-full bg-purple-600 text-white font-bold shrink-0 subcat-btn active';
+        } else {
+          btn.className = 'px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 subcat-btn';
+        }
+      });
+      renderSubcontractTable();
+    }
+
+    // 6. 合格分包商与供应商名录卡片渲染
+    function renderVendorsCards() {
+      const container = document.getElementById('cardsVendorsContainer');
+      if (!container) return;
+      const vendors = (masterData.master_data && masterData.master_data.qualified_vendors) || [];
+      container.innerHTML = vendors.map(v => `
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2 hover:border-teal-500 transition">
+          <div class="flex justify-between items-start">
+            <div>
+              <h4 class="font-bold text-slate-900 text-xs font-sans">${v.name}</h4>
+              <span class="inline-block mt-0.5 px-2 py-0.5 bg-teal-50 text-teal-700 border border-teal-200 rounded font-semibold text-[10px]">${v.grade}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded font-mono font-bold text-xs ${v.rating === 'AAA' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'}">${v.rating} 级</span>
+          </div>
+          <div class="text-[11px] text-slate-600 space-y-1">
+            <div><b>供应范围:</b> ${v.scope}</div>
+            <div><b>注册资金:</b> ¥ ${v.capital_m.toFixed(1)} 亿元 | <b>总部:</b> ${v.hq}</div>
+            <div><b>服务区域:</b> ${(v.regions || []).join('、')}</div>
+          </div>
+          <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs">
+            <span class="text-slate-400">指导浮动: <b class="text-teal-700">${((1 - v.discount) * 100).toFixed(0)}% 下浮优惠</b></span>
+            <button onclick="showToast('已接入合格供应商 [${v.name}] 合作档案')" class="text-blue-600 hover:text-blue-800 font-semibold">查看资信</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 7. 区域大型起重机械台班渲染与过滤
+    function renderMachineryRatesTable(filteredList) {
+      const tbody = document.getElementById('tbodyMachRates');
+      if (!tbody) return;
+      const list = filteredList || (masterData.master_data && masterData.master_data.machinery_rates) || [];
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-400">暂无符合条件的起重机械记录</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.slice(0, 50).map(r => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-2 text-slate-400">${r.id}</td>
+          <td class="p-2 font-bold text-slate-900 font-sans">${r.model}</td>
+          <td class="p-2 font-sans"><span class="px-1.5 py-0.5 rounded bg-slate-100 font-semibold">${r.region}</span></td>
+          <td class="p-2 text-right font-bold text-amber-900 font-mono">${r.monthly_rent > 0 ? '¥ ' + r.monthly_rent.toLocaleString() : '询价'}</td>
+          <td class="p-2 text-right text-blue-800 font-mono">${r.mobilization > 0 ? '¥ ' + r.mobilization.toLocaleString() : '短途免收'}</td>
+          <td class="p-2 text-right text-slate-500 font-mono">${r.monthly_rent > 0 ? '¥ ' + (r.monthly_rent / 25).toFixed(0) + '/台班' : '-'}</td>
+          <td class="p-2 text-center">
+            <button onclick="openMachineryDialog()" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded border border-amber-200 text-xs font-sans font-semibold">调配</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterMachRatesTable() {
+      const reg = (document.getElementById('filterMachRegion') ? document.getElementById('filterMachRegion').value : '').trim();
+      const kw = (document.getElementById('filterMachKw') ? document.getElementById('filterMachKw').value : '').trim().toLowerCase();
+      const all = (masterData.master_data && masterData.master_data.machinery_rates) || [];
+      const res = all.filter(r => {
+        const mReg = !reg || r.region.includes(reg);
+        const mKw = !kw || r.model.toLowerCase().includes(kw) || r.tag.toLowerCase().includes(kw);
+        return mReg && mKw;
+      });
+      renderMachineryRatesTable(res);
+    }
+
+    // =========================================================================
+    // 独立管理 Dialog 弹窗实现 (Global Dialog Implementations)
+    // =========================================================================
+
+    // Dialog 1: 工序定额管理与7道微工序穿透重算 (dlgQuotaManagement)
+    let currentEditingQuota = null;
+    function openQuotaManagementDialog(type, quotaId) {
+      const all = (type === 'fab') ? (masterData.master_data && masterData.master_data.fabrication_quotas) : (masterData.master_data && masterData.master_data.installation_quotas);
+      const item = (all || []).find(r => r.id === quotaId) || (all || [])[0];
+      if (!item) return;
+      currentEditingQuota = { type, item };
+
+      document.getElementById('modalQuotaTitle').innerText = (type === 'fab' ? '车间制作 7 道微工序调优: ' : '现场安装工序调优: ') + (item.full_name || item.name);
+      document.getElementById('quotaTargetName').innerText = '构件定额: ' + (item.full_name || item.name);
+      document.getElementById('quotaTargetDesc').innerText = '原表直接费基准合计: ' + (item.subtotal || item.total).toFixed(2) + ' 元/t';
+      document.getElementById('quotaCurrentTotal').innerText = '¥ ' + (item.subtotal || item.total).toFixed(2) + ' / t';
+
+      const container = document.getElementById('quotaMicroStepInputs');
+      if (type === 'fab') {
+        const steps = item.steps || {
+          cutting: 55, assembly: 95, welding: item.labor_cost || 120, ndt: 40, pre_assembly: 50, shot_blasting: 50, painting: 0
+        };
+        container.innerHTML = `
+          <div><label class="font-semibold text-slate-700">1. 数控下料切割 (元/t):</label><input type="number" id="qstep_cutting" value="${steps.cutting}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+          <div><label class="font-semibold text-slate-700">2. 重型胎架组立 (元/t):</label><input type="number" id="qstep_assembly" value="${steps.assembly}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+          <div><label class="font-semibold text-slate-700">3. 埋弧焊主焊缝 (元/t):</label><input type="number" id="qstep_welding" value="${steps.welding}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold text-indigo-700"></div>
+          <div><label class="font-semibold text-slate-700">4. 焊缝探伤矫正 (元/t):</label><input type="number" id="qstep_ndt" value="${steps.ndt}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+          <div><label class="font-semibold text-slate-700">5. 空间立体预拼装 (元/t):</label><input type="number" id="qstep_pre" value="${steps.pre_assembly}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+          <div><label class="font-semibold text-slate-700">6. 抛丸除锈 Sa2.5 (元/t):</label><input type="number" id="qstep_shot" value="${steps.shot_blasting}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+          <div class="col-span-2"><label class="font-semibold text-slate-700">7. 车间底漆中间漆 (元/t):</label><input type="number" id="qstep_paint" value="${steps.painting}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div><label class="font-semibold text-slate-700">1. 人工直接费 (元/t):</label><input type="number" id="qstep_labor" value="${item.labor}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold text-emerald-700"></div>
+          <div><label class="font-semibold text-slate-700">2. 辅助材料费 (元/t):</label><input type="number" id="qstep_aux" value="${item.aux}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+          <div><label class="font-semibold text-slate-700">3. 现场机械措施 (元/t):</label><input type="number" id="qstep_mech" value="${item.mech}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold text-blue-700"></div>
+          <div><label class="font-semibold text-slate-700">4. 其他直接费措施 (元/t):</label><input type="number" id="qstep_other" value="${item.other}" oninput="calcQuotaDialogTotal()" class="w-full mt-1 p-1.5 border rounded font-mono font-bold"></div>
+        `;
+      }
+      calcQuotaDialogTotal();
+      openDialog('dlgQuotaManagement');
+    }
+
+    function calcQuotaDialogTotal() {
+      let total = 0;
+      if (currentEditingQuota && currentEditingQuota.type === 'fab') {
+        const c = parseFloat(document.getElementById('qstep_cutting') ? document.getElementById('qstep_cutting').value : 0) || 0;
+        const a = parseFloat(document.getElementById('qstep_assembly') ? document.getElementById('qstep_assembly').value : 0) || 0;
+        const w = parseFloat(document.getElementById('qstep_welding') ? document.getElementById('qstep_welding').value : 0) || 0;
+        const n = parseFloat(document.getElementById('qstep_ndt') ? document.getElementById('qstep_ndt').value : 0) || 0;
+        const pr = parseFloat(document.getElementById('qstep_pre') ? document.getElementById('qstep_pre').value : 0) || 0;
+        const s = parseFloat(document.getElementById('qstep_shot') ? document.getElementById('qstep_shot').value : 0) || 0;
+        const p = parseFloat(document.getElementById('qstep_paint') ? document.getElementById('qstep_paint').value : 0) || 0;
+        total = c + a + w + n + pr + s + p;
+      } else {
+        const l = parseFloat(document.getElementById('qstep_labor') ? document.getElementById('qstep_labor').value : 0) || 0;
+        const ax = parseFloat(document.getElementById('qstep_aux') ? document.getElementById('qstep_aux').value : 0) || 0;
+        const m = parseFloat(document.getElementById('qstep_mech') ? document.getElementById('qstep_mech').value : 0) || 0;
+        const o = parseFloat(document.getElementById('qstep_other') ? document.getElementById('qstep_other').value : 0) || 0;
+        total = l + ax + m + o;
+      }
+      if (document.getElementById('quotaAdjustedTotal')) {
+        document.getElementById('quotaAdjustedTotal').innerText = '¥ ' + total.toFixed(2) + ' 元/t';
+      }
+    }
+
+    function applyQuotaAdjustment() {
+      showToast('已成功调优工序定额参数并更新中间明细！');
+      closeDialog('dlgQuotaManagement');
+    }
+
+    // Dialog 2: 材料价格正交矩阵与调运费试算弹窗 (dlgMaterialMatrix)
+    function openMaterialMatrixDialog() {
+      runDlgMatCalc();
+      openDialog('dlgMaterialMatrix');
+    }
+
+    function runDlgMatCalc() {
+      const grade = document.getElementById('dlgMatGrade') ? document.getElementById('dlgMatGrade').value : 'Q355B';
+      const thick = parseFloat(document.getElementById('dlgMatThick') ? document.getElementById('dlgMatThick').value : 30) || 30;
+      const process = document.getElementById('dlgMatProcess') ? document.getElementById('dlgMatProcess').value : 'TMCP';
+      const plant = document.getElementById('dlgMatPlant') ? document.getElementById('dlgMatPlant').value : '江门制造基地';
+      const zPerf = document.getElementById('dlgMatZ') ? document.getElementById('dlgMatZ').value : 'Z25';
+      const ut = document.getElementById('dlgMatUt') ? document.getElementById('dlgMatUt').value : 'UT_I';
+
+      // 快速闭式解算
+      let base = 4500;
+      if (grade === 'Q235B') base = 4460;
+      if (grade === 'Q345GJC') base = 4800;
+      if (grade === 'Q420GJC') base = 5250;
+      if (grade === 'Q690D') base = 6800;
+      if (grade === 'Q960E') base = 8800;
+
+      let pMarkup = (process === 'TMCP') ? 180 : (process === 'QT' ? 650 : (process === 'N' ? 220 : 0));
+      let thkMarkup = (thick <= 6) ? 200 : (thick <= 14 ? 0 : (thick <= 25 ? 60 : (thick <= 40 ? 150 : (thick <= 80 ? 550 : 1000))));
+      let zMarkup = (zPerf === 'Z15') ? 150 : (zPerf === 'Z25' ? 250 : (zPerf === 'Z35' ? 350 : 0));
+      let utMarkup = (ut === 'UT_I') ? 120 : (ut === 'UT_II' ? 80 : 0);
+
+      const exMill = base + pMarkup + thkMarkup + zMarkup + utMarkup;
+      const freight = (plant.includes('江门') ? 145 : (plant.includes('中山') ? 155 : (plant.includes('武汉') ? 35 : 70))) + 30;
+      const landed = (exMill * 1.05) + freight;
+      const exVat = landed / 1.13;
+
+      if (document.getElementById('dlgResExMill')) document.getElementById('dlgResExMill').innerText = '¥ ' + exMill.toFixed(2);
+      if (document.getElementById('dlgResFreight')) document.getElementById('dlgResFreight').innerText = '¥ ' + freight.toFixed(2);
+      if (document.getElementById('dlgResLanded')) document.getElementById('dlgResLanded').innerText = '¥ ' + landed.toFixed(2);
+      if (document.getElementById('dlgResExVat')) document.getElementById('dlgResExVat').innerText = '¥ ' + exVat.toFixed(2);
+    }
+
+    function applyDlgMaterialToTakeoff() {
+      showToast('已选定该材质规格与到厂价，已自动回填至算量选型！');
+      closeDialog('dlgMaterialMatrix');
+    }
+
+    // Dialog 3: 专业分包产品选型弹窗 (dlgSubcontractManagement)
+    let selectedSubcontractItem = null;
+    function openSubcontractDialog(cat) {
+      if (cat && document.getElementById('dlgSubCatSelect')) {
+        document.getElementById('dlgSubCatSelect').value = cat;
+      }
+      renderDlgSubcontractItems();
+      openDialog('dlgSubcontractManagement');
+    }
+
+    function renderDlgSubcontractItems() {
+      const tbody = document.getElementById('tbodyDlgSubcontract');
+      if (!tbody) return;
+      const cat = document.getElementById('dlgSubCatSelect') ? document.getElementById('dlgSubCatSelect').value : 'ALL';
+      let list = (masterData.master_data && masterData.master_data.subcontract_products) || [];
+      if (cat !== 'ALL') {
+        list = list.filter(p => p.category === cat);
+      }
+      tbody.innerHTML = list.map((p, idx) => `
+        <tr class="hover:bg-purple-50/50 cursor-pointer transition ${idx === 0 ? 'bg-purple-50/30' : ''}" onclick="selectDlgSubItem('${p.id}')">
+          <td class="p-2"><input type="radio" name="rdoSubSelect" value="${p.id}" ${idx === 0 ? 'checked' : ''}></td>
+          <td class="p-2 font-bold font-sans text-slate-800">${p.name}</td>
+          <td class="p-2">${p.spec}</td>
+          <td class="p-2">${p.unit}</td>
+          <td class="p-2 text-right font-bold text-purple-900 font-mono">¥ ${p.unit_price.toFixed(2)}</td>
+          <td class="p-2 font-sans text-slate-500 text-[11px]">${(p.vendors || []).join('、')}</td>
+        </tr>
+      `).join('');
+      if (list.length > 0) {
+        selectDlgSubItem(list[0].id);
+      }
+    }
+
+    function selectDlgSubItem(itemId) {
+      const list = (masterData.master_data && masterData.master_data.subcontract_products) || [];
+      const item = list.find(p => p.id === itemId);
+      if (!item) return;
+      selectedSubcontractItem = item;
+      if (document.getElementById('dlgSelectedSubName')) {
+        document.getElementById('dlgSelectedSubName').innerText = `${item.name} (${item.spec})`;
+      }
+      if (document.getElementById('dlgSelectedSubPrice')) {
+        document.getElementById('dlgSelectedSubPrice').innerText = `¥ ${item.unit_price.toFixed(2)} / ${item.unit}`;
+      }
+    }
+
+    function applySubcontractSelection() {
+      if (selectedSubcontractItem) {
+        showToast(`已选定分包项 [${selectedSubcontractItem.name}] 并绑定单价 ¥${selectedSubcontractItem.unit_price.toFixed(2)}！`);
+      }
+      closeDialog('dlgSubcontractManagement');
+    }
+
+    // Dialog 4: 区域大型起重机械方案调配弹窗 (dlgMachineryManagement)
+    function openMachineryDialog() {
+      runDlgMachCalc();
+      openDialog('dlgMachineryManagement');
+    }
+
+    function runDlgMachCalc() {
+      const reg = document.getElementById('dlgMachRegion') ? document.getElementById('dlgMachRegion').value : '中南';
+      const model = document.getElementById('dlgMachModel') ? document.getElementById('dlgMachModel').value : '履带吊260T';
+      const months = parseFloat(document.getElementById('dlgMachMonths') ? document.getElementById('dlgMachMonths').value : 6) || 6;
+
+      let monthly = 97800;
+      let mob = 34200;
+      if (model.includes('50T')) { monthly = 47600; mob = 17100; }
+      else if (model.includes('70T')) { monthly = 64600; mob = 28140; }
+      else if (model.includes('100T')) { monthly = 78600; mob = 32160; }
+      else if (model.includes('150T')) { monthly = 97800; mob = 34200; }
+      else if (model.includes('260T')) { monthly = 145000; mob = 52000; }
+      else if (model.includes('400T')) { monthly = 220000; mob = 85000; }
+
+      const total = (monthly * months) + (mob * 2);
+
+      if (document.getElementById('dlgResMachMonthly')) document.getElementById('dlgResMachMonthly').innerText = '¥ ' + monthly.toLocaleString() + ' / 月';
+      if (document.getElementById('dlgResMachMob')) document.getElementById('dlgResMachMob').innerText = '¥ ' + mob.toLocaleString() + ' / 次';
+      if (document.getElementById('dlgResMachTotal')) document.getElementById('dlgResMachTotal').innerText = '¥ ' + total.toLocaleString() + ' 元';
+    }
+
+    function applyMachineryPackage() {
+      showToast('已确认大型起重机械调配方案并记入项目措施费！');
+      closeDialog('dlgMachineryManagement');
+    }
+    
   </script>
 </body>
 </html>
