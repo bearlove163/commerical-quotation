@@ -221,8 +221,8 @@
         <a href="javascript:void(0)" onclick="switchNavModule('project')" id="nav-project" title="② 项目与版本" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
           <i class="fa-solid fa-folder-tree w-4 text-center text-amber-400 shrink-0"></i><span class="sidebar-label">② 项目与版本</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('database')" id="nav-database" title="③ 基础定额库" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-database w-4 text-center text-emerald-400 shrink-0"></i><span class="sidebar-label">③ 基础定额库</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('database')" id="nav-database" title="③ 基础数据" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-database w-4 text-center text-emerald-400 shrink-0"></i><span class="sidebar-label">③ 基础数据</span>
         </a>
         <a href="javascript:void(0)" onclick="switchNavModule('takeoff')" id="nav-takeoff" title="④ 算量工作台 ⭐" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
           <i class="fa-solid fa-ruler-combined w-4 text-center text-blue-400 shrink-0"></i><span class="sidebar-label">④ 算量工作台 ⭐</span>
@@ -829,20 +829,106 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- VIEW 3: ③ 基础定额库中心 (Database Center)      -->
+      <!-- VIEW 3: ③ 基础数据中心 (Master Data & Quotas) ⭐ -->
       <!-- ============================================== -->
       <section id="view-database" class="flex-1 flex flex-col overflow-y-auto p-4 space-y-4 hidden">
-        <!-- 定额库 5 大分类 Tab -->
-        <div class="flex items-center space-x-2 border-b border-slate-200 pb-2 bg-white px-3 pt-2 rounded-t-xl shadow-2xs">
-          <button onclick="switchDbTab('mat')" id="dbTab-mat" class="px-3 py-1 font-bold text-blue-600 border-b-2 border-blue-600">1. 材料价格库 (快照)</button>
-          <button onclick="switchDbTab('fab')" id="dbTab-fab" class="px-3 py-1 text-slate-600 hover:text-slate-900">2. 车间制作定额 (7道微工序)</button>
-          <button onclick="switchDbTab('ins')" id="dbTab-ins" class="px-3 py-1 text-slate-600 hover:text-slate-900">3. 现场安装定额 (6道微工序)</button>
-          <button onclick="switchDbTab('overseas')" id="dbTab-overseas" class="px-3 py-1 text-slate-600 hover:text-slate-900">4. 海外标准费率 (人天开办费)</button>
-          <button onclick="switchDbTab('mach')" id="dbTab-mach" class="px-3 py-1 text-slate-600 hover:text-slate-900">5. 机械台班与费率</button>
+        <!-- 基础数据 6 大分类 Tab -->
+        <div class="flex items-center space-x-2 border-b border-slate-200 pb-2 bg-white px-3 pt-2 rounded-t-xl shadow-2xs overflow-x-auto text-xs">
+          <button onclick="switchDbTab('family')" id="dbTab-family" class="px-3 py-1.5 font-bold text-blue-600 border-b-2 border-blue-600 flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-shapes text-amber-500"></i>
+            <span>1. 截面族规则设置 (Section Families) ⭐</span>
+          </button>
+          <button onclick="switchDbTab('mat')" id="dbTab-mat" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">2. 材料价格库 (快照)</button>
+          <button onclick="switchDbTab('fab')" id="dbTab-fab" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">3. 车间制作定额 (7道微工序)</button>
+          <button onclick="switchDbTab('ins')" id="dbTab-ins" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">4. 现场安装定额 (6道微工序)</button>
+          <button onclick="switchDbTab('mach')" id="dbTab-mach" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">5. 机械台班与两票制费率</button>
+          <button onclick="switchDbTab('overseas')" id="dbTab-overseas" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0">6. 海外标准费率 (人天开办费)</button>
+        </div>
+
+        <!-- 3.0 截面族规则与智能推导设置 (Section Families Master Settings) ⭐ -->
+        <div id="dbPanel-family" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4">
+          <!-- 顶部业务说明与操作条 -->
+          <div class="flex flex-wrap items-center justify-between gap-2 p-3 bg-gradient-to-r from-amber-50/80 via-blue-50/60 to-slate-50 border border-amber-200/80 rounded-xl">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-300 flex items-center justify-center text-amber-600 shrink-0">
+                <i class="fa-solid fa-shapes text-base"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                  <span>截面族后台规则设置与智能定额映射引擎</span>
+                  <span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">Rule 10 宪法规范</span>
+                </div>
+                <div class="text-[11px] text-slate-500 mt-0.5">
+                  录入截面规格时，系统自动依据前缀规则推导截面大类与板厚，并秒级拉取绑定的车间制作定额包与现场安装定额包。
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="openAddSectionFamilyModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold flex items-center space-x-1 shadow transition">
+                <i class="fa-solid fa-plus text-[10px]"></i>
+                <span>新增截面族规则</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 推导规则在线仿真沙盒 (Live Derivation Sandbox) -->
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5 text-xs">
+            <div class="flex items-center justify-between">
+              <div class="font-bold text-slate-700 flex items-center space-x-1.5">
+                <i class="fa-solid fa-flask-vial text-blue-600"></i>
+                <span>截面规格智能推导与定额拉取仿真沙盒 (Live Sandbox)</span>
+              </div>
+              <span class="text-[11px] text-slate-400">实时检验手工录入前缀匹配、板厚提取与定额联动</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="flex items-center space-x-1 flex-1 min-w-[280px]">
+                <span class="text-slate-500 text-xs shrink-0">测试规格:</span>
+                <input type="text" id="inpSandboxSpec" value="十1300x600x80x80" placeholder="例如: 十1300x600x80x80 / 箱1600x1800x55x55 / Ф1200x35" class="px-3 py-1.5 border border-slate-300 rounded text-xs font-mono flex-1 focus:ring-1 focus:ring-blue-500 focus:outline-none">
+              </div>
+              <div class="flex items-center space-x-1">
+                <span class="text-slate-500 text-xs shrink-0">材质:</span>
+                <select id="selSandboxMat" class="px-2 py-1.5 border border-slate-300 rounded text-xs font-mono bg-white">
+                  <option value="Q355B">Q355B</option>
+                  <option value="Q345GJC">Q345GJC</option>
+                  <option value="Q420GJC">Q420GJC</option>
+                  <option value="Q235B">Q235B</option>
+                </select>
+              </div>
+              <button onclick="runSandboxDerivation()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded text-xs font-semibold flex items-center space-x-1.5 shadow transition">
+                <i class="fa-solid fa-play text-[10px] text-emerald-400"></i>
+                <span>执行推导测试</span>
+              </button>
+            </div>
+            <!-- 沙盒结果输出卡片 -->
+            <div id="sandboxResultCard" class="p-3 bg-white border border-slate-200 rounded-lg text-xs font-mono">
+              <div class="text-slate-400 text-center py-1">点击“执行推导测试”验证规则解析与自动取数结果</div>
+            </div>
+          </div>
+
+          <!-- 截面族规则清单表格 -->
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 whitespace-nowrap">
+                <tr>
+                  <th class="py-2.5 px-3 w-24">族代码</th>
+                  <th class="py-2.5 px-3 w-44">截面族中文名称</th>
+                  <th class="py-2.5 px-3 w-40">前缀识别规则</th>
+                  <th class="py-2.5 px-3 w-24 text-center">默认材质</th>
+                  <th class="py-2.5 px-3 w-44">板厚推导逻辑</th>
+                  <th class="py-2.5 px-3 min-w-[200px]">绑定的车间制作定额包</th>
+                  <th class="py-2.5 px-3 min-w-[180px]">绑定的现场安装定额包</th>
+                  <th class="py-2.5 px-3 w-28 text-center">操作</th>
+                </tr>
+              </thead>
+              <tbody id="tblSectionFamiliesBody" class="divide-y divide-slate-100 font-mono text-[11px]">
+                <!-- 动态注入截面族列表 -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- 3.1 材料价格库 -->
-        <div id="dbPanel-mat" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3">
+        <div id="dbPanel-mat" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-3 hidden">
           <div class="flex justify-between items-center text-xs">
             <div class="flex items-center space-x-2">
               <span class="font-bold text-slate-800">当前活跃材料快照:</span>
@@ -999,55 +1085,68 @@
             </div>
           </div>
 
-          <!-- 右侧抽屉: 定额自动拉取检查看板 (Auto-Pull Inspector) -->
-          <div class="w-80 bg-white rounded-xl border border-slate-200 flex flex-col shrink-0 shadow-2xs overflow-hidden">
+          <!-- 右侧抽屉: 定额自动拉取检查与即时调价看板 (Auto-Pull Inspector & Live Customizer) -->
+          <div class="w-88 lg:w-96 bg-white rounded-xl border border-slate-200 flex flex-col shrink-0 shadow-2xs overflow-hidden">
             <div class="p-2.5 bg-slate-900 text-white font-bold text-xs flex justify-between items-center">
               <span class="flex items-center space-x-1.5">
                 <i class="fa-solid fa-wand-magic-sparkles text-blue-400"></i>
-                <span>定额自动拉取检查 (Auto-Pull)</span>
+                <span>定额自动拉取与微调 (Auto-Pull)</span>
               </span>
-              <span class="bg-emerald-900 text-emerald-200 text-[10px] px-1.5 py-0.5 rounded">毫秒级匹配 ✓</span>
+              <div class="flex items-center space-x-1.5">
+                <button onclick="toggleAutoPullEditMode()" id="btnToggleAutoPullEdit" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded font-semibold transition flex items-center space-x-1">
+                  <i class="fa-solid fa-pen-to-square text-[9px]"></i>
+                  <span id="txtAutoPullMode">编辑调价</span>
+                </button>
+                <button onclick="resetCurrentComponentQuota()" title="恢复基准定额默认值" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] px-1.5 py-0.5 rounded transition">
+                  <i class="fa-solid fa-rotate-left"></i>
+                </button>
+              </div>
             </div>
 
-            <div class="p-3 overflow-y-auto flex-1 space-y-2.5 text-xs">
-              <!-- 构件基础几何 -->
+            <!-- 查看模式容器 -->
+            <div id="inspectorViewContainer" class="p-3 overflow-y-auto flex-1 space-y-2.5 text-xs">
+              <!-- 1. 几何解析推导 -->
               <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">1. 几何解析推导</div>
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex justify-between items-center">
+                  <span>1. 几何解析推导</span>
+                  <span id="inspThickBadge" class="bg-amber-100 text-amber-800 border border-amber-300 text-[9px] px-1 rounded font-bold hidden">特厚板≥80mm</span>
+                </div>
                 <div class="font-mono space-y-0.5">
                   <div class="flex justify-between"><span>序号与编号:</span><b id="inspCompId" class="text-blue-700">ROW-17</b></div>
                   <div class="flex justify-between"><span>构件名称:</span><span id="inspName" class="font-bold text-slate-800">十字柱</span></div>
                   <div class="flex justify-between"><span>截面规格:</span><b id="inspSpec" class="text-slate-900">十1300x600x80x80</b></div>
-                  <div class="flex justify-between"><span>材质与分类:</span><span id="inspMat" class="text-blue-600">Q355B</span> / <span id="inspShape">CROSS</span></div>
-                  <div class="flex justify-between"><span>推导最大板厚:</span><b id="inspThick" class="text-amber-700">80.0 mm</b></div>
-                  <div class="flex justify-between"><span>对应甲方清单:</span><span id="inspBqItem" class="text-slate-600 truncate max-w-[140px]">实腹钢柱</span></div>
+                  <div class="flex justify-between"><span>材质与分类:</span><span id="inspMat" class="text-blue-600 font-bold">Q355B</span> / <span id="inspShape" class="bg-slate-200 px-1 rounded text-slate-700">CROSS</span></div>
+                  <div class="flex justify-between"><span>推导最大板厚:</span><b id="inspThick" class="text-amber-700 font-bold">80.0 mm</b></div>
+                  <div class="flex justify-between"><span>对应甲方清单:</span><span id="inspBqItem" class="text-slate-600 truncate max-w-[150px]">实腹钢柱</span></div>
                 </div>
               </div>
 
-              <!-- 材料库拉取 -->
+              <!-- 2. 材料库价格快照拉取 (定额联动) -->
               <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-200">
                 <div class="text-[10px] font-bold text-blue-900 uppercase tracking-wider mb-1 flex justify-between">
                   <span>2. 材料库价格快照拉取</span>
-                  <span class="text-emerald-700 text-[10px]">成功 ✓</span>
+                  <span class="text-emerald-700 text-[10px]">定额直连 ✓</span>
                 </div>
                 <div class="font-mono text-[11px] space-y-0.5">
                   <div class="flex justify-between"><span>出厂除税价:</span><b class="text-blue-900" id="inspMatNet">4,982.30 元/t</b></div>
-                  <div class="flex justify-between text-slate-500"><span>材料损耗 5%:</span><span>249.12 元/t</span></div>
+                  <div class="flex justify-between text-slate-500"><span>材料损耗 5%:</span><span id="inspMatLoss">249.12 元/t</span></div>
+                  <div class="text-[10px] text-slate-400 pt-0.5" id="inspMatDesc">Q355B基价 + 特厚板加价</div>
                 </div>
               </div>
 
-              <!-- 制作定额拉取 -->
+              <!-- 3. 车间制作微工序定额 (定额联动) -->
               <div class="bg-emerald-50/70 p-2.5 rounded-lg border border-emerald-200">
                 <div class="text-[10px] font-bold text-emerald-900 uppercase tracking-wider mb-1 flex justify-between">
                   <span>3. 车间制作微工序定额</span>
-                  <span class="text-emerald-700 text-[10px]">7道展开 ✓</span>
+                  <span class="text-emerald-700 text-[10px]" id="inspFabBadge">7道展开 ✓</span>
                 </div>
                 <div class="font-mono text-[11px] space-y-0.5">
                   <div class="flex justify-between"><span>制作成本小计:</span><b class="text-emerald-900" id="inspFabCost">¥5,981.77</b></div>
-                  <div class="text-[10px] text-slate-500">含胎架95、埋弧焊120、80mm厚板调价140</div>
+                  <div class="text-[10px] text-slate-600 leading-tight" id="inspFabDesc">含胎架95、埋弧焊120、80mm厚板调价140</div>
                 </div>
               </div>
 
-              <!-- 运杂与安装 -->
+              <!-- 4. 运杂费与现场建安定额 (定额联动) -->
               <div class="bg-purple-50/70 p-2.5 rounded-lg border border-purple-200">
                 <div class="text-[10px] font-bold text-purple-900 uppercase tracking-wider mb-1 flex justify-between">
                   <span>4. 运杂费与现场建安定额</span>
@@ -1056,16 +1155,116 @@
                 <div class="font-mono text-[11px] space-y-0.5">
                   <div class="flex justify-between"><span>公路干线运输(850km):</span><b id="inspTransCost">¥302.85</b></div>
                   <div class="flex justify-between"><span>现场建安直接费:</span><b id="inspInstCost">¥1,525.69</b></div>
+                  <div class="text-[10px] text-slate-600 leading-tight" id="inspInstDesc">十字柱吊装618.05 + 机械措施769.33</div>
                 </div>
               </div>
 
-              <!-- 闭式求解出数 -->
+              <!-- 5. 闭式求解出数 -->
               <div class="bg-slate-900 text-white p-2.5 rounded-lg font-mono text-[11px] space-y-1">
                 <div class="flex justify-between items-center">
                   <span class="text-slate-400">两票制解析单价:</span>
-                  <b class="text-emerald-400 text-xs" id="inspCjPrice">8,895.52 元/t</b>
+                  <b class="text-emerald-400 text-sm font-bold" id="inspCjPrice">8,847.58 元/t</b>
                 </div>
-                <div class="text-[10px] text-slate-400">闭式解代数出数，杜绝循环迭代计算</div>
+                <div class="flex justify-between items-center text-[10px] text-slate-400">
+                  <span>构件含税合价:</span>
+                  <b class="text-white" id="inspTotalAmount">¥67.24 万元</b>
+                </div>
+                <div class="text-[10px] text-slate-400 border-t border-slate-800 pt-1 mt-1 flex justify-between">
+                  <span>闭式解析解出数</span>
+                  <span class="text-emerald-300">杜绝循环迭代计算</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 编辑微调模式容器 (Edit Mode) -->
+            <div id="inspectorEditContainer" class="p-3 overflow-y-auto flex-1 space-y-3 text-xs hidden bg-slate-50/50">
+              <div class="bg-amber-50 border border-amber-200 rounded p-2 text-amber-900 text-[11px]">
+                <b>在线调价提示：</b>修改截面规格或微调工序单价后，系统即时代数求解闭式单价并更新全案！
+              </div>
+
+              <!-- 几何规格与分类 -->
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 space-y-2">
+                <div class="font-bold text-slate-800 text-[11px]">构件几何规格与分类</div>
+                <div>
+                  <label class="text-[10px] text-slate-500">截面规格 (输入后自动识别板厚与截面族):</label>
+                  <input type="text" id="inpEditCompSpec" oninput="onInspectorSpecInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs font-bold text-slate-900 focus:ring-1 focus:ring-blue-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-[10px] text-slate-500">材质型号:</label>
+                    <select id="selEditCompMat" onchange="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded text-xs font-mono bg-white">
+                      <option value="Q235B">Q235B</option>
+                      <option value="Q355B">Q355B</option>
+                      <option value="Q345GJC">Q345GJC</option>
+                      <option value="Q420GJC">Q420GJC</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-500">截面族分类:</label>
+                    <select id="selEditCompFamily" onchange="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded text-xs font-mono bg-white">
+                      <!-- 动态填充 -->
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="text-[10px] text-slate-500">推导最大板厚 (mm):</label>
+                  <input type="number" step="0.1" id="inpEditCompThick" oninput="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs text-amber-700 font-bold">
+                </div>
+              </div>
+
+              <!-- 定额工序与材价调微 -->
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 space-y-2">
+                <div class="font-bold text-slate-800 text-[11px]">定额工序与价格微调</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-[10px] text-slate-500">主材除税价 (元/t):</label>
+                    <input type="number" step="0.01" id="inpEditMatNet" oninput="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs">
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-500">损耗率 (%):</label>
+                    <input type="number" step="0.1" id="inpEditLossRate" oninput="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs">
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-[10px] text-slate-500">制作成本小计 (元/t):</label>
+                    <input type="number" step="0.01" id="inpEditFabCost" oninput="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs text-emerald-700 font-bold">
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-500">安装直接费 (元/t):</label>
+                    <input type="number" step="0.01" id="inpEditInstCost" oninput="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs text-purple-700 font-bold">
+                  </div>
+                </div>
+                <div>
+                  <label class="text-[10px] text-slate-500">公路干线运距 (km):</label>
+                  <input type="number" step="10" id="inpEditTransKm" oninput="onInspectorParamInput()" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded font-mono text-xs">
+                </div>
+              </div>
+
+              <!-- 实时微调重算预览卡片 -->
+              <div class="bg-slate-900 text-white p-2.5 rounded-lg font-mono text-xs space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">微调后解析单价:</span>
+                  <b class="text-emerald-400 text-sm font-bold" id="previewEditCjPrice">8,847.58 元/t</b>
+                </div>
+                <div class="flex justify-between items-center text-[10px] text-slate-400">
+                  <span>变动差额:</span>
+                  <b id="previewEditDiff" class="text-white">±0.00 元/t</b>
+                </div>
+                <div class="flex justify-between items-center text-[10px] text-slate-400">
+                  <span>新预计合价:</span>
+                  <b id="previewEditTotal" class="text-amber-300">¥0.00 万元</b>
+                </div>
+              </div>
+
+              <!-- 操作按钮 -->
+              <div class="flex space-x-2 pt-1">
+                <button onclick="applyAutoPullEdits()" class="flex-1 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded text-xs shadow transition">
+                  <i class="fa-solid fa-check mr-1"></i>保存并应用修改
+                </button>
+                <button onclick="toggleAutoPullEditMode(false)" class="px-3 py-1.5 border border-slate-300 text-slate-600 hover:bg-slate-100 rounded text-xs transition">
+                  取消
+                </button>
               </div>
             </div>
           </div>
@@ -2010,6 +2209,73 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal 8: 新增 / 编辑截面族推导规则 (dlgAddSectionFamily) -->
+  <div id="dlgAddSectionFamily" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-shapes text-amber-400"></i>
+          <span class="font-bold text-sm" id="modalSectionFamilyTitle">新增截面族推导规则</span>
+        </div>
+        <button onclick="closeDialog('dlgAddSectionFamily')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-3 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">截面族代码 (Code):</label>
+            <input type="text" id="inpFamCode" placeholder="如: T_STEEL" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded font-mono uppercase focus:ring-1 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">截面族中文名称:</label>
+            <input type="text" id="inpFamName" placeholder="如: T型钢构件" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">前缀识别规则 (多个用逗号隔开):</label>
+          <input type="text" id="inpFamPrefix" placeholder="如: T, 剖分T, T型" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded font-mono focus:ring-1 focus:ring-blue-500">
+          <div class="text-[10px] text-slate-400 mt-0.5">当构件规格或名称包含任一前缀时自动匹配归入该截面族</div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">默认主材材质:</label>
+            <select id="selFamMat" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded bg-white">
+              <option value="Q355B">Q355B</option>
+              <option value="Q345GJC">Q345GJC</option>
+              <option value="Q420GJC">Q420GJC</option>
+              <option value="Q235B">Q235B</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">板厚推导位置规则:</label>
+            <input type="text" id="inpFamThickRule" value="取最后一位或翼缘厚度" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">绑定车间制作定额包描述:</label>
+          <input type="text" id="inpFamFabDesc" placeholder="如: 数控切割(55) + 自动埋弧焊(100)" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">制作基准直接费 (元/t):</label>
+            <input type="number" step="0.01" id="inpFamFabBase" value="5800.00" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded font-mono focus:ring-1 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">安装基准直接费 (元/t):</label>
+            <input type="number" step="0.01" id="inpFamInstBase" value="1450.00" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded font-mono focus:ring-1 focus:ring-blue-500">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">绑定现场安装定额包描述:</label>
+          <input type="text" id="inpFamInstDesc" placeholder="如: 汽车吊安装(450) + 螺栓施工(120)" class="w-full mt-1 px-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500">
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgAddSectionFamily')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">取消</button>
+        <button onclick="saveSectionFamilyRule()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded font-bold shadow">保存截面族规则</button>
+      </div>
+    </div>
+  </div>
 <!-- 4. 全局交互逻辑脚本 (JavaScript Engine)    -->
   <!-- ========================================== -->
   <script>
@@ -2035,6 +2301,8 @@
       .then(data => {
         masterData = data;
         initCockpitView();
+        renderSectionFamiliesTable();
+        renderShapeFamilyOptions();
         renderCurrentView();
         selectComponent(16);
       })
@@ -2161,20 +2429,24 @@
       }
     }
 
-    // 6. 基础定额库 Tab 切换
+    // 6. 基础数据 Tab 切换与截面族后台设置
     function switchDbTab(tabKey) {
-      const tabs = ['mat', 'fab', 'ins', 'overseas', 'mach'];
+      const tabs = ['family', 'mat', 'fab', 'ins', 'mach', 'overseas'];
       tabs.forEach(t => {
         const btn = document.getElementById('dbTab-' + t);
         const panel = document.getElementById('dbPanel-' + t);
+        if (!btn || !panel) return;
         if (t === tabKey) {
-          btn.className = 'px-3 py-1 font-bold text-blue-600 border-b-2 border-blue-600';
+          btn.className = 'px-3 py-1.5 font-bold text-blue-600 border-b-2 border-blue-600 flex items-center space-x-1.5 shrink-0';
           panel.classList.remove('hidden');
         } else {
-          btn.className = 'px-3 py-1 text-slate-600 hover:text-slate-900';
+          btn.className = 'px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0';
           panel.classList.add('hidden');
         }
       });
+      if (tabKey === 'family') {
+        renderSectionFamiliesTable();
+      }
     }
 
     // 7. 组价计算器模式切换与滑块重算
@@ -2442,24 +2714,505 @@
       renderCurrentView();
     }
 
+    // ----------------------------------------------------
+    // 8. 截面族后台设置、智能推导与定额映射引擎
+    // ----------------------------------------------------
+    let editingFamilyCode = null;
+
+    function renderSectionFamiliesTable() {
+      const tbody = document.getElementById('tblSectionFamiliesBody');
+      if (!tbody || !masterData || !masterData.section_families) return;
+
+      tbody.innerHTML = masterData.section_families.map(f => {
+        const prefixTags = (f.prefix_rules || []).map(p => `<span class="bg-slate-100 text-slate-700 border border-slate-200 px-1.5 py-0.2 rounded text-[10px] mr-1 shrink-0 font-bold">${p}</span>`).join('');
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="py-2.5 px-3 font-bold text-blue-700 whitespace-nowrap">
+              <span class="bg-blue-50 px-2 py-0.5 rounded border border-blue-200">${f.family_code}</span>
+            </td>
+            <td class="py-2.5 px-3 font-bold text-slate-800 whitespace-nowrap">${f.family_name}</td>
+            <td class="py-2.5 px-3">
+              <div class="flex flex-wrap gap-1">${prefixTags}</div>
+            </td>
+            <td class="py-2.5 px-3 text-center whitespace-nowrap font-bold text-slate-700">${f.default_material}</td>
+            <td class="py-2.5 px-3 text-slate-600 text-[11px]">${f.thick_rule}</td>
+            <td class="py-2.5 px-3 text-emerald-800 text-[11px] font-mono leading-relaxed">
+              <div>${f.bound_fab_desc}</div>
+              <div class="text-[10px] text-slate-400">基准制作直接费: ¥${(f.fab_base_cost || 5800).toFixed(2)} 元/t</div>
+            </td>
+            <td class="py-2.5 px-3 text-purple-800 text-[11px] font-mono leading-relaxed">
+              <div>${f.bound_inst_desc}</div>
+              <div class="text-[10px] text-slate-400">基准安装直接费: ¥${(f.inst_base_cost || 1450).toFixed(2)} 元/t</div>
+            </td>
+            <td class="py-2.5 px-3 text-center whitespace-nowrap">
+              <div class="flex items-center justify-center space-x-1.5">
+                <button onclick="editSectionFamily('${f.family_code}')" class="text-blue-600 hover:text-blue-800 font-semibold text-xs">编辑</button>
+                <button onclick="testInSandbox('${f.family_code}')" class="text-emerald-600 hover:text-emerald-800 font-semibold text-xs">测试</button>
+                ${f.is_builtin ? '' : `<button onclick="deleteSectionFamily('${f.family_code}')" class="text-rose-600 hover:text-rose-800 font-semibold text-xs">删除</button>`}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderShapeFamilyOptions() {
+      const select = document.getElementById('shapeFilter');
+      const editSelect = document.getElementById('selEditCompFamily');
+      if (!masterData || !masterData.section_families) return;
+
+      const families = masterData.section_families;
+      const comps = masterData.components || [];
+
+      if (select) {
+        let html = `<option value="ALL">全部截面族 (${comps.length})</option>`;
+        families.forEach(f => {
+          const cnt = comps.filter(c => c.shape_family === f.family_code).length;
+          html += `<option value="${f.family_code}">${f.family_name.split('/')[0].trim()} (${f.family_code} · ${cnt})</option>`;
+        });
+        select.innerHTML = html;
+      }
+
+      if (editSelect) {
+        let editHtml = '';
+        families.forEach(f => {
+          editHtml += `<option value="${f.family_code}">${f.family_code} - ${f.family_name.split('/')[0].trim()}</option>`;
+        });
+        editSelect.innerHTML = editHtml;
+      }
+    }
+
+    function openAddSectionFamilyModal() {
+      editingFamilyCode = null;
+      document.getElementById('modalSectionFamilyTitle').innerText = '新增截面族推导规则';
+      document.getElementById('inpFamCode').value = '';
+      document.getElementById('inpFamCode').disabled = false;
+      document.getElementById('inpFamName').value = '';
+      document.getElementById('inpFamPrefix').value = '';
+      document.getElementById('selFamMat').value = 'Q355B';
+      document.getElementById('inpFamThickRule').value = '取最后一位或翼缘厚度';
+      document.getElementById('inpFamFabDesc').value = '数控精切(55) + 自动埋弧焊(100)';
+      document.getElementById('inpFamFabBase').value = '5800.00';
+      document.getElementById('inpFamInstDesc').value = '现场吊装(550) + 螺栓初终拧(120)';
+      document.getElementById('inpFamInstBase').value = '1450.00';
+      openDialog('dlgAddSectionFamily');
+    }
+
+    function editSectionFamily(code) {
+      const fam = (masterData.section_families || []).find(f => f.family_code === code);
+      if (!fam) return;
+      editingFamilyCode = code;
+      document.getElementById('modalSectionFamilyTitle').innerText = `编辑截面族规则: [${code}]`;
+      document.getElementById('inpFamCode').value = fam.family_code;
+      document.getElementById('inpFamCode').disabled = true;
+      document.getElementById('inpFamName').value = fam.family_name;
+      document.getElementById('inpFamPrefix').value = (fam.prefix_rules || []).join(', ');
+      document.getElementById('selFamMat').value = fam.default_material || 'Q355B';
+      document.getElementById('inpFamThickRule').value = fam.thick_rule || '';
+      document.getElementById('inpFamFabDesc').value = fam.bound_fab_desc || '';
+      document.getElementById('inpFamFabBase').value = (fam.fab_base_cost || 5800).toFixed(2);
+      document.getElementById('inpFamInstDesc').value = fam.bound_inst_desc || '';
+      document.getElementById('inpFamInstBase').value = (fam.inst_base_cost || 1450).toFixed(2);
+      openDialog('dlgAddSectionFamily');
+    }
+
+    function saveSectionFamilyRule() {
+      const code = document.getElementById('inpFamCode').value.trim().toUpperCase();
+      const name = document.getElementById('inpFamName').value.trim();
+      const prefixStr = document.getElementById('inpFamPrefix').value.trim();
+      const mat = document.getElementById('selFamMat').value;
+      const thickRule = document.getElementById('inpFamThickRule').value.trim();
+      const fabDesc = document.getElementById('inpFamFabDesc').value.trim();
+      const fabBase = parseFloat(document.getElementById('inpFamFabBase').value) || 5800.00;
+      const instDesc = document.getElementById('inpFamInstDesc').value.trim();
+      const instBase = parseFloat(document.getElementById('inpFamInstBase').value) || 1450.00;
+
+      if (!code || !name || !prefixStr) {
+        alert('请完整填写截面族代码、中文名称与前缀识别规则！');
+        return;
+      }
+
+      const prefixes = prefixStr.split(/[,，\s]+/).filter(Boolean);
+
+      if (editingFamilyCode) {
+        const idx = masterData.section_families.findIndex(f => f.family_code === editingFamilyCode);
+        if (idx !== -1) {
+          masterData.section_families[idx] = {
+            ...masterData.section_families[idx],
+            family_name: name,
+            prefix_rules: prefixes,
+            default_material: mat,
+            thick_rule: thickRule,
+            bound_fab_desc: fabDesc,
+            fab_base_cost: fabBase,
+            bound_inst_desc: instDesc,
+            inst_base_cost: instBase
+          };
+          showToast(`已成功保存截面族 [${code}] 规则！`);
+        }
+      } else {
+        if (masterData.section_families.some(f => f.family_code === code)) {
+          alert('截面族代码已存在，请使用唯一代码！');
+          return;
+        }
+        masterData.section_families.push({
+          family_code: code,
+          family_name: name,
+          prefix_rules: prefixes,
+          default_material: mat,
+          thick_rule: thickRule,
+          bound_fab_desc: fabDesc,
+          fab_base_cost: fabBase,
+          bound_inst_desc: instDesc,
+          inst_base_cost: instBase,
+          is_builtin: false
+        });
+        showToast(`已新增截面族 [${code}] 并绑定定额规则！`);
+      }
+
+      closeDialog('dlgAddSectionFamily');
+      renderSectionFamiliesTable();
+      renderShapeFamilyOptions();
+    }
+
+    function deleteSectionFamily(code) {
+      if (!confirm(`确认删除自定义截面族 [${code}] 吗？`)) return;
+      masterData.section_families = masterData.section_families.filter(f => f.family_code !== code);
+      renderSectionFamiliesTable();
+      renderShapeFamilyOptions();
+      showToast(`已删除截面族 [${code}]`);
+    }
+
+    function parseSectionSpecIntelligent(specRaw, nameHint = '') {
+      const raw = String(specRaw || '').replace(/[×Xx*]/g, '*').trim();
+      const hint = String(nameHint || '').trim();
+      const nums = (raw.match(/\d+\.?\d*/g) || []).map(Number);
+
+      let shapeFamily = 'UNKNOWN';
+      let maxThick = 16.0;
+
+      // 1. 优先匹配后台配置的截面族前缀规则
+      if (masterData && masterData.section_families) {
+        for (const fam of masterData.section_families) {
+          const match = (fam.prefix_rules || []).some(rule => {
+            return raw.toUpperCase().includes(rule.toUpperCase()) || hint.includes(rule);
+          });
+          if (match) {
+            shapeFamily = fam.family_code;
+            break;
+          }
+        }
+      }
+
+      // 2. 几何板厚提取
+      if (shapeFamily === 'CROSS' || raw.includes('十') || hint.includes('十字')) {
+        shapeFamily = 'CROSS';
+        if (nums.length >= 4) maxThick = Math.max(nums[2], nums[3]);
+        else if (nums.length >= 3) maxThick = nums[2];
+      } else if (shapeFamily === 'BOX' || raw.includes('箱') || raw.includes('口') || hint.includes('箱')) {
+        shapeFamily = 'BOX';
+        if (nums.length >= 4) maxThick = Math.max(nums[2], nums[3]);
+        else if (nums.length >= 3) maxThick = nums[2];
+      } else if (shapeFamily === 'PIPE' || raw.includes('Ф') || raw.toUpperCase().includes('P') || hint.includes('管') || hint.includes('圆')) {
+        shapeFamily = 'PIPE';
+        if (nums.length >= 2) maxThick = nums[1];
+      } else if (shapeFamily === 'SPHERE' || raw.includes('球') || hint.includes('球') || hint.includes('网架')) {
+        shapeFamily = 'SPHERE';
+        if (nums.length >= 2) maxThick = nums[1];
+      } else if (shapeFamily === 'TRUSS' || raw.includes('桁架') || hint.includes('桁架')) {
+        shapeFamily = 'TRUSS';
+        if (nums.length >= 2) maxThick = nums[nums.length - 1];
+      } else if (shapeFamily === 'H_BEAM' || raw.toUpperCase().includes('H') || hint.includes('H')) {
+        shapeFamily = 'H_BEAM';
+        if (nums.length >= 4) maxThick = Math.max(nums[2], nums[3]);
+        else if (nums.length >= 2) maxThick = nums[1];
+      } else if (shapeFamily === 'PLATE' || raw.startsWith('-') || raw.toUpperCase().startsWith('PL') || hint.includes('板')) {
+        shapeFamily = 'PLATE';
+        if (nums.length >= 1) maxThick = nums[0];
+      } else {
+        if (nums.length >= 4) {
+          shapeFamily = (nums[0] === nums[1]) ? 'BOX' : 'H_BEAM';
+          maxThick = Math.max(nums[2], nums[3]);
+        } else if (nums.length === 2) {
+          shapeFamily = 'PIPE';
+          maxThick = nums[1];
+        }
+      }
+
+      return { shapeFamily, maxThick };
+    }
+
+    function testInSandbox(code) {
+      switchDbTab('family');
+      const fam = (masterData.section_families || []).find(f => f.family_code === code);
+      if (!fam) return;
+      const prefix = fam.prefix_rules[0] || '';
+      let testSpec = `${prefix}1200x600x40x40`;
+      if (code === 'PIPE') testSpec = `${prefix}1000x30`;
+      else if (code === 'SPHERE') testSpec = `焊接球D500x25`;
+      document.getElementById('inpSandboxSpec').value = testSpec;
+      document.getElementById('selSandboxMat').value = fam.default_material || 'Q355B';
+      runSandboxDerivation();
+    }
+
+    function runSandboxDerivation() {
+      const spec = document.getElementById('inpSandboxSpec').value;
+      const mat = document.getElementById('selSandboxMat').value;
+      const parsed = parseSectionSpecIntelligent(spec);
+      const isThick = parsed.maxThick >= 80;
+
+      const fam = (masterData.section_families || []).find(f => f.family_code === parsed.shapeFamily) || {
+        family_name: '未识别分类',
+        bound_fab_desc: '标准制作定额',
+        fab_base_cost: 5800,
+        bound_inst_desc: '标准安装定额',
+        inst_base_cost: 1450
+      };
+
+      const matPrices = (masterData.quotas && masterData.quotas.material_prices) || {};
+      const matData = matPrices[mat] || { normal_net: 3982.30, thick_80_net: 4982.30, loss_rate: 0.05 };
+      const netMatPrice = isThick ? matData.thick_80_net : matData.normal_net;
+
+      const fabCost = isThick ? (fam.fab_base_cost + 140) : fam.fab_base_cost;
+      const transCost = 302.85;
+      const instCost = fam.inst_base_cost;
+      const cj = solveClosedFormCj(fabCost, transCost, instCost, 0.0, 0.085, -0.0715);
+
+      const card = document.getElementById('sandboxResultCard');
+      card.innerHTML = `
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+          <div class="p-2 bg-slate-50 rounded border">
+            <div class="text-[10px] text-slate-400">匹配截面族</div>
+            <div class="font-bold text-blue-700 text-sm mt-0.5">${parsed.shapeFamily}</div>
+            <div class="text-[10px] text-slate-500">${fam.family_name.split('/')[0]}</div>
+          </div>
+          <div class="p-2 bg-slate-50 rounded border">
+            <div class="text-[10px] text-slate-400">推导最大板厚</div>
+            <div class="font-bold text-amber-700 text-sm mt-0.5">${parsed.maxThick.toFixed(1)} mm</div>
+            <div class="text-[10px] ${isThick ? 'text-rose-600 font-bold' : 'text-emerald-600'}">${isThick ? '特厚板 ≥80mm 加价 ⚠' : '常规厚度'}</div>
+          </div>
+          <div class="p-2 bg-slate-50 rounded border">
+            <div class="text-[10px] text-slate-400">拉取材料除税价</div>
+            <div class="font-bold text-slate-800 text-sm mt-0.5">¥${netMatPrice.toFixed(2)}</div>
+            <div class="text-[10px] text-slate-500">材质: ${mat} (损耗 5%)</div>
+          </div>
+          <div class="p-2 bg-slate-900 text-white rounded border border-slate-800">
+            <div class="text-[10px] text-slate-400">两票制闭式解析单价</div>
+            <div class="font-bold text-emerald-400 text-sm mt-0.5">¥${cj.toFixed(2)} 元/t</div>
+            <div class="text-[10px] text-slate-400">闭式解析一步求解</div>
+          </div>
+        </div>
+        <div class="p-2 bg-emerald-50 border border-emerald-200 rounded text-[11px] text-emerald-900 mt-2 flex justify-between">
+          <span><b>自动拉取绑定定额：</b>制作: ${fam.bound_fab_desc} | 安装: ${fam.bound_inst_desc}</span>
+          <span class="text-emerald-700 font-bold">匹配成功 ✓</span>
+        </div>
+      `;
+    }
+
+    // ----------------------------------------------------
+    // 9. 算量工作台 Auto-Pull 定额直连与即时微调
+    // ----------------------------------------------------
+    let currentAutoPullRowIndex = 16;
+    let isAutoPullEditMode = false;
+
+    // 两票制闭式代数公式求解
+    function solveClosedFormCj(cFab, cTrans, cInst, rProcess = 0.0, rMgmt = 0.085, rProfit = -0.0715) {
+      const numerator = (cFab + cTrans) * 1.13 + cInst * 1.09;
+      const denominator = 1.0 - (rProcess * 1.13) - ((rMgmt + rProfit) * 1.09);
+      return numerator / denominator;
+    }
+
     function selectComponent(rowIdx) {
-      if (!masterData) return;
+      if (!masterData || !masterData.components) return;
       selectedRowIndex = rowIdx;
+      currentAutoPullRowIndex = rowIdx;
       const comp = masterData.components.find(c => c.row_index === rowIdx) || masterData.components[0];
       if (!comp) return;
 
+      const families = masterData.section_families || [];
+      const fam = families.find(f => f.family_code === comp.shape_family) || families[0] || {};
+      const quotas = masterData.quotas || {};
+      const matPrices = quotas.material_prices || {};
+      const matKey = comp.material || 'Q355B';
+      const matData = matPrices[matKey] || matPrices['Q355B'] || { normal_net: 3982.30, thick_80_net: 4982.30, loss_rate: 0.05 };
+
+      const isThick = (comp.max_thickness || 0) >= 80;
+      const netMatPrice = isThick ? matData.thick_80_net : matData.normal_net;
+      const lossRate = matData.loss_rate || 0.05;
+      const lossCost = netMatPrice * lossRate;
+
+      const fabCost = comp.cost_fab_net || fam.fab_base_cost || 5981.77;
+      const transKm = comp.transport_km || 850;
+      const transCost = comp.cost_trans_net || ((transKm / 850.0) * 302.85);
+      const instCost = comp.cost_inst_net || fam.inst_base_cost || 1525.69;
+
+      const cjPrice = comp.cj_price || solveClosedFormCj(fabCost, transCost, instCost);
+      const totalAmount = comp.total_amount || (comp.self_weight * cjPrice);
+
+      // 渲染查看模式
       document.getElementById('inspCompId').innerText = 'ROW-' + comp.row_index;
       document.getElementById('inspName').innerText = comp.component_type || '-';
       document.getElementById('inspSpec').innerText = comp.spec;
       document.getElementById('inspMat').innerText = comp.material || 'Q355B';
+      document.getElementById('inspShape').innerText = comp.shape_family || 'CROSS';
       document.getElementById('inspThick').innerText = comp.max_thickness.toFixed(1) + ' mm';
-      document.getElementById('inspShape').innerText = comp.shape_family;
-      document.getElementById('inspBqItem').innerText = comp.bq_item_name;
+      document.getElementById('inspBqItem').innerText = comp.bq_item_name || '实腹钢柱';
 
-      document.getElementById('inspFabCost').innerText = '¥' + (comp.cost_fab_net || 0).toFixed(2);
-      document.getElementById('inspTransCost').innerText = '¥' + (comp.cost_trans_net || 0).toFixed(2);
-      document.getElementById('inspInstCost').innerText = '¥' + (comp.cost_inst_net || 0).toFixed(2);
-      document.getElementById('inspCjPrice').innerText = (comp.cj_price || 0).toFixed(2) + ' 元/t';
+      const thickBadge = document.getElementById('inspThickBadge');
+      if (thickBadge) {
+        if (isThick) thickBadge.classList.remove('hidden');
+        else thickBadge.classList.add('hidden');
+      }
+
+      document.getElementById('inspMatNet').innerText = netMatPrice.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' 元/t';
+      document.getElementById('inspMatLoss').innerText = lossCost.toFixed(2) + ' 元/t';
+      document.getElementById('inspMatDesc').innerText = `${matKey} 基价${isThick ? ' + 80mm特厚板加价' : ''}`;
+
+      document.getElementById('inspFabCost').innerText = '¥' + fabCost.toFixed(2);
+      document.getElementById('inspFabDesc').innerText = fam.bound_fab_desc || '含胎架95、埋弧焊120、80mm厚板调价140';
+
+      document.getElementById('inspTransCost').innerText = '¥' + transCost.toFixed(2);
+      document.getElementById('inspInstCost').innerText = '¥' + instCost.toFixed(2);
+      document.getElementById('inspInstDesc').innerText = fam.bound_inst_desc || '高空吊装就位 + 大型机械措施包';
+
+      document.getElementById('inspCjPrice').innerText = cjPrice.toFixed(2) + ' 元/t';
+      document.getElementById('inspTotalAmount').innerText = '¥' + (totalAmount / 10000.0).toFixed(2) + ' 万元';
+
+      // 若正处于编辑模式，同步填充表单
+      if (isAutoPullEditMode) {
+        populateAutoPullEditForm(comp, netMatPrice, lossRate, fabCost, transKm, instCost, cjPrice);
+      }
+    }
+
+    function toggleAutoPullEditMode(forceState) {
+      if (forceState !== undefined) isAutoPullEditMode = forceState;
+      else isAutoPullEditMode = !isAutoPullEditMode;
+
+      const viewContainer = document.getElementById('inspectorViewContainer');
+      const editContainer = document.getElementById('inspectorEditContainer');
+      const btnToggle = document.getElementById('btnToggleAutoPullEdit');
+      const txtMode = document.getElementById('txtAutoPullMode');
+
+      if (isAutoPullEditMode) {
+        viewContainer.classList.add('hidden');
+        editContainer.classList.remove('hidden');
+        btnToggle.className = 'bg-amber-600 hover:bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded font-semibold transition flex items-center space-x-1';
+        txtMode.innerText = '查看明细';
+        selectComponent(currentAutoPullRowIndex);
+      } else {
+        viewContainer.classList.remove('hidden');
+        editContainer.classList.add('hidden');
+        btnToggle.className = 'bg-blue-600 hover:bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded font-semibold transition flex items-center space-x-1';
+        txtMode.innerText = '编辑调价';
+      }
+    }
+
+    function populateAutoPullEditForm(comp, netMatPrice, lossRate, fabCost, transKm, instCost, cjPrice) {
+      document.getElementById('inpEditCompSpec').value = comp.spec || '';
+      document.getElementById('selEditCompMat').value = comp.material || 'Q355B';
+      document.getElementById('selEditCompFamily').value = comp.shape_family || 'CROSS';
+      document.getElementById('inpEditCompThick').value = (comp.max_thickness || 16.0).toFixed(1);
+
+      document.getElementById('inpEditMatNet').value = netMatPrice.toFixed(2);
+      document.getElementById('inpEditLossRate').value = (lossRate * 100).toFixed(1);
+      document.getElementById('inpEditFabCost').value = fabCost.toFixed(2);
+      document.getElementById('inpEditInstCost').value = instCost.toFixed(2);
+      document.getElementById('inpEditTransKm').value = transKm;
+
+      onInspectorParamInput();
+    }
+
+    function onInspectorSpecInput() {
+      const spec = document.getElementById('inpEditCompSpec').value;
+      const parsed = parseSectionSpecIntelligent(spec);
+      document.getElementById('selEditCompFamily').value = parsed.shapeFamily;
+      document.getElementById('inpEditCompThick').value = parsed.maxThick.toFixed(1);
+
+      // 根据新截面族和板厚重新拉取基准价格
+      const fam = (masterData.section_families || []).find(f => f.family_code === parsed.shapeFamily);
+      if (fam) {
+        const isThick = parsed.maxThick >= 80;
+        document.getElementById('inpEditFabCost').value = (isThick ? (fam.fab_base_cost + 140) : fam.fab_base_cost).toFixed(2);
+        document.getElementById('inpEditInstCost').value = fam.inst_base_cost.toFixed(2);
+      }
+      onInspectorParamInput();
+    }
+
+    function onInspectorParamInput() {
+      const comp = masterData.components.find(c => c.row_index === currentAutoPullRowIndex);
+      if (!comp) return;
+
+      const fabCost = parseFloat(document.getElementById('inpEditFabCost').value) || 0;
+      const instCost = parseFloat(document.getElementById('inpEditInstCost').value) || 0;
+      const transKm = parseFloat(document.getElementById('inpEditTransKm').value) || 850;
+      const transCost = (transKm / 850.0) * 302.85;
+
+      const newCj = solveClosedFormCj(fabCost, transCost, instCost);
+      const oldCj = comp.cj_price || newCj;
+      const diff = newCj - oldCj;
+      const newTotal = (comp.self_weight * newCj) / 10000.0;
+
+      document.getElementById('previewEditCjPrice').innerText = newCj.toFixed(2) + ' 元/t';
+      const diffEl = document.getElementById('previewEditDiff');
+      diffEl.innerText = (diff >= 0 ? '+' : '') + diff.toFixed(2) + ' 元/t';
+      diffEl.className = diff >= 0 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold';
+      document.getElementById('previewEditTotal').innerText = '¥' + newTotal.toFixed(2) + ' 万元';
+    }
+
+    function applyAutoPullEdits() {
+      const comp = masterData.components.find(c => c.row_index === currentAutoPullRowIndex);
+      if (!comp) return;
+
+      const newSpec = document.getElementById('inpEditCompSpec').value.trim();
+      const newMat = document.getElementById('selEditCompMat').value;
+      const newFamily = document.getElementById('selEditCompFamily').value;
+      const newThick = parseFloat(document.getElementById('inpEditCompThick').value) || 16.0;
+
+      const fabCost = parseFloat(document.getElementById('inpEditFabCost').value) || 0;
+      const instCost = parseFloat(document.getElementById('inpEditInstCost').value) || 0;
+      const transKm = parseFloat(document.getElementById('inpEditTransKm').value) || 850;
+      const transCost = (transKm / 850.0) * 302.85;
+
+      const newCj = solveClosedFormCj(fabCost, transCost, instCost);
+
+      comp.spec = newSpec;
+      comp.material = newMat;
+      comp.shape_family = newFamily;
+      comp.max_thickness = newThick;
+      comp.cost_fab_net = fabCost;
+      comp.cost_inst_net = instCost;
+      comp.cost_trans_net = transCost;
+      comp.transport_km = transKm;
+      comp.cj_price = newCj;
+      comp.total_amount = comp.self_weight * newCj;
+
+      toggleAutoPullEditMode(false);
+      renderCurrentView();
+      selectComponent(comp.row_index);
+      showToast(`已成功保存构件 [ROW-${comp.row_index}] 的微调参数，并完成全案闭式重算！`);
+    }
+
+    function resetCurrentComponentQuota() {
+      const comp = masterData.components.find(c => c.row_index === currentAutoPullRowIndex);
+      if (!comp) return;
+
+      const parsed = parseSectionSpecIntelligent(comp.spec, comp.component_type);
+      comp.shape_family = parsed.shapeFamily;
+      comp.max_thickness = parsed.maxThick;
+
+      const fam = (masterData.section_families || []).find(f => f.family_code === comp.shape_family) || masterData.section_families[0];
+      const isThick = comp.max_thickness >= 80;
+
+      comp.cost_fab_net = isThick ? (fam.fab_base_cost + 140) : fam.fab_base_cost;
+      comp.cost_inst_net = fam.inst_base_cost;
+      comp.transport_km = 850;
+      comp.cost_trans_net = 302.85;
+      comp.cj_price = solveClosedFormCj(comp.cost_fab_net, comp.cost_trans_net, comp.cost_inst_net);
+      comp.total_amount = comp.self_weight * comp.cj_price;
+
+      renderCurrentView();
+      selectComponent(comp.row_index);
+      showToast(`已将构件 [ROW-${comp.row_index}] 恢复为标准截面族定额默认值！`);
     }
 
     function confirmTakeoffDialogAdd() {

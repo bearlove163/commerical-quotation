@@ -2297,5 +2297,247 @@
       "unlocked_tonnage": "20,974 t",
       "sensitivity_impact": "钢价每波动 ¥100/t 影响利润池 ¥209.7 万元"
     }
+  },
+  "section_families": [
+    {
+      "family_code": "CROSS",
+      "family_name": "十字形钢柱 / 实腹十字构件",
+      "prefix_rules": [
+        "十",
+        "十字",
+        "CROSS"
+      ],
+      "default_material": "Q355B",
+      "thick_rule": "取最后两位或肢板厚度",
+      "bound_fab_desc": "重型胎架(95) + 埋弧焊(120) + ≥80mm厚板调价(140)",
+      "bound_inst_desc": "高空吊装就位(618.05) + 大型机械措施(769.33)",
+      "fab_base_cost": 6050.0,
+      "inst_base_cost": 1525.69,
+      "is_builtin": true
+    },
+    {
+      "family_code": "BOX",
+      "family_name": "箱型钢柱 / 焊接箱型梁",
+      "prefix_rules": [
+        "箱",
+        "口",
+        "BOX"
+      ],
+      "default_material": "Q355B",
+      "thick_rule": "取翼缘/腹板厚度",
+      "bound_fab_desc": "内隔板电渣焊(110) + 自动埋弧焊(120) + 胎架(95)",
+      "bound_inst_desc": "箱体现场对接口焊(620.00) + 机械措施(750.00)",
+      "fab_base_cost": 5925.0,
+      "inst_base_cost": 1525.69,
+      "is_builtin": true
+    },
+    {
+      "family_code": "PIPE",
+      "family_name": "圆管钢柱 / 钢管桁架杆件",
+      "prefix_rules": [
+        "Ф",
+        "直径",
+        "P",
+        "PIPE",
+        "管"
+      ],
+      "default_material": "Q345GJC",
+      "thick_rule": "取壁厚",
+      "bound_fab_desc": "相贯线数控激光切割(80) + 环缝自动焊(130)",
+      "bound_inst_desc": "高空对接口焊(680.00) + 吊装机械(700.00)",
+      "fab_base_cost": 5860.0,
+      "inst_base_cost": 1490.0,
+      "is_builtin": true
+    },
+    {
+      "family_code": "SPHERE",
+      "family_name": "网架焊接球 / 铸钢节点",
+      "prefix_rules": [
+        "焊接球",
+        "WS",
+        "球",
+        "SPHERE"
+      ],
+      "default_material": "Q420GJC",
+      "thick_rule": "取球壁厚度",
+      "bound_fab_desc": "半球热冲压(180) + 环焊缝拼对(150) + 支座拼装(80)",
+      "bound_inst_desc": "网架高空散拼/滑移(780.00) + 脚手架措施包(450.00)",
+      "fab_base_cost": 6150.0,
+      "inst_base_cost": 1620.0,
+      "is_builtin": true
+    },
+    {
+      "family_code": "TRUSS",
+      "family_name": "空间管桁架 / 倒三角桁架",
+      "prefix_rules": [
+        "桁架",
+        "TRUSS"
+      ],
+      "default_material": "Q355B",
+      "thick_rule": "取主弦杆壁厚",
+      "bound_fab_desc": "空间立体预拼装(150) + 弦杆相贯打磨(120) + 胎架(100)",
+      "bound_inst_desc": "整体分段原位拼装液压提升(850.00)",
+      "fab_base_cost": 6220.0,
+      "inst_base_cost": 1750.0,
+      "is_builtin": true
+    },
+    {
+      "family_code": "H_BEAM",
+      "family_name": "焊接H型钢 / 轧制H型钢",
+      "prefix_rules": [
+        "H",
+        "焊接H",
+        "轧制H"
+      ],
+      "default_material": "Q355B",
+      "thick_rule": "取翼缘厚度",
+      "bound_fab_desc": "三挺身自动组立(60) + 埋弧焊(90) + 翼缘矫正(30)",
+      "bound_inst_desc": "高强螺栓初终拧施工(180.00) + 汽车吊安装(420.00)",
+      "fab_base_cost": 5480.0,
+      "inst_base_cost": 1380.0,
+      "is_builtin": true
+    },
+    {
+      "family_code": "PLATE",
+      "family_name": "节点连接板 / 预埋件 / 加劲肋",
+      "prefix_rules": [
+        "-",
+        "PL",
+        "板",
+        "连接板"
+      ],
+      "default_material": "Q355B",
+      "thick_rule": "取前缀板厚",
+      "bound_fab_desc": "数控精细等离子切割(45) + 自动坡口(35)",
+      "bound_inst_desc": "构件现场组拼定位点焊(120.00)",
+      "fab_base_cost": 5320.0,
+      "inst_base_cost": 1250.0,
+      "is_builtin": true
+    }
+  ],
+  "quotas": {
+    "material_prices": {
+      "Q235B": {
+        "normal_net": 3946.9,
+        "thick_80_net": 3946.9,
+        "loss_rate": 0.05,
+        "market_price": 4460.0
+      },
+      "Q355B": {
+        "normal_net": 3982.3,
+        "thick_80_net": 4982.3,
+        "loss_rate": 0.05,
+        "market_price": 4500.0,
+        "thick_addon": 1000.0
+      },
+      "Q345GJC": {
+        "normal_net": 4247.79,
+        "thick_80_net": 5247.79,
+        "loss_rate": 0.05,
+        "market_price": 4800.0,
+        "thick_addon": 1000.0
+      },
+      "Q420GJC": {
+        "normal_net": 4650.0,
+        "thick_80_net": 5650.0,
+        "loss_rate": 0.05,
+        "market_price": 5250.0,
+        "thick_addon": 1000.0
+      }
+    },
+    "fabrication_steps": [
+      {
+        "id": 1,
+        "name": "数控精细下料切割",
+        "cost": 55.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 2,
+        "name": "重型胎架组立拼装",
+        "cost": 95.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 3,
+        "name": "埋弧自动焊主焊缝",
+        "cost": 120.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 4,
+        "name": "焊缝探伤矫正打磨",
+        "cost": 40.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 5,
+        "name": "超厚板(≥80mm)加工加价",
+        "cost": 140.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 6,
+        "name": "空间立体预拼装",
+        "cost": 50.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 7,
+        "name": "工厂抛丸底中漆",
+        "cost": 0.0,
+        "unit": "元/t"
+      }
+    ],
+    "installation_steps": [
+      {
+        "id": 1,
+        "name": "现场卸货倒运与二次短驳",
+        "cost": 45.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 2,
+        "name": "地面拼装胎架拼焊",
+        "cost": 80.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 3,
+        "name": "高空吊装就位 (十字钢柱)",
+        "cost": 618.05,
+        "unit": "元/t"
+      },
+      {
+        "id": 4,
+        "name": "大型起重机械措施(履带吊+提升)",
+        "cost": 769.33,
+        "unit": "元/t"
+      },
+      {
+        "id": 5,
+        "name": "高强螺栓初终拧施工",
+        "cost": 60.0,
+        "unit": "元/t"
+      },
+      {
+        "id": 6,
+        "name": "现场防火涂料与面漆涂装",
+        "cost": 112.0,
+        "unit": "元/t"
+      }
+    ],
+    "transport": {
+      "base_km": 850,
+      "base_cost": 302.85,
+      "cost_per_km": 0.3563
+    },
+    "two_invoice_params": {
+      "vat_fab_rate": 0.13,
+      "vat_inst_rate": 0.09,
+      "mgmt_rate": 0.085,
+      "profit_rate": -0.0715,
+      "process_plate_rate": 0.084
+    }
   }
 }
