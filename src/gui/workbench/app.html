@@ -23,7 +23,7 @@
   <!-- ========================================== -->
   <!-- 0. 登录门禁与身份切换模态层 (Login & Auth)  -->
   <!-- ========================================== -->
-  <div id="loginOverlay" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+  <div id="loginOverlay" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-3xl overflow-hidden flex flex-col">
       <!-- 登录顶栏 -->
       <div class="bg-slate-900 text-white px-8 py-6 border-b border-slate-800 flex justify-between items-center">
@@ -304,6 +304,106 @@
             <button onclick="switchNavModule('database')" class="px-3.5 py-1.5 bg-white hover:bg-blue-50 text-blue-900 rounded-lg font-bold text-xs shadow transition flex items-center space-x-1.5">
               <span>立即进入基础数据看板</span><i class="fa-solid fa-arrow-right"></i>
             </button>
+          </div>
+        </div>
+
+        <!-- 基础数据六大核心分包与定额快捷透视 (拉索/铸钢件/楼承板/油漆涂料/支座/检测) ⭐ -->
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="w-2.5 h-4 bg-purple-600 rounded-full inline-block"></span>
+              <h3 class="font-bold text-slate-800 text-xs flex items-center space-x-2">
+                <span>基础数据全景直达透视 (专业分包 / 正交材料 / 制作安装定额)</span>
+                <span class="bg-purple-100 text-purple-700 text-[10px] px-2 py-0.5 rounded font-mono font-semibold">18 分包 + 116 定额 + 13 调运</span>
+              </h3>
+            </div>
+            <div class="flex items-center space-x-2 text-[11px]">
+              <button onclick="pullExternalSubcontractData()" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 rounded flex items-center space-x-1 font-semibold transition">
+                <i class="fa-solid fa-cloud-arrow-down text-emerald-600"></i><span>智能拉取外部数据</span>
+              </button>
+              <button onclick="switchNavModule('database')" class="text-indigo-600 hover:text-indigo-800 font-bold flex items-center space-x-0.5">
+                <span>进入③基础数据中心</span><i class="fa-solid fa-chevron-right text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+          <!-- 6 大分包核心卡片 -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs">
+            <!-- 1. 拉索体系 -->
+            <div onclick="navigateToSubcontractCategory('CABLE')" class="p-2.5 rounded-lg border border-purple-200 bg-purple-50/50 hover:bg-purple-100/70 hover:border-purple-400 cursor-pointer transition shadow-2xs group">
+              <div class="flex items-center justify-between text-purple-700 mb-1">
+                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-link mr-1 text-[11px]"></i>拉索体系</span>
+                <span class="text-[10px] font-mono bg-purple-200/80 text-purple-800 px-1 rounded font-bold">4项</span>
+              </div>
+              <div class="text-[10px] text-slate-600 truncate">高钒索 / 半平行索 / 不锈钢索</div>
+              <div class="text-[10px] text-purple-900 font-mono font-bold mt-1">¥ 19,500 ~ 34,000 / t</div>
+            </div>
+            <!-- 2. 空间铸钢件 -->
+            <div onclick="navigateToSubcontractCategory('CAST_STEEL')" class="p-2.5 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 hover:border-amber-400 cursor-pointer transition shadow-2xs group">
+              <div class="flex items-center justify-between text-amber-700 mb-1">
+                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-shapes mr-1 text-[11px]"></i>空间铸钢件</span>
+                <span class="text-[10px] font-mono bg-amber-200/80 text-amber-800 px-1 rounded font-bold">2项</span>
+              </div>
+              <div class="text-[10px] text-slate-600 truncate">G20Mn5 节点 / 拱脚铸钢</div>
+              <div class="text-[10px] text-amber-900 font-mono font-bold mt-1">¥ 16,800 ~ 18,500 / t</div>
+            </div>
+            <!-- 3. 楼承板体系 -->
+            <div onclick="navigateToSubcontractCategory('DECKING')" class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/50 hover:bg-blue-100/70 hover:border-blue-400 cursor-pointer transition shadow-2xs group">
+              <div class="flex items-center justify-between text-blue-700 mb-1">
+                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-layer-group mr-1 text-[11px]"></i>楼承板体系</span>
+                <span class="text-[10px] font-mono bg-blue-200/80 text-blue-800 px-1 rounded font-bold">3项</span>
+              </div>
+              <div class="text-[10px] text-slate-600 truncate">闭口型 / 桁架楼承板</div>
+              <div class="text-[10px] text-blue-900 font-mono font-bold mt-1">¥ 62 ~ 115 / ㎡</div>
+            </div>
+            <!-- 4. 油漆涂料体系 -->
+            <div onclick="navigateToSubcontractCategory('COATING')" class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100/70 hover:border-emerald-400 cursor-pointer transition shadow-2xs group">
+              <div class="flex items-center justify-between text-emerald-700 mb-1">
+                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-paint-roller mr-1 text-[11px]"></i>油漆涂料体系</span>
+                <span class="text-[10px] font-mono bg-emerald-200/80 text-emerald-800 px-1 rounded font-bold">5项</span>
+              </div>
+              <div class="text-[10px] text-slate-600 truncate">富锌底漆 / 氟碳 / 防火涂料</div>
+              <div class="text-[10px] text-emerald-900 font-mono font-bold mt-1">¥ 29~68/kg · ¥65/㎡</div>
+            </div>
+            <!-- 5. 减隔震支座 -->
+            <div onclick="navigateToSubcontractCategory('BEARING')" class="p-2.5 rounded-lg border border-cyan-200 bg-cyan-50/50 hover:bg-cyan-100/70 hover:border-cyan-400 cursor-pointer transition shadow-2xs group">
+              <div class="flex items-center justify-between text-cyan-700 mb-1">
+                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-circle-dot mr-1 text-[11px]"></i>减隔震支座</span>
+                <span class="text-[10px] font-mono bg-cyan-200/80 text-cyan-800 px-1 rounded font-bold">2项</span>
+              </div>
+              <div class="text-[10px] text-slate-600 truncate">抗震球型钢支座 / 橡胶减震</div>
+              <div class="text-[10px] text-cyan-900 font-mono font-bold mt-1">¥ 28,000 ~ 46,000 / 套</div>
+            </div>
+            <!-- 6. 专项检测(UT/MT) -->
+            <div onclick="navigateToSubcontractCategory('NDT')" class="p-2.5 rounded-lg border border-rose-200 bg-rose-50/50 hover:bg-rose-100/70 hover:border-rose-400 cursor-pointer transition shadow-2xs group">
+              <div class="flex items-center justify-between text-rose-700 mb-1">
+                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-magnifying-glass-chart mr-1 text-[11px]"></i>专项检测(UT/MT)</span>
+                <span class="text-[10px] font-mono bg-rose-200/80 text-rose-800 px-1 rounded font-bold">2项</span>
+              </div>
+              <div class="text-[10px] text-slate-600 truncate">超声波UT / 磁粉MT探伤</div>
+              <div class="text-[10px] text-rose-900 font-mono font-bold mt-1">¥ 32.00 ~ 48.00 / m</div>
+            </div>
+          </div>
+          <!-- 底部快捷关联链接行 -->
+          <div class="flex flex-wrap items-center justify-between pt-1 text-[11px] text-slate-500 border-t border-slate-100 gap-2">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span class="font-medium text-slate-700">关联配套库：</span>
+              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('vendors');" class="text-teal-600 hover:text-teal-800 font-semibold flex items-center space-x-1">
+                <i class="fa-solid fa-building-circle-check"></i><span>合格分包商名录 (12家)</span>
+              </a>
+              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('fab');" class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center space-x-1">
+                <i class="fa-solid fa-industry"></i><span>车间制作工序定额 (47项)</span>
+              </a>
+              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('ins');" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center space-x-1">
+                <i class="fa-solid fa-person-digging"></i><span>现场安装定额 (65项)</span>
+              </a>
+              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('mat');" class="text-amber-600 hover:text-amber-800 font-semibold flex items-center space-x-1">
+                <i class="fa-solid fa-truck-ramp-box"></i><span>钢厂-加工厂调运矩阵 (13路线)</span>
+              </a>
+            </div>
+            <div class="flex items-center space-x-1 text-slate-400">
+              <i class="fa-solid fa-circle-info text-[10px]"></i>
+              <span>点击任意卡片一键直达对应明细与编辑界面</span>
+            </div>
           </div>
         </div>
 
@@ -1269,10 +1369,20 @@
                 </div>
               </div>
             </div>
-            <button onclick="openSubcontractDialog()" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold shadow flex items-center space-x-1.5">
-              <i class="fa-solid fa-cart-flatbed"></i>
-              <span>唤起分包选型弹窗 (SubcontractDialog)</span>
-            </button>
+            <div class="flex items-center space-x-2">
+              <button onclick="openAddSubcontractModal()" class="px-3 py-1.5 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
+                <i class="fa-solid fa-plus"></i>
+                <span>录入新分包产品</span>
+              </button>
+              <button onclick="pullExternalSubcontractData()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span>拉取外部行业数据</span>
+              </button>
+              <button onclick="openSubcontractDialog()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-purple-200 border border-slate-700 rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
+                <i class="fa-solid fa-cart-flatbed"></i>
+                <span>选型弹窗</span>
+              </button>
+            </div>
           </div>
 
           <!-- 分包产品类别快速筛选 -->
@@ -1310,7 +1420,7 @@
 
         <!-- 3.5 合格分包商名录库 (Vendor Registry) ⭐ -->
         <div id="dbPanel-vendors" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
-          <div class="p-3 bg-gradient-to-r from-teal-50 to-slate-50 border border-teal-200 rounded-xl flex justify-between items-center">
+          <div class="p-3 bg-gradient-to-r from-teal-50 to-slate-50 border border-teal-200 rounded-xl flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center space-x-2.5">
               <div class="w-8 h-8 rounded-lg bg-teal-600/10 border border-teal-300 flex items-center justify-center text-teal-600 shrink-0">
                 <i class="fa-solid fa-building-circle-check text-base"></i>
@@ -1324,6 +1434,16 @@
                   沉淀具备大跨度公建站房施工业绩、特种设备制造资质与优良履约评级的专业供应商名录，支持在出标选型时一键比选与拉取折扣。
                 </div>
               </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="openAddVendorModal()" class="px-3 py-1.5 bg-teal-700 hover:bg-teal-800 text-white rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>录入合格分包商</span>
+              </button>
+              <button onclick="pullExternalVendorData()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span>拉取行业合格名录</span>
+              </button>
             </div>
           </div>
 
@@ -2898,6 +3018,161 @@
     </div>
   </div>
 
+  <!-- MODAL 13: 录入新分包产品弹窗 (modalAddSubcontract) ⭐ -->
+  <div id="modalAddSubcontract" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-xl overflow-hidden flex flex-col">
+      <div class="bg-purple-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-plus-circle text-purple-300"></i>
+          <span class="font-bold text-sm">录入新增专业分包产品 (拉索/铸钢/楼承板/油漆涂料/支座/检测)</span>
+        </div>
+        <button onclick="closeDialog('modalAddSubcontract')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-3 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">产品类别:</label>
+            <select id="newSubCat" class="w-full mt-1 p-2 border rounded font-semibold bg-white text-xs">
+              <option value="CABLE" selected>拉索体系 (CABLE)</option>
+              <option value="CAST_STEEL">空间铸钢件 (CAST_STEEL)</option>
+              <option value="DECKING">楼承板体系 (DECKING)</option>
+              <option value="COATING">油漆涂料体系 (COATING)</option>
+              <option value="BEARING">减隔震支座 (BEARING)</option>
+              <option value="NDT">专项无损检测 (NDT)</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">自拟产品编码 (可选):</label>
+            <input type="text" id="newSubId" placeholder="例: SUB-CABLE-05" class="w-full mt-1 p-2 border rounded font-mono text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">分包产品全称 <span class="text-rose-500">*</span>:</label>
+          <input type="text" id="newSubName" placeholder="例: 阻尼自限位索具体系" class="w-full mt-1 p-2 border rounded font-bold text-xs">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">规格型号:</label>
+            <input type="text" id="newSubSpec" placeholder="例: Φ65mm Galfan 阻尼型" class="w-full mt-1 p-2 border rounded text-xs">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">计量单位:</label>
+            <select id="newSubUnit" class="w-full mt-1 p-2 border rounded bg-white text-xs">
+              <option value="t" selected>t (吨)</option>
+              <option value="m2">m2 (平方米)</option>
+              <option value="m">m (米)</option>
+              <option value="套">套</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="font-bold text-purple-900">基准预算单价 (元):</label>
+            <input type="number" id="newSubPrice" placeholder="28000" class="w-full mt-1 p-2 border rounded font-mono font-bold text-xs">
+          </div>
+          <div>
+            <label class="text-slate-600">市场最低单价:</label>
+            <input type="number" id="newSubPriceMin" placeholder="25000" class="w-full mt-1 p-2 border rounded font-mono text-xs">
+          </div>
+          <div>
+            <label class="text-slate-600">市场最高单价:</label>
+            <input type="number" id="newSubPriceMax" placeholder="32000" class="w-full mt-1 p-2 border rounded font-mono text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">推荐合格分包商 / 供应商 (用顿号隔开):</label>
+          <input type="text" id="newSubVendors" placeholder="例: 柳州欧维姆、巨力索具" class="w-full mt-1 p-2 border rounded text-xs">
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">核心技术要点与参数说明:</label>
+          <textarea id="newSubSpecs" rows="2" placeholder="例: 包含双向减震阻尼锚头、出厂拉力破坏试验与包装保护。" class="w-full mt-1 p-2 border rounded text-xs"></textarea>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('modalAddSubcontract')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">取消</button>
+        <button onclick="saveNewSubcontractProduct()" class="px-4 py-1.5 bg-purple-700 hover:bg-purple-800 text-white rounded font-bold shadow">确认录入并保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 14: 录入新合格分包商弹窗 (modalAddVendor) ⭐ -->
+  <div id="modalAddVendor" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-xl overflow-hidden flex flex-col">
+      <div class="bg-teal-900 text-white px-5 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-user-plus text-teal-300"></i>
+          <span class="font-bold text-sm">录入新增合格分包商与供应商名录</span>
+        </div>
+        <button onclick="closeDialog('modalAddVendor')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 space-y-3 text-xs overflow-y-auto max-h-[75vh]">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">分包业务类别:</label>
+            <select id="newVenCat" class="w-full mt-1 p-2 border rounded font-semibold bg-white text-xs">
+              <option value="CABLE">拉索体系 (CABLE)</option>
+              <option value="CAST_STEEL">空间铸钢件 (CAST_STEEL)</option>
+              <option value="DECKING">楼承板体系 (DECKING)</option>
+              <option value="COATING" selected>油漆涂料体系 (COATING)</option>
+              <option value="BEARING">减隔震支座 (BEARING)</option>
+              <option value="NDT">专项无损检测 (NDT)</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">供应商编码 (可选):</label>
+            <input type="text" id="newVenId" placeholder="例: VEN-COAT-03" class="w-full mt-1 p-2 border rounded font-mono text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">企业全称 <span class="text-rose-500">*</span>:</label>
+          <input type="text" id="newVenName" placeholder="例: 中远佐敦船舶涂料（青岛）有限公司" class="w-full mt-1 p-2 border rounded font-bold text-xs">
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="font-bold text-slate-700">资质等级:</label>
+            <input type="text" id="newVenGrade" placeholder="例: 特种工业防护特级" class="w-full mt-1 p-2 border rounded text-xs">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">信用合作评级:</label>
+            <select id="newVenRating" class="w-full mt-1 p-2 border rounded bg-white text-xs font-bold text-amber-700">
+              <option value="AAA" selected>AAA 级 (优选)</option>
+              <option value="AA">AA 级 (推荐)</option>
+              <option value="A">A 级 (合格)</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-bold text-teal-800">指导浮动折扣:</label>
+            <select id="newVenDiscount" class="w-full mt-1 p-2 border rounded bg-white text-xs font-bold">
+              <option value="0.95" selected>0.95 (5%优惠)</option>
+              <option value="0.92">0.92 (8%优惠)</option>
+              <option value="0.90">0.90 (10%优惠)</option>
+              <option value="1.00">1.00 (基准平价)</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700">注册资金 (亿元):</label>
+            <input type="number" step="0.1" id="newVenCapital" placeholder="2.5" class="w-full mt-1 p-2 border rounded font-mono text-xs">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700">总部所在地:</label>
+            <input type="text" id="newVenHq" placeholder="例: 山东青岛" class="w-full mt-1 p-2 border rounded text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700">特许供应范围与业绩亮点:</label>
+          <textarea id="newVenScope" rows="2" placeholder="例: 重度海洋盐雾防腐涂料研发生产，深中通道/大湾区特大型桥梁供货业绩。" class="w-full mt-1 p-2 border rounded text-xs"></textarea>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('modalAddVendor')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">取消</button>
+        <button onclick="saveNewVendor()" class="px-4 py-1.5 bg-teal-700 hover:bg-teal-800 text-white rounded font-bold shadow">确认录入名录库</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 4. 全局交互逻辑脚本 (JavaScript Engine)    -->
   <!-- ========================================== -->
   <script>
@@ -2934,6 +3209,7 @@
         runSimMaterialCalc();
         renderCurrentView();
         selectComponent(16);
+        handleUrlRouting();
       })
       .catch(err => {
         console.error("加载 data.json 失败:", err);
@@ -4690,6 +4966,212 @@
         </div>
       `).join('');
     }
+
+    // 6.1 分包类别与外部数据导航
+    function navigateToSubcontractCategory(cat) {
+      closeLoginOverlay();
+      switchNavModule('database');
+      switchDbTab('subcontract');
+      filterSubcontractTable(cat);
+      try {
+        window.location.hash = 'subcontract_' + (cat ? cat.toLowerCase() : 'all');
+      } catch (e) {}
+    }
+
+    // 6.2 录入新增分包产品
+    function openAddSubcontractModal() {
+      openDialog('modalAddSubcontract');
+    }
+    function saveNewSubcontractProduct() {
+      const id = (document.getElementById('newSubId') ? document.getElementById('newSubId').value.trim() : '') || ('SUB-CUSTOM-' + Math.floor(Math.random() * 900 + 100));
+      const cat = document.getElementById('newSubCat') ? document.getElementById('newSubCat').value : 'CABLE';
+      const name = document.getElementById('newSubName') ? document.getElementById('newSubName').value.trim() : '';
+      const spec = (document.getElementById('newSubSpec') ? document.getElementById('newSubSpec').value.trim() : '') || '-';
+      const unit = (document.getElementById('newSubUnit') ? document.getElementById('newSubUnit').value.trim() : '') || 't';
+      const price = parseFloat(document.getElementById('newSubPrice') ? document.getElementById('newSubPrice').value : 0) || 0;
+      const pMin = parseFloat(document.getElementById('newSubPriceMin') ? document.getElementById('newSubPriceMin').value : 0) || (price * 0.9);
+      const pMax = parseFloat(document.getElementById('newSubPriceMax') ? document.getElementById('newSubPriceMax').value : 0) || (price * 1.15);
+      const specs = document.getElementById('newSubSpecs') ? document.getElementById('newSubSpecs').value.trim() : '';
+      const vendorStr = document.getElementById('newSubVendors') ? document.getElementById('newSubVendors').value.trim() : '';
+      const vendors = vendorStr ? vendorStr.split(/[,，、]/).map(s => s.trim()) : ['自定义合格名录'];
+
+      if (!name) {
+        showToast('请输入分包产品名称！');
+        return;
+      }
+      const newItem = {
+        id, category: cat, name, spec, unit,
+        unit_price: price, price_min: pMin, price_max: pMax,
+        specs: specs || '商务自定义录入分包项',
+        formula: '综合包干单价',
+        vendors: vendors.length ? vendors : ['自定义合格名录']
+      };
+      if (masterData && masterData.master_data && masterData.master_data.subcontract_products) {
+        masterData.master_data.subcontract_products.unshift(newItem);
+      }
+      renderSubcontractTable();
+      closeDialog('modalAddSubcontract');
+      showToast(`已成功录入分包产品：${name} (¥${price.toFixed(2)}/${unit})！`);
+    }
+
+    // 6.3 录入新增合格分包商
+    function openAddVendorModal() {
+      openDialog('modalAddVendor');
+    }
+    function saveNewVendor() {
+      const id = (document.getElementById('newVenId') ? document.getElementById('newVenId').value.trim() : '') || ('VEN-CUSTOM-' + Math.floor(Math.random() * 900 + 100));
+      const name = document.getElementById('newVenName') ? document.getElementById('newVenName').value.trim() : '';
+      const cat = document.getElementById('newVenCat') ? document.getElementById('newVenCat').value : 'COATING';
+      const grade = (document.getElementById('newVenGrade') ? document.getElementById('newVenGrade').value.trim() : '') || '专业承包壹级';
+      const scope = (document.getElementById('newVenScope') ? document.getElementById('newVenScope').value.trim() : '') || '专业加工制作与现场配合';
+      const capital = parseFloat(document.getElementById('newVenCapital') ? document.getElementById('newVenCapital').value : 50.0) || 50.0;
+      const hq = (document.getElementById('newVenHq') ? document.getElementById('newVenHq').value.trim() : '') || '国内制造业基地';
+      const rating = (document.getElementById('newVenRating') ? document.getElementById('newVenRating').value : '') || 'AAA';
+      const discount = parseFloat(document.getElementById('newVenDiscount') ? document.getElementById('newVenDiscount').value : 0.95) || 0.95;
+
+      if (!name) {
+        showToast('请输入企业全称！');
+        return;
+      }
+      const newV = {
+        id, name, category: cat, grade, scope,
+        capital_m: capital, hq,
+        regions: ['全国各区域'],
+        rating, discount
+      };
+      if (masterData && masterData.master_data && masterData.master_data.qualified_vendors) {
+        masterData.master_data.qualified_vendors.unshift(newV);
+      }
+      renderVendorsCards();
+      closeDialog('modalAddVendor');
+      showToast(`已成功录入合格分包商：${name} (${rating}级)！`);
+    }
+
+    // 6.4 智能拉取外部行业数据
+    function pullExternalSubcontractData() {
+      if (!masterData || !masterData.master_data) return;
+      const list = masterData.master_data.subcontract_products;
+      const newItems = [
+        {
+          id: "SUB-CABLE-05", category: "CABLE", name: "碳纤维高强复合拉索",
+          spec: "Φ40mm CFRP Cable", unit: "t", unit_price: 45000.00,
+          price_min: 42000.00, price_max: 52000.00,
+          specs: "超轻量化超高耐腐蚀碳纤维复合拉索，适用于近海及高盐雾极端腐蚀环境",
+          formula: "成品包干单价 (含锚具配套)", vendors: ["中建科工外部创新技术库", "江苏连云港碳谷"]
+        },
+        {
+          id: "SUB-COAT-06", category: "COATING", name: "纳米超疏水自洁面漆",
+          spec: "Nano-Fluorocarbon (50μm)", unit: "kg", unit_price: 95.00,
+          price_min: 85.00, price_max: 115.00,
+          specs: "纳米二氧化钛光催化自洁面漆，水滴接触角>150°，终身抗重度灰尘沉积",
+          formula: "理论涂布率 0.15kg/㎡", vendors: ["中国钢结构协会推荐名录", "中远关西涂料"]
+        },
+        {
+          id: "SUB-BEAR-03", category: "BEARING", name: "三维隔震橡胶摩擦摆支座",
+          spec: "FPB-12000kN (双曲面摩擦摆)", unit: "套", unit_price: 68000.00,
+          price_min: 62000.00, price_max: 78000.00,
+          specs: "9度设防高烈度区大型枢纽站房主支承，具备自动复位与位移自限位",
+          formula: "含出厂三维动载疲劳试验与CMA检测报告", vendors: ["国家抗震试验中心推荐", "株洲时代新材"]
+        }
+      ];
+      let added = 0;
+      newItems.forEach(item => {
+        if (!list.find(p => p.id === item.id)) {
+          list.unshift(item);
+          added++;
+        }
+      });
+      renderSubcontractTable();
+      showToast(`已成功从外部行业技术库拉取 ${added} 项最新前沿分包产品！`);
+    }
+
+    function pullExternalVendorData() {
+      if (!masterData || !masterData.master_data) return;
+      const vendors = masterData.master_data.qualified_vendors;
+      const newVendors = [
+        {
+          id: "VEN-COAT-03", name: "中远佐敦船舶涂料（青岛）有限公司", category: "COATING",
+          grade: "国家级特种工业防护特级", scope: "重度海洋与极端气候防腐涂料研发生产",
+          capital_m: 480.0, hq: "山东青岛", regions: ["全国全区域", "海外一带一路"],
+          rating: "AAA", discount: 0.96
+        },
+        {
+          id: "VEN-BEAR-02", name: "衡水双林橡胶制品有限公司", category: "BEARING",
+          grade: "铁路客专与大跨度站房一级", scope: "铁路站房抗震球型钢支座、铅芯减震垫研发生产",
+          capital_m: 160.0, hq: "河北衡水", regions: ["华北", "华南", "中南", "西北"],
+          rating: "AA", discount: 0.93
+        }
+      ];
+      let added = 0;
+      newVendors.forEach(v => {
+        if (!vendors.find(item => item.id === v.id)) {
+          vendors.unshift(v);
+          added++;
+        }
+      });
+      renderVendorsCards();
+      showToast(`已成功从协会合格名录库拉取 ${added} 家特级专业分包商！`);
+    }
+
+    // 6.5 URL 路由与锚点直达解析引擎
+    function handleUrlRouting() {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      const target = params.get('tab') || params.get('view') || hash;
+      
+      if (!target) return;
+      closeLoginOverlay();
+
+      if (target === 'database' || target === 'master_data' || target === 'base_data') {
+        switchNavModule('database');
+      } else if (target.startsWith('subcontract') || target === 'sub' || target === 'subcontracts') {
+        switchNavModule('database');
+        switchDbTab('subcontract');
+        if (target.includes('cable')) filterSubcontractTable('CABLE');
+        else if (target.includes('cast')) filterSubcontractTable('CAST_STEEL');
+        else if (target.includes('deck')) filterSubcontractTable('DECKING');
+        else if (target.includes('coat') || target.includes('paint')) filterSubcontractTable('COATING');
+        else if (target.includes('bear')) filterSubcontractTable('BEARING');
+        else if (target.includes('ndt')) filterSubcontractTable('NDT');
+        else filterSubcontractTable('');
+      } else if (target === 'cable') {
+        navigateToSubcontractCategory('CABLE');
+      } else if (target === 'cast_steel' || target === 'cast') {
+        navigateToSubcontractCategory('CAST_STEEL');
+      } else if (target === 'decking' || target === 'deck') {
+        navigateToSubcontractCategory('DECKING');
+      } else if (target === 'coating' || target === 'paint') {
+        navigateToSubcontractCategory('COATING');
+      } else if (target === 'bearing') {
+        navigateToSubcontractCategory('BEARING');
+      } else if (target === 'ndt') {
+        navigateToSubcontractCategory('NDT');
+      } else if (target === 'vendors' || target === 'vendor') {
+        switchNavModule('database');
+        switchDbTab('vendors');
+      } else if (target === 'material' || target === 'mat' || target === 'mysteel') {
+        switchNavModule('database');
+        switchDbTab('mat');
+      } else if (target === 'fab' || target === 'fabrication') {
+        switchNavModule('database');
+        switchDbTab('fab');
+      } else if (target === 'ins' || target === 'installation') {
+        switchNavModule('database');
+        switchDbTab('ins');
+      } else if (target === 'mach' || target === 'machinery') {
+        switchNavModule('database');
+        switchDbTab('mach');
+      } else if (target === 'overseas') {
+        switchNavModule('database');
+        switchDbTab('overseas');
+      } else if (target === 'takeoff') {
+        switchNavModule('takeoff');
+      } else if (target === 'pricing') {
+        switchNavModule('pricing');
+      }
+    }
+
+    window.addEventListener('hashchange', handleUrlRouting);
 
     // 7. 区域大型起重机械台班渲染与过滤
     function renderMachineryRatesTable(filteredList) {
