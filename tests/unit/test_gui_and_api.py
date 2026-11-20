@@ -171,7 +171,7 @@ def test_section_families_master_data_and_auto_pull():
 
     assert "③ 基础数据" in html, "导航菜单应重命名为 ③ 基础数据"
     assert "id=\"dbPanel-family\"" in html, "缺少截面族设置面板"
-    assert "id=\"dbTab-family\"" in html, "缺少截面族 Tab"
+    assert ("id=\"dbTab-family\"" in html or "id=\"dbTreeNode-family\"" in html), "缺少截面族目录树导航节点"
     assert "renderSectionFamiliesTable" in html, "缺少截面族表格渲染函数"
     assert "parseSectionSpecIntelligent" in html, "缺少智能截面规则推导函数"
     assert "runSandboxDerivation" in html, "缺少沙盒在线推导仿真函数"

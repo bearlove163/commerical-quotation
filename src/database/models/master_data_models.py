@@ -177,10 +177,12 @@ class InstallationQuotaRecord:
 
 @dataclass
 class MachineryRateRecord:
-    """区域起重机械定额记录 (承接原Excel 195项)"""
+    """区域起重机械定额记录 (承接原Excel 193项 + 海外典型大区)"""
     record_id: int
     tag: str                       # 履带吊50T华东
     model: str                     # 履带吊50T, 汽车吊100T
-    region: str                    # 华东, 华北, 东北, 中南, 西南, 西北
+    region: str                    # 华东, 华北, 东北, 中南, 西南, 西北, 东南亚, 中东, 非洲
     monthly_rent_and_fuel: Decimal # 月租费+油费 (元/月)
     mobilization_cost: Decimal     # 进退场运输费 (元/次)
+    is_overseas: bool = False      # 是否海外区域
+    currency: str = "CNY"          # 结算币种

@@ -302,108 +302,8 @@
               <i class="fa-solid fa-link mr-1"></i>专业分包选型
             </button>
             <button onclick="switchNavModule('database')" class="px-3.5 py-1.5 bg-white hover:bg-blue-50 text-blue-900 rounded-lg font-bold text-xs shadow transition flex items-center space-x-1.5">
-              <span>立即进入基础数据看板</span><i class="fa-solid fa-arrow-right"></i>
+              <span>立即进入基础数据中台</span><i class="fa-solid fa-arrow-right"></i>
             </button>
-          </div>
-        </div>
-
-        <!-- 基础数据六大核心分包与定额快捷透视 (拉索/铸钢件/楼承板/油漆涂料/支座/检测) ⭐ -->
-        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
-            <div class="flex items-center space-x-2">
-              <span class="w-2.5 h-4 bg-purple-600 rounded-full inline-block"></span>
-              <h3 class="font-bold text-slate-800 text-xs flex items-center space-x-2">
-                <span>基础数据全景直达透视 (专业分包 / 正交材料 / 制作安装定额)</span>
-                <span class="bg-purple-100 text-purple-700 text-[10px] px-2 py-0.5 rounded font-mono font-semibold">18 分包 + 116 定额 + 13 调运</span>
-              </h3>
-            </div>
-            <div class="flex items-center space-x-2 text-[11px]">
-              <button onclick="pullExternalSubcontractData()" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 rounded flex items-center space-x-1 font-semibold transition">
-                <i class="fa-solid fa-cloud-arrow-down text-emerald-600"></i><span>智能拉取外部数据</span>
-              </button>
-              <button onclick="switchNavModule('database')" class="text-indigo-600 hover:text-indigo-800 font-bold flex items-center space-x-0.5">
-                <span>进入③基础数据中心</span><i class="fa-solid fa-chevron-right text-[10px]"></i>
-              </button>
-            </div>
-          </div>
-          <!-- 6 大分包核心卡片 -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs">
-            <!-- 1. 拉索体系 -->
-            <div onclick="navigateToSubcontractCategory('CABLE')" class="p-2.5 rounded-lg border border-purple-200 bg-purple-50/50 hover:bg-purple-100/70 hover:border-purple-400 cursor-pointer transition shadow-2xs group">
-              <div class="flex items-center justify-between text-purple-700 mb-1">
-                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-link mr-1 text-[11px]"></i>拉索体系</span>
-                <span class="text-[10px] font-mono bg-purple-200/80 text-purple-800 px-1 rounded font-bold">4项</span>
-              </div>
-              <div class="text-[10px] text-slate-600 truncate">高钒索 / 半平行索 / 不锈钢索</div>
-              <div class="text-[10px] text-purple-900 font-mono font-bold mt-1">¥ 19,500 ~ 34,000 / t</div>
-            </div>
-            <!-- 2. 空间铸钢件 -->
-            <div onclick="navigateToSubcontractCategory('CAST_STEEL')" class="p-2.5 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 hover:border-amber-400 cursor-pointer transition shadow-2xs group">
-              <div class="flex items-center justify-between text-amber-700 mb-1">
-                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-shapes mr-1 text-[11px]"></i>空间铸钢件</span>
-                <span class="text-[10px] font-mono bg-amber-200/80 text-amber-800 px-1 rounded font-bold">2项</span>
-              </div>
-              <div class="text-[10px] text-slate-600 truncate">G20Mn5 节点 / 拱脚铸钢</div>
-              <div class="text-[10px] text-amber-900 font-mono font-bold mt-1">¥ 16,800 ~ 18,500 / t</div>
-            </div>
-            <!-- 3. 楼承板体系 -->
-            <div onclick="navigateToSubcontractCategory('DECKING')" class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/50 hover:bg-blue-100/70 hover:border-blue-400 cursor-pointer transition shadow-2xs group">
-              <div class="flex items-center justify-between text-blue-700 mb-1">
-                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-layer-group mr-1 text-[11px]"></i>楼承板体系</span>
-                <span class="text-[10px] font-mono bg-blue-200/80 text-blue-800 px-1 rounded font-bold">3项</span>
-              </div>
-              <div class="text-[10px] text-slate-600 truncate">闭口型 / 桁架楼承板</div>
-              <div class="text-[10px] text-blue-900 font-mono font-bold mt-1">¥ 62 ~ 115 / ㎡</div>
-            </div>
-            <!-- 4. 油漆涂料体系 -->
-            <div onclick="navigateToSubcontractCategory('COATING')" class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100/70 hover:border-emerald-400 cursor-pointer transition shadow-2xs group">
-              <div class="flex items-center justify-between text-emerald-700 mb-1">
-                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-paint-roller mr-1 text-[11px]"></i>油漆涂料体系</span>
-                <span class="text-[10px] font-mono bg-emerald-200/80 text-emerald-800 px-1 rounded font-bold">5项</span>
-              </div>
-              <div class="text-[10px] text-slate-600 truncate">富锌底漆 / 氟碳 / 防火涂料</div>
-              <div class="text-[10px] text-emerald-900 font-mono font-bold mt-1">¥ 29~68/kg · ¥65/㎡</div>
-            </div>
-            <!-- 5. 减隔震支座 -->
-            <div onclick="navigateToSubcontractCategory('BEARING')" class="p-2.5 rounded-lg border border-cyan-200 bg-cyan-50/50 hover:bg-cyan-100/70 hover:border-cyan-400 cursor-pointer transition shadow-2xs group">
-              <div class="flex items-center justify-between text-cyan-700 mb-1">
-                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-circle-dot mr-1 text-[11px]"></i>减隔震支座</span>
-                <span class="text-[10px] font-mono bg-cyan-200/80 text-cyan-800 px-1 rounded font-bold">2项</span>
-              </div>
-              <div class="text-[10px] text-slate-600 truncate">抗震球型钢支座 / 橡胶减震</div>
-              <div class="text-[10px] text-cyan-900 font-mono font-bold mt-1">¥ 28,000 ~ 46,000 / 套</div>
-            </div>
-            <!-- 6. 专项检测(UT/MT) -->
-            <div onclick="navigateToSubcontractCategory('NDT')" class="p-2.5 rounded-lg border border-rose-200 bg-rose-50/50 hover:bg-rose-100/70 hover:border-rose-400 cursor-pointer transition shadow-2xs group">
-              <div class="flex items-center justify-between text-rose-700 mb-1">
-                <span class="font-bold text-xs flex items-center"><i class="fa-solid fa-magnifying-glass-chart mr-1 text-[11px]"></i>专项检测(UT/MT)</span>
-                <span class="text-[10px] font-mono bg-rose-200/80 text-rose-800 px-1 rounded font-bold">2项</span>
-              </div>
-              <div class="text-[10px] text-slate-600 truncate">超声波UT / 磁粉MT探伤</div>
-              <div class="text-[10px] text-rose-900 font-mono font-bold mt-1">¥ 32.00 ~ 48.00 / m</div>
-            </div>
-          </div>
-          <!-- 底部快捷关联链接行 -->
-          <div class="flex flex-wrap items-center justify-between pt-1 text-[11px] text-slate-500 border-t border-slate-100 gap-2">
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <span class="font-medium text-slate-700">关联配套库：</span>
-              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('vendors');" class="text-teal-600 hover:text-teal-800 font-semibold flex items-center space-x-1">
-                <i class="fa-solid fa-building-circle-check"></i><span>合格分包商名录 (12家)</span>
-              </a>
-              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('fab');" class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center space-x-1">
-                <i class="fa-solid fa-industry"></i><span>车间制作工序定额 (47项)</span>
-              </a>
-              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('ins');" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center space-x-1">
-                <i class="fa-solid fa-person-digging"></i><span>现场安装定额 (65项)</span>
-              </a>
-              <a href="javascript:void(0)" onclick="switchNavModule('database'); switchDbTab('mat');" class="text-amber-600 hover:text-amber-800 font-semibold flex items-center space-x-1">
-                <i class="fa-solid fa-truck-ramp-box"></i><span>钢厂-加工厂调运矩阵 (13路线)</span>
-              </a>
-            </div>
-            <div class="flex items-center space-x-1 text-slate-400">
-              <i class="fa-solid fa-circle-info text-[10px]"></i>
-              <span>点击任意卡片一键直达对应明细与编辑界面</span>
-            </div>
           </div>
         </div>
 
@@ -967,44 +867,130 @@
       </section>
 
       <!-- ============================================== -->
-      <!-- VIEW 3: ③ 基础数据中心 (Master Data & Quotas) ⭐ -->
+      <!-- VIEW 3: ③ 基础数据超级管理中台 (Master Data Hub) ⭐ -->
       <!-- ============================================== -->
-      <section id="view-database" class="flex-1 flex flex-col overflow-y-auto p-4 space-y-4 hidden">
-        <!-- 基础数据 8 大分类 Tab -->
-        <div class="flex items-center space-x-2 border-b border-slate-200 pb-2 bg-white px-3 pt-2 rounded-t-xl shadow-2xs overflow-x-auto text-xs">
-          <button onclick="switchDbTab('family')" id="dbTab-family" class="px-3 py-1.5 font-bold text-blue-600 border-b-2 border-blue-600 flex items-center space-x-1.5 shrink-0">
-            <i class="fa-solid fa-shapes text-amber-500"></i>
-            <span>1. 截面族规则设置 (Section Families) ⭐</span>
-          </button>
-          <button onclick="switchDbTab('mat')" id="dbTab-mat" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-layer-group text-blue-600"></i>
-            <span>2. 正交材料规则与调运矩阵 (Mysteel & Logistics) ⭐</span>
-          </button>
-          <button onclick="switchDbTab('fab')" id="dbTab-fab" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-industry text-indigo-600"></i>
-            <span>3. 制作工序定额库 (原表54项全量)</span>
-          </button>
-          <button onclick="switchDbTab('ins')" id="dbTab-ins" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-helmet-safety text-emerald-600"></i>
-            <span>4. 现场安装定额库 (原表69项全量)</span>
-          </button>
-          <button onclick="switchDbTab('subcontract')" id="dbTab-subcontract" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-link text-purple-600"></i>
-            <span>5. 专业分包与外协字典 (拉索/铸钢/楼承板/涂料/支座) ⭐</span>
-          </button>
-          <button onclick="switchDbTab('vendors')" id="dbTab-vendors" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-building-circle-check text-teal-600"></i>
-            <span>6. 合格分包商名录库 (Vendor Registry)</span>
-          </button>
-          <button onclick="switchDbTab('mach')" id="dbTab-mach" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-truck-monster text-amber-600"></i>
-            <span>7. 区域大型起重机械库 (原表195项)</span>
-          </button>
-          <button onclick="switchDbTab('overseas')" id="dbTab-overseas" class="px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5">
-            <i class="fa-solid fa-globe text-blue-500"></i>
-            <span>8. 海外标准费率 (人天开办费)</span>
-          </button>
-        </div>
+      <section id="view-database" class="flex-1 flex flex-row overflow-hidden p-3 gap-3 hidden">
+        <!-- 左侧二级树状导航侧栏 (支持一键缩放折叠) ⭐ -->
+        <aside id="dbTreeSidebar" class="w-64 bg-white border border-slate-200 rounded-xl flex flex-col shadow-2xs shrink-0 transition-all duration-200 overflow-hidden">
+          <!-- 侧栏顶栏: 标题与折叠缩放手柄 -->
+          <div class="p-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+            <div class="flex items-center space-x-2 overflow-hidden tree-label-group">
+              <div class="w-6 h-6 rounded bg-indigo-600/10 text-indigo-600 flex items-center justify-center text-xs shrink-0 font-bold">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <span class="font-bold text-xs text-slate-800 truncate">数据中台目录树</span>
+            </div>
+            <button onclick="toggleDbSidebar()" id="btnToggleDbSidebar" title="一键折叠/展开左侧目录 (自动缩放)" class="w-6 h-6 rounded flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition shrink-0 cursor-pointer">
+              <i class="fa-solid fa-angles-left text-xs" id="iconToggleDbSidebar"></i>
+            </button>
+          </div>
+
+          <!-- 树状列表容器 (可纵向滚动) -->
+          <div class="flex-1 overflow-y-auto p-2 space-y-3 text-xs" id="dbTreeContainer">
+            <!-- 体系 A: 工程材料与微工序定额树 -->
+            <div class="space-y-1">
+              <div class="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider tree-label-group flex items-center justify-between">
+                <span>工程材料与定额树</span>
+                <span class="text-[9px] bg-slate-100 text-slate-500 px-1 rounded font-mono">7大类</span>
+              </div>
+              <!-- 1. 截面族 -->
+              <button onclick="switchDbTab('family')" id="dbTreeNode-family" class="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node font-bold text-blue-700 bg-blue-50/80">
+                <i class="fa-solid fa-shapes w-4 text-center text-amber-500 shrink-0"></i>
+                <span class="truncate tree-label-group text-xs">1. 截面族推导规则</span>
+              </button>
+              <!-- 2. 正交材料与调运 -->
+              <button onclick="switchDbTab('mat')" id="dbTreeNode-mat" class="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node">
+                <i class="fa-solid fa-layer-group w-4 text-center text-blue-600 shrink-0"></i>
+                <span class="truncate tree-label-group text-xs">2. 正交材料与调运矩阵</span>
+              </button>
+              <!-- 3. 制作工序定额 -->
+              <button onclick="switchDbTab('fab')" id="dbTreeNode-fab" class="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node">
+                <i class="fa-solid fa-industry w-4 text-center text-indigo-600 shrink-0"></i>
+                <span class="truncate tree-label-group text-xs">3. 车间制作工序 (47项)</span>
+              </button>
+              <!-- 4. 现场安装定额 -->
+              <button onclick="switchDbTab('ins')" id="dbTreeNode-ins" class="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node">
+                <i class="fa-solid fa-helmet-safety w-4 text-center text-emerald-600 shrink-0"></i>
+                <span class="truncate tree-label-group text-xs">4. 现场安装定额 (65项)</span>
+              </button>
+              <!-- 5. 专业分包与外协字典 (展开6大材料分支) -->
+              <div class="space-y-0.5">
+                <button onclick="switchDbTab('subcontract', '')" id="dbTreeNode-subcontract" class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node">
+                  <div class="flex items-center space-x-2 truncate">
+                    <i class="fa-solid fa-link w-4 text-center text-purple-600 shrink-0"></i>
+                    <span class="truncate tree-label-group text-xs font-semibold">5. 专业分包字典 (18项)</span>
+                  </div>
+                  <span class="text-[10px] bg-purple-100 text-purple-800 px-1.5 rounded font-mono font-bold tree-label-group">6分支</span>
+                </button>
+                <!-- 6 个二级材料小分支 (带缩进与小图标) -->
+                <div class="pl-5 space-y-0.5 tree-label-group" id="dbSubBranchesList">
+                  <button onclick="switchDbTab('subcontract', 'CABLE')" id="dbSubBranch-CABLE" class="w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-purple-50 hover:text-purple-700 transition text-left subbranch-node">
+                    <span class="flex items-center"><i class="fa-solid fa-link mr-1.5 text-[9px] text-purple-400"></i>5.1 拉索体系</span>
+                    <span class="font-mono text-[10px] text-slate-400">4项</span>
+                  </button>
+                  <button onclick="switchDbTab('subcontract', 'CAST_STEEL')" id="dbSubBranch-CAST_STEEL" class="w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-amber-50 hover:text-amber-700 transition text-left subbranch-node">
+                    <span class="flex items-center"><i class="fa-solid fa-shapes mr-1.5 text-[9px] text-amber-500"></i>5.2 空间铸钢件</span>
+                    <span class="font-mono text-[10px] text-slate-400">2项</span>
+                  </button>
+                  <button onclick="switchDbTab('subcontract', 'DECKING')" id="dbSubBranch-DECKING" class="w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition text-left subbranch-node">
+                    <span class="flex items-center"><i class="fa-solid fa-layer-group mr-1.5 text-[9px] text-blue-500"></i>5.3 楼承板体系</span>
+                    <span class="font-mono text-[10px] text-slate-400">3项</span>
+                  </button>
+                  <button onclick="switchDbTab('subcontract', 'COATING')" id="dbSubBranch-COATING" class="w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition text-left subbranch-node">
+                    <span class="flex items-center"><i class="fa-solid fa-paint-roller mr-1.5 text-[9px] text-emerald-500"></i>5.4 防腐防火涂装</span>
+                    <span class="font-mono text-[10px] text-slate-400">5项</span>
+                  </button>
+                  <button onclick="switchDbTab('subcontract', 'BEARING')" id="dbSubBranch-BEARING" class="w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-cyan-50 hover:text-cyan-700 transition text-left subbranch-node">
+                    <span class="flex items-center"><i class="fa-solid fa-circle-dot mr-1.5 text-[9px] text-cyan-500"></i>5.5 减隔震支座</span>
+                    <span class="font-mono text-[10px] text-slate-400">2项</span>
+                  </button>
+                  <button onclick="switchDbTab('subcontract', 'NDT')" id="dbSubBranch-NDT" class="w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-rose-50 hover:text-rose-700 transition text-left subbranch-node">
+                    <span class="flex items-center"><i class="fa-solid fa-magnifying-glass-chart mr-1.5 text-[9px] text-rose-500"></i>5.6 专项无损检测</span>
+                    <span class="font-mono text-[10px] text-slate-400">2项</span>
+                  </button>
+                </div>
+              </div>
+              <!-- 6. 吊机租赁与运杂费库 (多区域) -->
+              <button onclick="switchDbTab('mach')" id="dbTreeNode-mach" class="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node">
+                <i class="fa-solid fa-truck-monster w-4 text-center text-amber-600 shrink-0"></i>
+                <span class="truncate tree-label-group text-xs">6. 吊机租赁与运杂费库</span>
+              </button>
+              <!-- 7. 境外人天开办费 -->
+              <button onclick="switchDbTab('overseas')" id="dbTreeNode-overseas" class="w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node">
+                <i class="fa-solid fa-globe w-4 text-center text-blue-500 shrink-0"></i>
+                <span class="truncate tree-label-group text-xs">7. 境外人天与开办费</span>
+              </button>
+            </div>
+
+            <!-- 体系 B: 独立企业级客商名录中枢 -->
+            <div class="pt-2 border-t border-slate-100 space-y-1">
+              <div class="px-2 py-1 text-[10px] font-bold text-teal-700 uppercase tracking-wider tree-label-group flex items-center justify-between">
+                <span>企业客商中心</span>
+                <span class="text-[9px] bg-teal-50 text-teal-700 px-1 rounded font-mono">全局共享</span>
+              </div>
+              <!-- 独立客商名录库 -->
+              <button onclick="switchDbTab('vendors')" id="dbTreeNode-vendors" class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition text-left tree-node group">
+                <div class="flex items-center space-x-2 truncate">
+                  <i class="fa-solid fa-building-circle-check w-4 text-center text-teal-600 shrink-0"></i>
+                  <span class="truncate tree-label-group text-xs font-bold text-teal-900">合格客商与供应商名录</span>
+                </div>
+                <span class="text-[10px] bg-teal-100 text-teal-800 px-1.5 rounded font-mono font-bold tree-label-group">12家</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 侧栏底栏状态 -->
+          <div class="p-2.5 border-t border-slate-100 bg-slate-50 text-[10px] text-slate-500 flex items-center justify-between shrink-0">
+            <div class="flex items-center space-x-1.5 tree-label-group truncate">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+              <span class="truncate font-semibold text-slate-700">超级管理员控制台</span>
+            </div>
+            <span class="font-mono text-slate-400 tree-label-group">v2.3</span>
+          </div>
+        </aside>
+
+        <!-- 右侧主工作台内容区 (可纵向滚动) ⭐ -->
+        <div id="dbMainContent" class="flex-1 overflow-y-auto space-y-4 min-w-0 pr-1">
 
         <!-- 3.0 截面族规则与智能推导设置 (Section Families Master Settings) ⭐ -->
         <div id="dbPanel-family" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4">
@@ -1418,7 +1404,7 @@
           </div>
         </div>
 
-        <!-- 3.5 合格分包商名录库 (Vendor Registry) ⭐ -->
+        <!-- 3.5 企业级客商与供应商名录中枢 (Enterprise Vendor & Partner Hub) ⭐ -->
         <div id="dbPanel-vendors" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
           <div class="p-3 bg-gradient-to-r from-teal-50 to-slate-50 border border-teal-200 rounded-xl flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center space-x-2.5">
@@ -1427,18 +1413,19 @@
               </div>
               <div>
                 <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
-                  <span>合格分包商与供应商名录库 (Qualified Vendor Registry)</span>
+                  <span>企业级客商与供应商名录中枢 (Enterprise Vendor & Partner Hub)</span>
                   <span class="bg-teal-100 text-teal-800 border border-teal-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">行业一级/特级资质</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.2 rounded font-mono">全局共享中枢</span>
                 </div>
                 <div class="text-[11px] text-slate-500 mt-0.5">
-                  沉淀具备大跨度公建站房施工业绩、特种设备制造资质与优良履约评级的专业供应商名录，支持在出标选型时一键比选与拉取折扣。
+                  独立沉淀钢厂母材、索结构、空间铸钢、楼承板、涂装、支座、起重机租赁及第三方专项检测的全局合格客商中枢，支持多维比选与动态资信穿透。
                 </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <button onclick="openAddVendorModal()" class="px-3 py-1.5 bg-teal-700 hover:bg-teal-800 text-white rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
                 <i class="fa-solid fa-user-plus"></i>
-                <span>录入合格分包商</span>
+                <span>录入合格客商</span>
               </button>
               <button onclick="pullExternalVendorData()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold shadow flex items-center space-x-1.5 text-xs transition">
                 <i class="fa-solid fa-cloud-arrow-down"></i>
@@ -1447,12 +1434,25 @@
             </div>
           </div>
 
+          <!-- 客商分类快速标签 -->
+          <div class="flex items-center space-x-2 overflow-x-auto text-xs pb-1" id="vendorCatButtons">
+            <button onclick="filterVendorsTable('')" class="px-3 py-1 rounded-full bg-teal-700 text-white font-bold shrink-0 vendor-cat-btn active" data-cat="">全部客商 (12)</button>
+            <button onclick="filterVendorsTable('STEEL_MILL')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="STEEL_MILL">钢厂母材</button>
+            <button onclick="filterVendorsTable('CABLE')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="CABLE">拉索厂商</button>
+            <button onclick="filterVendorsTable('CAST_STEEL')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="CAST_STEEL">空间铸钢</button>
+            <button onclick="filterVendorsTable('DECKING')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="DECKING">楼承板</button>
+            <button onclick="filterVendorsTable('COATING')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="COATING">防腐防火</button>
+            <button onclick="filterVendorsTable('BEARING')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="BEARING">减隔震支座</button>
+            <button onclick="filterVendorsTable('CRANE_RENTAL')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="CRANE_RENTAL">起重租赁</button>
+            <button onclick="filterVendorsTable('NDT')" class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn" data-cat="NDT">专项检测</button>
+          </div>
+
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="cardsVendorsContainer">
             <!-- 动态卡片渲染 -->
           </div>
         </div>
 
-        <!-- 3.6 区域大型起重机械库 (原表 195 项全量) ⭐ -->
+        <!-- 3.6 区域大型起重机械库 (原表 195 项全量 + 海外典型大区) ⭐ -->
         <div id="dbPanel-mach" class="bg-white p-4 rounded-b-xl border border-slate-200 shadow-2xs space-y-4 hidden">
           <div class="flex flex-wrap justify-between items-center gap-2 p-3 bg-gradient-to-r from-amber-50 to-slate-50 border border-amber-200 rounded-xl">
             <div class="flex items-center space-x-2.5">
@@ -1461,23 +1461,30 @@
               </div>
               <div>
                 <div class="font-bold text-slate-800 text-xs flex items-center space-x-2">
-                  <span>区域大型起重机械与调运定额库 (原表193项全量收录)</span>
-                  <span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">6 大区域覆盖</span>
+                  <span>区域大型起重机械与调运定额库 (原表193项全量 + 海外典型大区)</span>
+                  <span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold">国内 6 大区 + 境外典型大区</span>
                 </div>
                 <div class="text-[11px] text-slate-500 mt-0.5">
-                  涵盖 50t~650t 履带吊、25t~500t 汽车吊在华东、华北、东北、中南、西南、西北各区域的月租费、燃油消耗及进出场运输费。
+                  解耦 50t~650t 履带吊、25t~500t 汽车吊在各区域的月租费、燃油消耗及进退场运费，支持国内六大工程大区与新兴国际市场多区域横向比选。
                 </div>
               </div>
             </div>
             <div class="flex items-center space-x-2 text-xs">
-              <select id="filterMachRegion" onchange="filterMachRatesTable()" class="px-2.5 py-1.5 border border-slate-300 rounded text-xs bg-white">
-                <option value="">全部区域 (全国)</option>
-                <option value="中南" selected>中南区域 (湛江北站所在地)</option>
-                <option value="华东">华东区域</option>
-                <option value="华北">华北区域</option>
-                <option value="西南">西南区域</option>
-                <option value="西北">西北区域</option>
-                <option value="东北">东北区域</option>
+              <select id="filterMachRegion" onchange="filterMachRatesTable()" class="px-2.5 py-1.5 border border-slate-300 rounded text-xs bg-white font-medium">
+                <option value="">全部区域 (全国及境外)</option>
+                <optgroup label="国内六大工程大区">
+                  <option value="中南" selected>中南区域 (含大湾区/湛江北站)</option>
+                  <option value="华东">华东区域 (长三角重点基建)</option>
+                  <option value="华北">华北区域 (京津冀/雄安)</option>
+                  <option value="西南">西南区域 (川渝大跨度)</option>
+                  <option value="西北">西北区域 (新能源与重工)</option>
+                  <option value="东北">东北区域 (老工业基地)</option>
+                </optgroup>
+                <optgroup label="海外重点工程大区 (Incoterms 2020 履约)">
+                  <option value="东南亚">东南亚大区 (印尼雅加达/雅万高铁沿线)</option>
+                  <option value="中东">中东大区 (沙特阿美/NEOM新城)</option>
+                  <option value="非洲">非洲大区 (东非/西非港口基建)</option>
+                </optgroup>
               </select>
               <input type="text" id="filterMachKw" oninput="filterMachRatesTable()" placeholder="搜索吊车吨位型号..." class="px-2.5 py-1.5 border border-slate-300 rounded text-xs w-40">
             </div>
@@ -1512,7 +1519,11 @@
             <div class="p-2 bg-slate-50 rounded border"><b>Tier 3 欧美高端</b><div class="text-[11px] text-slate-500 mt-1">1,210 元/人天</div></div>
             <div class="p-2 bg-slate-50 rounded border"><b>Tier 4 非洲艰苦</b><div class="text-[11px] text-slate-500 mt-1">820 元/人天</div></div>
           </div>
-        </div><!-- ============================================== -->
+        </div>
+      </div><!-- end of dbMainContent -->
+    </section><!-- end of view-database -->
+
+      <!-- ============================================== -->
       <!-- VIEW 4: ④ 算量工作台 (Takeoff Workbench) ⭐    -->
       <!-- ============================================== -->
       <section id="view-takeoff" class="flex-1 flex flex-col overflow-hidden hidden">
@@ -3336,22 +3347,79 @@
       }
     }
 
-    // 6. 基础数据 Tab 切换与截面族后台设置
-    // 6. 基础数据 8 大 Tab 切换与动态渲染驱动
-    function switchDbTab(tabKey) {
+    // 6. 基础数据中台导航、树状目录折叠与微工序/客商渲染驱动 ⭐
+    function toggleDbSidebar() {
+      const sidebar = document.getElementById('dbTreeSidebar');
+      const icon = document.getElementById('iconToggleDbSidebar');
+      const labelGroups = document.querySelectorAll('.tree-label-group');
+      if (!sidebar) return;
+
+      const isCollapsed = sidebar.classList.contains('w-14');
+      if (isCollapsed) {
+        sidebar.classList.remove('w-14');
+        sidebar.classList.add('w-64');
+        if (icon) icon.className = 'fa-solid fa-angles-left text-xs';
+        labelGroups.forEach(el => el.classList.remove('hidden'));
+      } else {
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-14');
+        if (icon) icon.className = 'fa-solid fa-angles-right text-xs';
+        labelGroups.forEach(el => el.classList.add('hidden'));
+      }
+    }
+
+    function switchDbTab(tabKey, subBranch) {
       const tabs = ['family', 'mat', 'fab', 'ins', 'subcontract', 'vendors', 'mach', 'overseas'];
       tabs.forEach(t => {
-        const btn = document.getElementById('dbTab-' + t);
         const panel = document.getElementById('dbPanel-' + t);
-        if (!btn || !panel) return;
-        if (t === tabKey) {
-          btn.className = 'px-3 py-1.5 font-bold text-blue-600 border-b-2 border-blue-600 flex items-center space-x-1.5 shrink-0';
-          panel.classList.remove('hidden');
-        } else {
-          btn.className = 'px-3 py-1.5 text-slate-600 hover:text-slate-900 shrink-0 flex items-center space-x-1.5';
-          panel.classList.add('hidden');
+        const treeBtn = document.getElementById('dbTreeNode-' + t);
+        if (panel) {
+          if (t === tabKey) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        }
+        if (treeBtn) {
+          if (t === tabKey) {
+            if (t === 'vendors') {
+              treeBtn.className = 'w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-teal-900 bg-teal-50 font-bold transition text-left tree-node shadow-2xs border-l-2 border-teal-600';
+            } else if (t === 'subcontract') {
+              treeBtn.className = 'w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-purple-900 bg-purple-50/90 font-bold transition text-left tree-node shadow-2xs border-l-2 border-purple-600';
+            } else {
+              treeBtn.className = 'w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-blue-700 bg-blue-50/90 font-bold transition text-left tree-node shadow-2xs border-l-2 border-blue-600';
+            }
+          } else {
+            if (t === 'vendors') {
+              treeBtn.className = 'w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition text-left tree-node group';
+            } else if (t === 'subcontract') {
+              treeBtn.className = 'w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node';
+            } else {
+              treeBtn.className = 'w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-left tree-node';
+            }
+          }
         }
       });
+
+      // 处理专业分包 6 个子分支高亮与联动
+      if (tabKey === 'subcontract') {
+        const subBranches = ['CABLE', 'CAST_STEEL', 'DECKING', 'COATING', 'BEARING', 'NDT'];
+        subBranches.forEach(b => {
+          const bBtn = document.getElementById('dbSubBranch-' + b);
+          if (!bBtn) return;
+          if (subBranch && b === subBranch) {
+            bBtn.className = 'w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] font-bold bg-purple-100 text-purple-900 transition text-left subbranch-node shadow-2xs border-l-2 border-purple-600';
+          } else {
+            bBtn.className = 'w-full flex items-center justify-between px-2 py-1.5 rounded text-[11px] text-slate-600 hover:bg-purple-50 hover:text-purple-700 transition text-left subbranch-node';
+          }
+        });
+        if (subBranch) {
+          filterSubcontractTable(subBranch);
+        } else {
+          renderSubcontractTable();
+        }
+      }
+
       if (tabKey === 'family') {
         renderSectionFamiliesTable();
       } else if (tabKey === 'mat') {
@@ -3361,7 +3429,7 @@
         renderFabricationQuotasTable();
       } else if (tabKey === 'ins') {
         renderInstallationQuotasTable();
-      } else if (tabKey === 'subcontract') {
+      } else if (tabKey === 'subcontract' && !subBranch) {
         renderSubcontractTable();
       } else if (tabKey === 'vendors') {
         renderVendorsCards();
@@ -4940,11 +5008,29 @@
       renderSubcontractTable();
     }
 
-    // 6. 合格分包商与供应商名录卡片渲染
+    // 6. 企业级客商与供应商名录中枢卡片渲染与分类筛选
+    let activeVendorCat = '';
+    function filterVendorsTable(cat) {
+      activeVendorCat = cat;
+      document.querySelectorAll('.vendor-cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = 'px-3 py-1 rounded-full bg-teal-700 text-white font-bold shrink-0 vendor-cat-btn active';
+        } else {
+          btn.className = 'px-3 py-1 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0 vendor-cat-btn';
+        }
+      });
+      renderVendorsCards();
+    }
+
     function renderVendorsCards() {
       const container = document.getElementById('cardsVendorsContainer');
       if (!container) return;
-      const vendors = (masterData.master_data && masterData.master_data.qualified_vendors) || [];
+      const allVendors = (masterData.master_data && masterData.master_data.qualified_vendors) || [];
+      const vendors = activeVendorCat ? allVendors.filter(v => v.category === activeVendorCat) : allVendors;
+      if (!vendors.length) {
+        container.innerHTML = '<div class="col-span-1 md:col-span-2 lg:col-span-3 p-8 text-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">暂无该分类的合格客商记录</div>';
+        return;
+      }
       container.innerHTML = vendors.map(v => `
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs space-y-2 hover:border-teal-500 transition">
           <div class="flex justify-between items-start">
@@ -4961,7 +5047,9 @@
           </div>
           <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs">
             <span class="text-slate-400">指导浮动: <b class="text-teal-700">${((1 - v.discount) * 100).toFixed(0)}% 下浮优惠</b></span>
-            <button onclick="showToast('已接入合格供应商 [${v.name}] 合作档案')" class="text-blue-600 hover:text-blue-800 font-semibold">查看资信</button>
+            <button onclick="showToast('已接入合格客商 [${v.name}] 企业资信档案')" class="text-teal-700 hover:text-teal-900 font-semibold flex items-center space-x-1">
+              <i class="fa-solid fa-file-shield text-xs"></i><span>穿透资信</span>
+            </button>
           </div>
         </div>
       `).join('');
@@ -5182,19 +5270,28 @@
         tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-400">暂无符合条件的起重机械记录</td></tr>';
         return;
       }
-      tbody.innerHTML = list.slice(0, 50).map(r => `
+      tbody.innerHTML = list.slice(0, 60).map(r => {
+        const currSym = r.currency === 'USD' ? '$ ' : '¥ ';
+        return `
         <tr class="hover:bg-slate-50 transition">
           <td class="p-2 text-slate-400">${r.id}</td>
-          <td class="p-2 font-bold text-slate-900 font-sans">${r.model}</td>
-          <td class="p-2 font-sans"><span class="px-1.5 py-0.5 rounded bg-slate-100 font-semibold">${r.region}</span></td>
-          <td class="p-2 text-right font-bold text-amber-900 font-mono">${r.monthly_rent > 0 ? '¥ ' + r.monthly_rent.toLocaleString() : '询价'}</td>
-          <td class="p-2 text-right text-blue-800 font-mono">${r.mobilization > 0 ? '¥ ' + r.mobilization.toLocaleString() : '短途免收'}</td>
-          <td class="p-2 text-right text-slate-500 font-mono">${r.monthly_rent > 0 ? '¥ ' + (r.monthly_rent / 25).toFixed(0) + '/台班' : '-'}</td>
+          <td class="p-2 font-bold text-slate-900 font-sans flex items-center space-x-1">
+            <span>${r.model}</span>
+            ${r.is_overseas ? '<span class="px-1 py-0.2 bg-blue-100 text-blue-700 text-[9px] rounded font-mono font-bold">海外典型</span>' : ''}
+          </td>
+          <td class="p-2 font-sans">
+            <span class="px-1.5 py-0.5 rounded ${r.is_overseas ? 'bg-blue-50 text-blue-800 border border-blue-200' : 'bg-slate-100 text-slate-700'} font-semibold text-[11px]">
+              ${r.region}
+            </span>
+          </td>
+          <td class="p-2 text-right font-bold text-amber-900 font-mono">${r.monthly_rent > 0 ? currSym + r.monthly_rent.toLocaleString() : '询价'}</td>
+          <td class="p-2 text-right text-blue-800 font-mono">${r.mobilization > 0 ? currSym + r.mobilization.toLocaleString() : '短途免收'}</td>
+          <td class="p-2 text-right text-slate-500 font-mono">${r.monthly_rent > 0 ? currSym + (r.monthly_rent / 25).toFixed(0) + '/台班' : '-'}</td>
           <td class="p-2 text-center">
             <button onclick="openMachineryDialog()" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded border border-amber-200 text-xs font-sans font-semibold">调配</button>
           </td>
         </tr>
-      `).join('');
+      `}).join('');
     }
 
     function filterMachRatesTable() {
@@ -5203,7 +5300,7 @@
       const all = (masterData.master_data && masterData.master_data.machinery_rates) || [];
       const res = all.filter(r => {
         const mReg = !reg || r.region.includes(reg);
-        const mKw = !kw || r.model.toLowerCase().includes(kw) || r.tag.toLowerCase().includes(kw);
+        const mKw = !kw || r.model.toLowerCase().includes(kw) || (r.tag && r.tag.toLowerCase().includes(kw));
         return mReg && mKw;
       });
       renderMachineryRatesTable(res);
