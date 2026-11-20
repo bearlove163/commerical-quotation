@@ -4426,7 +4426,9 @@
         "model": "履带吊50T",
         "region": "华东",
         "monthly_rent": 45600.0,
-        "mobilization": 20100.0
+        "mobilization": 20100.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 2,
@@ -4434,7 +4436,9 @@
         "model": "履带吊50T",
         "region": "华北",
         "monthly_rent": 45600.0,
-        "mobilization": 20100.0
+        "mobilization": 20100.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 3,
@@ -4442,7 +4446,9 @@
         "model": "履带吊50T",
         "region": "东北",
         "monthly_rent": 45600.0,
-        "mobilization": 20100.0
+        "mobilization": 20100.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 4,
@@ -4450,7 +4456,9 @@
         "model": "履带吊50T",
         "region": "中南",
         "monthly_rent": 47600.0,
-        "mobilization": 17100.0
+        "mobilization": 17100.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 5,
@@ -4458,7 +4466,9 @@
         "model": "履带吊50T",
         "region": "西南",
         "monthly_rent": 47600.0,
-        "mobilization": 17100.0
+        "mobilization": 17100.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 6,
@@ -4466,7 +4476,9 @@
         "model": "履带吊50T",
         "region": "西北",
         "monthly_rent": 47600.0,
-        "mobilization": 17100.0
+        "mobilization": 17100.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 7,
@@ -4474,7 +4486,9 @@
         "model": "履带吊70T",
         "region": "华东",
         "monthly_rent": 64600.0,
-        "mobilization": 28140.0
+        "mobilization": 28140.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 8,
@@ -4482,7 +4496,9 @@
         "model": "履带吊70T",
         "region": "华北",
         "monthly_rent": 64600.0,
-        "mobilization": 28140.0
+        "mobilization": 28140.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 9,
@@ -4490,7 +4506,9 @@
         "model": "履带吊70T",
         "region": "东北",
         "monthly_rent": 64600.0,
-        "mobilization": 28140.0
+        "mobilization": 28140.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 10,
@@ -4498,7 +4516,9 @@
         "model": "履带吊70T",
         "region": "中南",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 11,
@@ -4506,7 +4526,9 @@
         "model": "履带吊70T",
         "region": "西南",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 12,
@@ -4514,7 +4536,9 @@
         "model": "履带吊70T",
         "region": "西北",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 13,
@@ -4522,7 +4546,9 @@
         "model": "履带吊80T",
         "region": "华东",
         "monthly_rent": 73600.0,
-        "mobilization": 32160.0
+        "mobilization": 32160.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 14,
@@ -4530,7 +4556,9 @@
         "model": "履带吊80T",
         "region": "华北",
         "monthly_rent": 78600.0,
-        "mobilization": 32160.0
+        "mobilization": 32160.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 15,
@@ -4538,7 +4566,9 @@
         "model": "履带吊80T",
         "region": "东北",
         "monthly_rent": 78600.0,
-        "mobilization": 32160.0
+        "mobilization": 32160.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 16,
@@ -4546,7 +4576,9 @@
         "model": "履带吊80T",
         "region": "中南",
         "monthly_rent": 73600.0,
-        "mobilization": 27360.0
+        "mobilization": 27360.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 17,
@@ -4554,7 +4586,9 @@
         "model": "履带吊80T",
         "region": "西南",
         "monthly_rent": 73600.0,
-        "mobilization": 27360.0
+        "mobilization": 27360.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 18,
@@ -4562,7 +4596,9 @@
         "model": "履带吊80T",
         "region": "西北",
         "monthly_rent": 78600.0,
-        "mobilization": 27360.0
+        "mobilization": 27360.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 19,
@@ -4570,7 +4606,9 @@
         "model": "履带吊100T",
         "region": "华东",
         "monthly_rent": 97800.0,
-        "mobilization": 40200.0
+        "mobilization": 40200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 20,
@@ -4578,7 +4616,9 @@
         "model": "履带吊100T",
         "region": "华北",
         "monthly_rent": 97800.0,
-        "mobilization": 40200.0
+        "mobilization": 40200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 21,
@@ -4586,7 +4626,9 @@
         "model": "履带吊100T",
         "region": "东北",
         "monthly_rent": 97800.0,
-        "mobilization": 40200.0
+        "mobilization": 40200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 22,
@@ -4594,7 +4636,9 @@
         "model": "履带吊100T",
         "region": "中南",
         "monthly_rent": 97800.0,
-        "mobilization": 34200.0
+        "mobilization": 34200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 23,
@@ -4602,7 +4646,9 @@
         "model": "履带吊100T",
         "region": "西南",
         "monthly_rent": 97800.0,
-        "mobilization": 34200.0
+        "mobilization": 34200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 24,
@@ -4610,7 +4656,9 @@
         "model": "履带吊100T",
         "region": "西北",
         "monthly_rent": 97800.0,
-        "mobilization": 34200.0
+        "mobilization": 34200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 25,
@@ -4618,7 +4666,9 @@
         "model": "履带吊150T",
         "region": "华东",
         "monthly_rent": 126800.0,
-        "mobilization": 60300.0
+        "mobilization": 60300.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 26,
@@ -4626,7 +4676,9 @@
         "model": "履带吊150T",
         "region": "华北",
         "monthly_rent": 116800.0,
-        "mobilization": 60300.0
+        "mobilization": 60300.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 27,
@@ -4634,7 +4686,9 @@
         "model": "履带吊150T",
         "region": "东北",
         "monthly_rent": 116800.0,
-        "mobilization": 60300.0
+        "mobilization": 60300.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 28,
@@ -4642,7 +4696,9 @@
         "model": "履带吊150T",
         "region": "中南",
         "monthly_rent": 133800.0,
-        "mobilization": 51300.0
+        "mobilization": 51300.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 29,
@@ -4650,7 +4706,9 @@
         "model": "履带吊150T",
         "region": "西南",
         "monthly_rent": 133800.0,
-        "mobilization": 51300.0
+        "mobilization": 51300.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 30,
@@ -4658,7 +4716,9 @@
         "model": "履带吊150T",
         "region": "西北",
         "monthly_rent": 135800.0,
-        "mobilization": 51300.0
+        "mobilization": 51300.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 31,
@@ -4666,7 +4726,9 @@
         "model": "履带吊160T",
         "region": "华东",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 32,
@@ -4674,7 +4736,9 @@
         "model": "履带吊160T",
         "region": "华北",
         "monthly_rent": 136600.0,
-        "mobilization": 64320.0
+        "mobilization": 64320.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 33,
@@ -4682,7 +4746,9 @@
         "model": "履带吊160T",
         "region": "东北",
         "monthly_rent": 136600.0,
-        "mobilization": 64320.0
+        "mobilization": 64320.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 34,
@@ -4690,7 +4756,9 @@
         "model": "履带吊160T",
         "region": "中南",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 35,
@@ -4698,7 +4766,9 @@
         "model": "履带吊160T",
         "region": "西南",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 36,
@@ -4706,7 +4776,9 @@
         "model": "履带吊160T",
         "region": "西北",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 37,
@@ -4714,7 +4786,9 @@
         "model": "履带吊200T",
         "region": "华东",
         "monthly_rent": 157300.0,
-        "mobilization": 80400.0
+        "mobilization": 80400.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 38,
@@ -4722,7 +4796,9 @@
         "model": "履带吊200T",
         "region": "华北",
         "monthly_rent": 157300.0,
-        "mobilization": 80400.0
+        "mobilization": 80400.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 39,
@@ -4730,7 +4806,9 @@
         "model": "履带吊200T",
         "region": "东北",
         "monthly_rent": 157300.0,
-        "mobilization": 80400.0
+        "mobilization": 80400.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 40,
@@ -4738,7 +4816,9 @@
         "model": "履带吊200T",
         "region": "中南",
         "monthly_rent": 157300.0,
-        "mobilization": 68400.0
+        "mobilization": 68400.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 41,
@@ -4746,7 +4826,9 @@
         "model": "履带吊200T",
         "region": "西南",
         "monthly_rent": 176300.0,
-        "mobilization": 68400.0
+        "mobilization": 68400.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 42,
@@ -4754,7 +4836,9 @@
         "model": "履带吊200T",
         "region": "西北",
         "monthly_rent": 157300.0,
-        "mobilization": 68400.0
+        "mobilization": 68400.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 43,
@@ -4762,7 +4846,9 @@
         "model": "履带吊250T",
         "region": "华东",
         "monthly_rent": 186300.0,
-        "mobilization": 100500.0
+        "mobilization": 100500.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 44,
@@ -4770,7 +4856,9 @@
         "model": "履带吊250T",
         "region": "华北",
         "monthly_rent": 186300.0,
-        "mobilization": 100500.0
+        "mobilization": 100500.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 45,
@@ -4778,7 +4866,9 @@
         "model": "履带吊250T",
         "region": "东北",
         "monthly_rent": 186300.0,
-        "mobilization": 100500.0
+        "mobilization": 100500.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 46,
@@ -4786,7 +4876,9 @@
         "model": "履带吊250T",
         "region": "中南",
         "monthly_rent": 186300.0,
-        "mobilization": 85500.0
+        "mobilization": 85500.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 47,
@@ -4794,7 +4886,9 @@
         "model": "履带吊250T",
         "region": "西南",
         "monthly_rent": 186300.0,
-        "mobilization": 85500.0
+        "mobilization": 85500.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 48,
@@ -4802,7 +4896,9 @@
         "model": "履带吊250T",
         "region": "西北",
         "monthly_rent": 186300.0,
-        "mobilization": 85500.0
+        "mobilization": 85500.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 49,
@@ -4810,7 +4906,9 @@
         "model": "履带吊280T",
         "region": "华东",
         "monthly_rent": 245900.0,
-        "mobilization": 112560.0
+        "mobilization": 112560.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 50,
@@ -4818,7 +4916,9 @@
         "model": "履带吊280T",
         "region": "华北",
         "monthly_rent": 245900.0,
-        "mobilization": 112560.0
+        "mobilization": 112560.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 51,
@@ -4826,7 +4926,9 @@
         "model": "履带吊280T",
         "region": "东北",
         "monthly_rent": 245900.0,
-        "mobilization": 112560.0
+        "mobilization": 112560.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 52,
@@ -4834,7 +4936,9 @@
         "model": "履带吊280T",
         "region": "中南",
         "monthly_rent": 236900.0,
-        "mobilization": 95760.0
+        "mobilization": 95760.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 53,
@@ -4842,7 +4946,9 @@
         "model": "履带吊280T",
         "region": "西南",
         "monthly_rent": 236900.0,
-        "mobilization": 95760.0
+        "mobilization": 95760.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 54,
@@ -4850,7 +4956,9 @@
         "model": "履带吊280T",
         "region": "西北",
         "monthly_rent": 245900.0,
-        "mobilization": 95760.0
+        "mobilization": 95760.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 55,
@@ -4858,7 +4966,9 @@
         "model": "履带吊280T（带超起）",
         "region": "华东",
         "monthly_rent": 255900.0,
-        "mobilization": 112560.0
+        "mobilization": 112560.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 56,
@@ -4866,7 +4976,9 @@
         "model": "履带吊280T（带超起）",
         "region": "华北",
         "monthly_rent": 274900.0,
-        "mobilization": 112560.0
+        "mobilization": 112560.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 57,
@@ -4874,7 +4986,9 @@
         "model": "履带吊280T（带超起）",
         "region": "东北",
         "monthly_rent": 274900.0,
-        "mobilization": 112560.0
+        "mobilization": 112560.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 58,
@@ -4882,7 +4996,9 @@
         "model": "履带吊280T（带超起）",
         "region": "中南",
         "monthly_rent": 264900.0,
-        "mobilization": 95760.0
+        "mobilization": 95760.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 59,
@@ -4890,7 +5006,9 @@
         "model": "履带吊280T（带超起）",
         "region": "西南",
         "monthly_rent": 264900.0,
-        "mobilization": 95760.0
+        "mobilization": 95760.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 60,
@@ -4898,7 +5016,9 @@
         "model": "履带吊280T（带超起）",
         "region": "西北",
         "monthly_rent": 264900.0,
-        "mobilization": 95760.0
+        "mobilization": 95760.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 61,
@@ -4906,7 +5026,9 @@
         "model": "履带吊300T",
         "region": "华东",
         "monthly_rent": 283900.0,
-        "mobilization": 120600.0
+        "mobilization": 120600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 62,
@@ -4914,7 +5036,9 @@
         "model": "履带吊300T",
         "region": "华北",
         "monthly_rent": 283900.0,
-        "mobilization": 120600.0
+        "mobilization": 120600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 63,
@@ -4922,7 +5046,9 @@
         "model": "履带吊300T",
         "region": "东北",
         "monthly_rent": 283900.0,
-        "mobilization": 120600.0
+        "mobilization": 120600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 64,
@@ -4930,7 +5056,9 @@
         "model": "履带吊300T",
         "region": "中南",
         "monthly_rent": 283900.0,
-        "mobilization": 102600.0
+        "mobilization": 102600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 65,
@@ -4938,7 +5066,9 @@
         "model": "履带吊300T",
         "region": "西南",
         "monthly_rent": 283900.0,
-        "mobilization": 102600.0
+        "mobilization": 102600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 66,
@@ -4946,7 +5076,9 @@
         "model": "履带吊300T",
         "region": "西北",
         "monthly_rent": 283900.0,
-        "mobilization": 102600.0
+        "mobilization": 102600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 67,
@@ -4954,7 +5086,9 @@
         "model": "履带吊300T（带超起）",
         "region": "华东",
         "monthly_rent": 283900.0,
-        "mobilization": 120600.0
+        "mobilization": 120600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 68,
@@ -4962,7 +5096,9 @@
         "model": "履带吊300T（带超起）",
         "region": "华北",
         "monthly_rent": 302900.0,
-        "mobilization": 120600.0
+        "mobilization": 120600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 69,
@@ -4970,7 +5106,9 @@
         "model": "履带吊300T（带超起）",
         "region": "东北",
         "monthly_rent": 302900.0,
-        "mobilization": 120600.0
+        "mobilization": 120600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 70,
@@ -4978,7 +5116,9 @@
         "model": "履带吊300T（带超起）",
         "region": "中南",
         "monthly_rent": 283900.0,
-        "mobilization": 102600.0
+        "mobilization": 102600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 71,
@@ -4986,7 +5126,9 @@
         "model": "履带吊300T（带超起）",
         "region": "西南",
         "monthly_rent": 302900.0,
-        "mobilization": 102600.0
+        "mobilization": 102600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 72,
@@ -4994,7 +5136,9 @@
         "model": "履带吊300T（带超起）",
         "region": "西北",
         "monthly_rent": 321900.0,
-        "mobilization": 102600.0
+        "mobilization": 102600.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 73,
@@ -5002,7 +5146,9 @@
         "model": "履带吊350T",
         "region": "华东",
         "monthly_rent": 305500.0,
-        "mobilization": 140700.0
+        "mobilization": 140700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 74,
@@ -5010,7 +5156,9 @@
         "model": "履带吊350T",
         "region": "华北",
         "monthly_rent": 305500.0,
-        "mobilization": 140700.0
+        "mobilization": 140700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 75,
@@ -5018,7 +5166,9 @@
         "model": "履带吊350T",
         "region": "东北",
         "monthly_rent": 305500.0,
-        "mobilization": 140700.0
+        "mobilization": 140700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 76,
@@ -5026,7 +5176,9 @@
         "model": "履带吊350T",
         "region": "中南",
         "monthly_rent": 324500.0,
-        "mobilization": 119700.0
+        "mobilization": 119700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 77,
@@ -5034,7 +5186,9 @@
         "model": "履带吊350T",
         "region": "西南",
         "monthly_rent": 324500.0,
-        "mobilization": 119700.0
+        "mobilization": 119700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 78,
@@ -5042,7 +5196,9 @@
         "model": "履带吊350T",
         "region": "西北",
         "monthly_rent": 305500.0,
-        "mobilization": 119700.0
+        "mobilization": 119700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 79,
@@ -5050,7 +5206,9 @@
         "model": "履带吊350T（带超起）",
         "region": "华东",
         "monthly_rent": 334500.0,
-        "mobilization": 140700.0
+        "mobilization": 140700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 80,
@@ -5058,7 +5216,9 @@
         "model": "履带吊350T（带超起）",
         "region": "华北",
         "monthly_rent": 343500.0,
-        "mobilization": 140700.0
+        "mobilization": 140700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 81,
@@ -5066,7 +5226,9 @@
         "model": "履带吊350T（带超起）",
         "region": "东北",
         "monthly_rent": 343500.0,
-        "mobilization": 140700.0
+        "mobilization": 140700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 82,
@@ -5074,7 +5236,9 @@
         "model": "履带吊350T（带超起）",
         "region": "中南",
         "monthly_rent": 343500.0,
-        "mobilization": 119700.0
+        "mobilization": 119700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 83,
@@ -5082,7 +5246,9 @@
         "model": "履带吊350T（带超起）",
         "region": "西南",
         "monthly_rent": 343500.0,
-        "mobilization": 119700.0
+        "mobilization": 119700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 84,
@@ -5090,7 +5256,9 @@
         "model": "履带吊350T（带超起）",
         "region": "西北",
         "monthly_rent": 343500.0,
-        "mobilization": 119700.0
+        "mobilization": 119700.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 85,
@@ -5098,7 +5266,9 @@
         "model": "履带吊400T",
         "region": "华东",
         "monthly_rent": 381500.0,
-        "mobilization": 160800.0
+        "mobilization": 160800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 86,
@@ -5106,7 +5276,9 @@
         "model": "履带吊400T",
         "region": "华北",
         "monthly_rent": 381500.0,
-        "mobilization": 160800.0
+        "mobilization": 160800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 87,
@@ -5114,7 +5286,9 @@
         "model": "履带吊400T",
         "region": "东北",
         "monthly_rent": 381500.0,
-        "mobilization": 160800.0
+        "mobilization": 160800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 88,
@@ -5122,7 +5296,9 @@
         "model": "履带吊400T",
         "region": "中南",
         "monthly_rent": 391500.0,
-        "mobilization": 136800.0
+        "mobilization": 136800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 89,
@@ -5130,7 +5306,9 @@
         "model": "履带吊400T",
         "region": "西南",
         "monthly_rent": 381500.0,
-        "mobilization": 136800.0
+        "mobilization": 136800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 90,
@@ -5138,7 +5316,9 @@
         "model": "履带吊400T",
         "region": "西北",
         "monthly_rent": 381500.0,
-        "mobilization": 136800.0
+        "mobilization": 136800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 91,
@@ -5146,7 +5326,9 @@
         "model": "履带吊400T（带超起）",
         "region": "华东",
         "monthly_rent": 381500.0,
-        "mobilization": 160800.0
+        "mobilization": 160800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 92,
@@ -5154,7 +5336,9 @@
         "model": "履带吊400T（带超起）",
         "region": "华北",
         "monthly_rent": 381500.0,
-        "mobilization": 160800.0
+        "mobilization": 160800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 93,
@@ -5162,7 +5346,9 @@
         "model": "履带吊400T（带超起）",
         "region": "东北",
         "monthly_rent": 381500.0,
-        "mobilization": 160800.0
+        "mobilization": 160800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 94,
@@ -5170,7 +5356,9 @@
         "model": "履带吊400T（带超起）",
         "region": "中南",
         "monthly_rent": 391500.0,
-        "mobilization": 136800.0
+        "mobilization": 136800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 95,
@@ -5178,7 +5366,9 @@
         "model": "履带吊400T（带超起）",
         "region": "西南",
         "monthly_rent": 381500.0,
-        "mobilization": 136800.0
+        "mobilization": 136800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 96,
@@ -5186,7 +5376,9 @@
         "model": "履带吊400T（带超起）",
         "region": "西北",
         "monthly_rent": 381500.0,
-        "mobilization": 136800.0
+        "mobilization": 136800.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 97,
@@ -5194,7 +5386,9 @@
         "model": "履带吊450T",
         "region": "华东",
         "monthly_rent": 400500.0,
-        "mobilization": 180900.0
+        "mobilization": 180900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 98,
@@ -5202,7 +5396,9 @@
         "model": "履带吊450T",
         "region": "华北",
         "monthly_rent": 400500.0,
-        "mobilization": 180900.0
+        "mobilization": 180900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 99,
@@ -5210,7 +5406,9 @@
         "model": "履带吊450T",
         "region": "东北",
         "monthly_rent": 400500.0,
-        "mobilization": 180900.0
+        "mobilization": 180900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 100,
@@ -5218,7 +5416,9 @@
         "model": "履带吊450T",
         "region": "中南",
         "monthly_rent": 448500.0,
-        "mobilization": 153900.0
+        "mobilization": 153900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 101,
@@ -5226,7 +5426,9 @@
         "model": "履带吊450T",
         "region": "西南",
         "monthly_rent": 458500.0,
-        "mobilization": 153900.0
+        "mobilization": 153900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 102,
@@ -5234,7 +5436,9 @@
         "model": "履带吊450T",
         "region": "西北",
         "monthly_rent": 400500.0,
-        "mobilization": 153900.0
+        "mobilization": 153900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 103,
@@ -5242,7 +5446,9 @@
         "model": "履带吊450T（带超起）",
         "region": "华东",
         "monthly_rent": 448500.0,
-        "mobilization": 180900.0
+        "mobilization": 180900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 104,
@@ -5250,7 +5456,9 @@
         "model": "履带吊450T（带超起）",
         "region": "华北",
         "monthly_rent": 448500.0,
-        "mobilization": 180900.0
+        "mobilization": 180900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 105,
@@ -5258,7 +5466,9 @@
         "model": "履带吊450T（带超起）",
         "region": "东北",
         "monthly_rent": 448500.0,
-        "mobilization": 180900.0
+        "mobilization": 180900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 106,
@@ -5266,7 +5476,9 @@
         "model": "履带吊450T（带超起）",
         "region": "中南",
         "monthly_rent": 477500.0,
-        "mobilization": 153900.0
+        "mobilization": 153900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 107,
@@ -5274,7 +5486,9 @@
         "model": "履带吊450T（带超起）",
         "region": "西南",
         "monthly_rent": 496500.0,
-        "mobilization": 153900.0
+        "mobilization": 153900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 108,
@@ -5282,7 +5496,9 @@
         "model": "履带吊450T（带超起）",
         "region": "西北",
         "monthly_rent": 448500.0,
-        "mobilization": 153900.0
+        "mobilization": 153900.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 109,
@@ -5290,7 +5506,9 @@
         "model": "履带吊500T",
         "region": "华东",
         "monthly_rent": 458700.0,
-        "mobilization": 201000.0
+        "mobilization": 201000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 110,
@@ -5298,7 +5516,9 @@
         "model": "履带吊500T",
         "region": "华北",
         "monthly_rent": 458700.0,
-        "mobilization": 201000.0
+        "mobilization": 201000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 111,
@@ -5306,7 +5526,9 @@
         "model": "履带吊500T",
         "region": "东北",
         "monthly_rent": 458700.0,
-        "mobilization": 201000.0
+        "mobilization": 201000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 112,
@@ -5314,7 +5536,9 @@
         "model": "履带吊500T",
         "region": "中南",
         "monthly_rent": 487700.0,
-        "mobilization": 171000.0
+        "mobilization": 171000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 113,
@@ -5322,7 +5546,9 @@
         "model": "履带吊500T",
         "region": "西南",
         "monthly_rent": 506700.0,
-        "mobilization": 171000.0
+        "mobilization": 171000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 114,
@@ -5330,7 +5556,9 @@
         "model": "履带吊500T",
         "region": "西北",
         "monthly_rent": 458700.0,
-        "mobilization": 171000.0
+        "mobilization": 171000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 115,
@@ -5338,7 +5566,9 @@
         "model": "履带吊500T（带超起）",
         "region": "华东",
         "monthly_rent": 487700.0,
-        "mobilization": 201000.0
+        "mobilization": 201000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 116,
@@ -5346,7 +5576,9 @@
         "model": "履带吊500T（带超起）",
         "region": "华北",
         "monthly_rent": 506700.0,
-        "mobilization": 201000.0
+        "mobilization": 201000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 117,
@@ -5354,7 +5586,9 @@
         "model": "履带吊500T（带超起）",
         "region": "东北",
         "monthly_rent": 506700.0,
-        "mobilization": 201000.0
+        "mobilization": 201000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 118,
@@ -5362,7 +5596,9 @@
         "model": "履带吊500T（带超起）",
         "region": "中南",
         "monthly_rent": 487700.0,
-        "mobilization": 171000.0
+        "mobilization": 171000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 119,
@@ -5370,7 +5606,9 @@
         "model": "履带吊500T（带超起）",
         "region": "西南",
         "monthly_rent": 534700.0,
-        "mobilization": 171000.0
+        "mobilization": 171000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 120,
@@ -5378,7 +5616,9 @@
         "model": "履带吊500T（带超起）",
         "region": "西北",
         "monthly_rent": 487700.0,
-        "mobilization": 171000.0
+        "mobilization": 171000.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 121,
@@ -5386,7 +5626,9 @@
         "model": "履带吊600T",
         "region": "华东",
         "monthly_rent": 553700.0,
-        "mobilization": 241200.0
+        "mobilization": 241200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 122,
@@ -5394,7 +5636,9 @@
         "model": "履带吊600T",
         "region": "华北",
         "monthly_rent": 553700.0,
-        "mobilization": 241200.0
+        "mobilization": 241200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 123,
@@ -5402,7 +5646,9 @@
         "model": "履带吊600T",
         "region": "东北",
         "monthly_rent": 553700.0,
-        "mobilization": 241200.0
+        "mobilization": 241200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 124,
@@ -5410,7 +5656,9 @@
         "model": "履带吊600T",
         "region": "中南",
         "monthly_rent": 630700.0,
-        "mobilization": 205200.0
+        "mobilization": 205200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 125,
@@ -5418,7 +5666,9 @@
         "model": "履带吊600T",
         "region": "西南",
         "monthly_rent": 658700.0,
-        "mobilization": 205200.0
+        "mobilization": 205200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 126,
@@ -5426,7 +5676,9 @@
         "model": "履带吊600T",
         "region": "西北",
         "monthly_rent": 553700.0,
-        "mobilization": 205200.0
+        "mobilization": 205200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 127,
@@ -5434,7 +5686,9 @@
         "model": "履带吊600T（带超起）",
         "region": "华东",
         "monthly_rent": 601700.0,
-        "mobilization": 241200.0
+        "mobilization": 241200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 128,
@@ -5442,7 +5696,9 @@
         "model": "履带吊600T（带超起）",
         "region": "华北",
         "monthly_rent": 601700.0,
-        "mobilization": 241200.0
+        "mobilization": 241200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 129,
@@ -5450,7 +5706,9 @@
         "model": "履带吊600T（带超起）",
         "region": "东北",
         "monthly_rent": 601700.0,
-        "mobilization": 241200.0
+        "mobilization": 241200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 130,
@@ -5458,7 +5716,9 @@
         "model": "履带吊600T（带超起）",
         "region": "中南",
         "monthly_rent": 630700.0,
-        "mobilization": 205200.0
+        "mobilization": 205200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 131,
@@ -5466,7 +5726,9 @@
         "model": "履带吊600T（带超起）",
         "region": "西南",
         "monthly_rent": 658700.0,
-        "mobilization": 205200.0
+        "mobilization": 205200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 132,
@@ -5474,7 +5736,9 @@
         "model": "履带吊600T（带超起）",
         "region": "西北",
         "monthly_rent": 601700.0,
-        "mobilization": 205200.0
+        "mobilization": 205200.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 133,
@@ -5482,7 +5746,9 @@
         "model": "履带吊600T（带超起）",
         "region": "华东",
         "monthly_rent": 0.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 134,
@@ -5490,7 +5756,9 @@
         "model": "汽车吊50T",
         "region": "华东",
         "monthly_rent": 50200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 135,
@@ -5498,7 +5766,9 @@
         "model": "汽车吊50T",
         "region": "华北",
         "monthly_rent": 50200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 136,
@@ -5506,7 +5776,9 @@
         "model": "汽车吊50T",
         "region": "东北",
         "monthly_rent": 50200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 137,
@@ -5514,7 +5786,9 @@
         "model": "汽车吊50T",
         "region": "中南",
         "monthly_rent": 50200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 138,
@@ -5522,7 +5796,9 @@
         "model": "汽车吊50T",
         "region": "西南",
         "monthly_rent": 50200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 139,
@@ -5530,7 +5806,9 @@
         "model": "汽车吊50T",
         "region": "西北",
         "monthly_rent": 50200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 140,
@@ -5538,7 +5816,9 @@
         "model": "汽车吊80T",
         "region": "华东",
         "monthly_rent": 67200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 141,
@@ -5546,7 +5826,9 @@
         "model": "汽车吊80T",
         "region": "华北",
         "monthly_rent": 67200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 142,
@@ -5554,7 +5836,9 @@
         "model": "汽车吊80T",
         "region": "东北",
         "monthly_rent": 67200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 143,
@@ -5562,7 +5846,9 @@
         "model": "汽车吊80T",
         "region": "中南",
         "monthly_rent": 67200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 144,
@@ -5570,7 +5856,9 @@
         "model": "汽车吊80T",
         "region": "西南",
         "monthly_rent": 67200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 145,
@@ -5578,7 +5866,9 @@
         "model": "汽车吊80T",
         "region": "西北",
         "monthly_rent": 67200.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 146,
@@ -5586,7 +5876,9 @@
         "model": "汽车吊100T",
         "region": "华东",
         "monthly_rent": 102800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 147,
@@ -5594,7 +5886,9 @@
         "model": "汽车吊100T",
         "region": "华北",
         "monthly_rent": 102800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 148,
@@ -5602,7 +5896,9 @@
         "model": "汽车吊100T",
         "region": "东北",
         "monthly_rent": 102800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 149,
@@ -5610,7 +5906,9 @@
         "model": "汽车吊100T",
         "region": "中南",
         "monthly_rent": 102800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 150,
@@ -5618,7 +5916,9 @@
         "model": "汽车吊100T",
         "region": "西南",
         "monthly_rent": 102800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 151,
@@ -5626,7 +5926,9 @@
         "model": "汽车吊100T",
         "region": "西北",
         "monthly_rent": 102800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 152,
@@ -5634,7 +5936,9 @@
         "model": "汽车吊120T",
         "region": "华东",
         "monthly_rent": 116800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 153,
@@ -5642,7 +5946,9 @@
         "model": "汽车吊120T",
         "region": "华北",
         "monthly_rent": 116800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 154,
@@ -5650,7 +5956,9 @@
         "model": "汽车吊120T",
         "region": "东北",
         "monthly_rent": 116800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 155,
@@ -5658,7 +5966,9 @@
         "model": "汽车吊120T",
         "region": "中南",
         "monthly_rent": 116800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 156,
@@ -5666,7 +5976,9 @@
         "model": "汽车吊120T",
         "region": "西南",
         "monthly_rent": 116800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 157,
@@ -5674,7 +5986,9 @@
         "model": "汽车吊120T",
         "region": "西北",
         "monthly_rent": 116800.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 158,
@@ -5682,7 +5996,9 @@
         "model": "汽车吊150T",
         "region": "华东",
         "monthly_rent": 148300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 159,
@@ -5690,7 +6006,9 @@
         "model": "汽车吊150T",
         "region": "华北",
         "monthly_rent": 148300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 160,
@@ -5698,7 +6016,9 @@
         "model": "汽车吊150T",
         "region": "东北",
         "monthly_rent": 148300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 161,
@@ -5706,7 +6026,9 @@
         "model": "汽车吊150T",
         "region": "中南",
         "monthly_rent": 148300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 162,
@@ -5714,7 +6036,9 @@
         "model": "汽车吊150T",
         "region": "西南",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 163,
@@ -5722,7 +6046,9 @@
         "model": "汽车吊150T",
         "region": "西北",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 164,
@@ -5730,7 +6056,9 @@
         "model": "汽车吊200T",
         "region": "华东",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 165,
@@ -5738,7 +6066,9 @@
         "model": "汽车吊200T",
         "region": "华北",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 166,
@@ -5746,7 +6076,9 @@
         "model": "汽车吊200T",
         "region": "东北",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 167,
@@ -5754,7 +6086,9 @@
         "model": "汽车吊200T",
         "region": "中南",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 168,
@@ -5762,7 +6096,9 @@
         "model": "汽车吊200T",
         "region": "西南",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 169,
@@ -5770,7 +6106,9 @@
         "model": "汽车吊200T",
         "region": "西北",
         "monthly_rent": 186300.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 170,
@@ -5778,7 +6116,9 @@
         "model": "汽车吊250T",
         "region": "华东",
         "monthly_rent": 210500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 171,
@@ -5786,7 +6126,9 @@
         "model": "汽车吊250T",
         "region": "华北",
         "monthly_rent": 210500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 172,
@@ -5794,7 +6136,9 @@
         "model": "汽车吊250T",
         "region": "东北",
         "monthly_rent": 210500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 173,
@@ -5802,7 +6146,9 @@
         "model": "汽车吊250T",
         "region": "中南",
         "monthly_rent": 210500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 174,
@@ -5810,7 +6156,9 @@
         "model": "汽车吊250T",
         "region": "西南",
         "monthly_rent": 286500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 175,
@@ -5818,7 +6166,9 @@
         "model": "汽车吊250T",
         "region": "西北",
         "monthly_rent": 286500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 176,
@@ -5826,7 +6176,9 @@
         "model": "汽车吊300T",
         "region": "华东",
         "monthly_rent": 258500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 177,
@@ -5834,7 +6186,9 @@
         "model": "汽车吊300T",
         "region": "华北",
         "monthly_rent": 286500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 178,
@@ -5842,7 +6196,9 @@
         "model": "汽车吊300T",
         "region": "东北",
         "monthly_rent": 286500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 179,
@@ -5850,7 +6206,9 @@
         "model": "汽车吊300T",
         "region": "中南",
         "monthly_rent": 286500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 180,
@@ -5858,7 +6216,9 @@
         "model": "汽车吊300T",
         "region": "西南",
         "monthly_rent": 381500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 181,
@@ -5866,7 +6226,9 @@
         "model": "汽车吊300T",
         "region": "西北",
         "monthly_rent": 381500.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 182,
@@ -5874,7 +6236,9 @@
         "model": "汽车吊350T",
         "region": "华东",
         "monthly_rent": 358600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 183,
@@ -5882,7 +6246,9 @@
         "model": "汽车吊350T",
         "region": "华北",
         "monthly_rent": 386600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 184,
@@ -5890,7 +6256,9 @@
         "model": "汽车吊350T",
         "region": "东北",
         "monthly_rent": 386600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 185,
@@ -5898,7 +6266,9 @@
         "model": "汽车吊350T",
         "region": "中南",
         "monthly_rent": 386600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 186,
@@ -5906,7 +6276,9 @@
         "model": "汽车吊350T",
         "region": "西南",
         "monthly_rent": 482600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 187,
@@ -5914,7 +6286,9 @@
         "model": "汽车吊350T",
         "region": "西北",
         "monthly_rent": 482600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 188,
@@ -5922,7 +6296,9 @@
         "model": "汽车吊350T",
         "region": "华东",
         "monthly_rent": 405600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 189,
@@ -5930,7 +6306,9 @@
         "model": "汽车吊350T",
         "region": "华北",
         "monthly_rent": 453600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 190,
@@ -5938,7 +6316,9 @@
         "model": "汽车吊350T",
         "region": "东北",
         "monthly_rent": 453600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 191,
@@ -5946,7 +6326,9 @@
         "model": "汽车吊350T",
         "region": "中南",
         "monthly_rent": 453600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 192,
@@ -5954,7 +6336,9 @@
         "model": "汽车吊350T",
         "region": "西南",
         "monthly_rent": 548600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
       },
       {
         "id": 193,
@@ -5962,7 +6346,69 @@
         "model": "汽车吊350T",
         "region": "西北",
         "monthly_rent": 548600.0,
-        "mobilization": 0.0
+        "mobilization": 0.0,
+        "is_overseas": false,
+        "currency": "CNY"
+      },
+      {
+        "id": 194,
+        "tag": "履带吊260T东南亚(印尼雅加达)",
+        "model": "履带吊260T",
+        "region": "东南亚(印尼雅加达)",
+        "monthly_rent": 198800.0,
+        "mobilization": 131350.0,
+        "is_overseas": true,
+        "currency": "CNY"
+      },
+      {
+        "id": 195,
+        "tag": "履带吊400T中东(沙特阿美管廊)",
+        "model": "履带吊400T",
+        "region": "中东(沙特阿美管廊)",
+        "monthly_rent": 273350.0,
+        "mobilization": 184600.0,
+        "is_overseas": true,
+        "currency": "CNY"
+      },
+      {
+        "id": 196,
+        "tag": "履带吊150T东南亚(印尼雅加达)",
+        "model": "履带吊150T",
+        "region": "东南亚(印尼雅加达)",
+        "monthly_rent": 131350.0,
+        "mobilization": 85200.0,
+        "is_overseas": true,
+        "currency": "CNY"
+      },
+      {
+        "id": 197,
+        "tag": "汽车吊100T非洲大区",
+        "model": "汽车吊100T",
+        "region": "非洲大区",
+        "monthly_rent": 113600.0,
+        "mobilization": 67450.0,
+        "is_overseas": true,
+        "currency": "CNY"
+      },
+      {
+        "id": 198,
+        "tag": "汽车吊50T东南亚(印尼雅加达)",
+        "model": "汽车吊50T",
+        "region": "东南亚(印尼雅加达)",
+        "monthly_rent": 68500.0,
+        "mobilization": 38000.0,
+        "is_overseas": true,
+        "currency": "CNY"
+      },
+      {
+        "id": 199,
+        "tag": "履带吊650T中东(沙特阿美管廊)",
+        "model": "履带吊650T",
+        "region": "中东(沙特阿美管廊)",
+        "monthly_rent": 460000.0,
+        "mobilization": 295000.0,
+        "is_overseas": true,
+        "currency": "CNY"
       }
     ],
     "logistics_matrix": [
