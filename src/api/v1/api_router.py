@@ -175,4 +175,61 @@ class SteelBidApiRouter:
             "total_amortized_per_ton_usd": float(res["total_amortized_per_ton_usd"]),
         }
 
+    # ==============================================================
+    # 基础数据中心与 Dialog 弹窗管理 API
+    # ==============================================================
+    def get_base_master_data(self) -> Dict[str, Any]:
+        """获取全量基础数据中心资产（制作、安装、机械、材料正交规则、分包与名录）"""
+        from src.services.base_data_service import BaseDataService
+        svc = BaseDataService()
+        return svc.export_master_data_dict()
+
+    def calculate_material_landed_cost(
+        self,
+        steel_grade: str = "Q355B",
+        thickness: float = 16.0,
+        fab_plant: str = "江门制造基地",
+        steel_mill: Optional[str] = None,
+        process_state: str = "AR",
+        impact_tier: str = "B",
+        z_perf: Optional[str] = None,
+        ut_level: Optional[str] = None,
+        loss_rate: float = 0.05
+    ) -> Dict[str, Any]:
+        """根据六大正交维度和加工厂运距，一步计算到厂综合结算价与等效基准 (供 MaterialPriceDialog 实时试算)"""
+        from src.services.base_data_service import BaseDataService
+        svc = BaseDataService()
+        res = svc.calculate_landed_material_price(
+            steel_grade=steel_grade,
+            thickness=thickness,
+            fab_plant=fab_plant,
+            steel_mill=steel_mill,
+            process_state=process_state,
+            impact_tier=impact_tier,
+            z_perf=z_perf,
+            ut_level=ut_level,
+            loss_rate=loss_rate
+        )
+        return {
+            "steel_grade": res.steel_grade,
+            "thickness": float(res.thickness),
+            "process_state": res.process_state,
+            "impact_tier": res.impact_tier,
+            "fab_plant": res.fab_plant,
+            "steel_mill": res.steel_mill,
+            "base_mill_price": float(res.base_mill_price),
+            "grade_markup": float(res.grade_markup),
+            "temp_markup": float(res.temp_markup),
+            "process_markup": float(res.process_markup),
+            "thickness_markup": float(res.thickness_markup),
+            "perf_markup": float(res.perf_markup),
+            "ex_mill_total": float(res.ex_mill_total),
+            "freight_cost": float(res.freight_cost),
+            "handling_cost": float(res.handling_cost),
+            "landed_cost": float(res.landed_cost),
+            "landed_cost_ex_vat": float(res.landed_cost_ex_vat),
+            "equivalent_355b_benchmark": float(res.equivalent_355b_benchmark)
+        }
+
+
 
