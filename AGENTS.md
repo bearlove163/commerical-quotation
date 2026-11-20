@@ -37,12 +37,12 @@ uv run --with pytest --with openpyxl python -m pytest tests/ -v
 
 ## 3. 模块化规则库索引 (Modular Rules Index)
 
-按照 Claude Code 规范，全部 19 条核心业务与工程铁律已按领域彻底解耦至 `.agents/rules/` 目录下，各 Agent 在执行相应任务时必须按需加载遵守：
+按照 Claude Code 规范，全部 23 条核心业务与工程铁律已按领域彻底解耦至 `.agents/rules/` 目录下，各 Agent 在执行相应任务时必须按需加载遵守：
 
 | 规则模块 | 文件路径 | 涵盖核心铁律 (Rules) |
 | :--- | :--- | :--- |
 | **01. 工程目录与存储规范** | [.agents/rules/01_directory_and_storage.md](file:///.agents/rules/01_directory_and_storage.md) | **Rule 1** 原始只读、**Rule 2** 成果专区、**Rule 3** 命名范式、**Rule 4** 3位序列号⭐、**Rule 5** Worktree 隔离与忽略⭐ |
-| **02. 业务模式与定额微工序** | [.agents/rules/02_business_modes_and_quotas.md](file:///.agents/rules/02_business_modes_and_quotas.md) | **Rule 6** 模式硬隔离、**Rule 7** 安装计价双轨制、**Rule 10** 算量 Auto-Pull⭐、**Rule 11** 制作7道/安装6道微工序解耦⭐ |
+| **02. 业务模式与基础数据定额** | [.agents/rules/02_business_modes_and_quotas.md](file:///.agents/rules/02_business_modes_and_quotas.md) | **Rule 6** 模式硬隔离、**Rule 7** 安装计价双轨制、**Rule 10** 算量 Auto-Pull⭐、**Rule 11** 制作7道/安装6道微工序解耦⭐、**Rule 20** 正交材料与TMCP⭐、**Rule 21** 钢厂-加工厂调运费⭐、**Rule 22** 分包字典与名录、**Rule 23** 独立 Dialog 解耦 |
 | **03. 组价公式与倒轧平衡** | [.agents/rules/03_pricing_and_balancing.md](file:///.agents/rules/03_pricing_and_balancing.md) | **Rule 8** 两票制闭式解析公式、**Rule 9** 9费项倒轧平衡与安全阈值、**Rule 14** Decimal 高精度量化 |
 | **04. 数据治理与版本控制** | [.agents/rules/04_data_governance.md](file:///.agents/rules/04_data_governance.md) | **Rule 12** 材料快照不可变性、**Rule 13** 商务版本树不可逆加锁与派生 |
 | **05. 协作守则与 xUnit 巡检** | [.agents/rules/05_agent_and_xunit_patrol.md](file:///.agents/rules/05_agent_and_xunit_patrol.md) | **Rule 15** 先查后改、**Rule 16** 回归对账零漂移、**Rule 17** Windows调用、**Rule 18** 同步交付、**Rule 19** xUnit 巡检阻断⭐ |
