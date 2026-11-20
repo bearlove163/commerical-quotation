@@ -144,5 +144,43 @@ def test_cockpit_assets_and_data_integrity():
     assert "id=\"dlgKpiAwarded\"" in html, "缺少中标台账弹窗"
 
 
+def test_section_families_master_data_and_auto_pull():
+    """验证基础数据模块中的截面族后台设置与算量工作台 Auto-Pull 定额取数及即时编辑能力"""
+    with open(DATA_JSON_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    # 1. 验证基础数据截面族库与定额库
+    assert "section_families" in data, "缺少 section_families 截面族后台数据"
+    assert len(data["section_families"]) >= 7, "应包含 CROSS, BOX, PIPE, SPHERE, TRUSS, H_BEAM, PLATE 7大内置截面族"
+    family_codes = {f["family_code"] for f in data["section_families"]}
+    assert {"CROSS", "BOX", "PIPE", "SPHERE", "TRUSS", "H_BEAM", "PLATE"}.issubset(family_codes)
+
+    cross_fam = next(f for f in data["section_families"] if f["family_code"] == "CROSS")
+    assert "十" in cross_fam["prefix_rules"]
+    assert cross_fam["default_material"] == "Q355B"
+    assert cross_fam["fab_base_cost"] > 0
+
+    assert "quotas" in data, "缺少 quotas 基础定额库数据"
+    assert "material_prices" in data["quotas"]
+    assert "fabrication_steps" in data["quotas"]
+    assert "installation_steps" in data["quotas"]
+
+    # 2. 验证 app.html 界面与交互函数完整性
+    with open(APP_HTML_PATH, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    assert "③ 基础数据" in html, "导航菜单应重命名为 ③ 基础数据"
+    assert "id=\"dbPanel-family\"" in html, "缺少截面族设置面板"
+    assert "id=\"dbTab-family\"" in html, "缺少截面族 Tab"
+    assert "renderSectionFamiliesTable" in html, "缺少截面族表格渲染函数"
+    assert "parseSectionSpecIntelligent" in html, "缺少智能截面规则推导函数"
+    assert "runSandboxDerivation" in html, "缺少沙盒在线推导仿真函数"
+    assert "toggleAutoPullEditMode" in html, "缺少 Auto-Pull 编辑模式切换函数"
+    assert "applyAutoPullEdits" in html, "缺少 Auto-Pull 参数修改应用函数"
+    assert "resetCurrentComponentQuota" in html, "缺少 Auto-Pull 定额恢复函数"
+    assert "id=\"dlgAddSectionFamily\"" in html, "缺少新增截面族弹窗"
+
+
+
 
 
