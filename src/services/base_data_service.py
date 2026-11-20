@@ -186,6 +186,28 @@ class BaseDataService:
                     )
                     self._mach_rates.append(rec)
 
+            # 丰富海外典型施工大区起重吊机租赁与跨国进退场运费
+            overseas_machinery = [
+                ("履带吊260T", "东南亚(印尼雅加达)", Decimal("198800.00"), Decimal("131350.00")),
+                ("履带吊400T", "中东(沙特阿美管廊)", Decimal("273350.00"), Decimal("184600.00")),
+                ("履带吊150T", "东南亚(印尼雅加达)", Decimal("131350.00"), Decimal("85200.00")),
+                ("汽车吊100T", "非洲大区", Decimal("113600.00"), Decimal("67450.00")),
+                ("汽车吊50T", "东南亚(印尼雅加达)", Decimal("68500.00"), Decimal("38000.00")),
+                ("履带吊650T", "中东(沙特阿美管廊)", Decimal("460000.00"), Decimal("295000.00")),
+            ]
+            for m_model, m_region, m_monthly, m_mob in overseas_machinery:
+                rec = MachineryRateRecord(
+                    record_id=len(self._mach_rates) + 1,
+                    tag=f"{m_model}{m_region}",
+                    model=m_model,
+                    region=m_region,
+                    monthly_rent_and_fuel=m_monthly,
+                    mobilization_cost=m_mob,
+                    is_overseas=True,
+                    currency="CNY"
+                )
+                self._mach_rates.append(rec)
+
     def _init_orthogonal_material_rules(self):
         """初始化正交材料规则字典库 (强度级、冲击温度、TMCP/调质、板厚阶梯、性能加价)"""
         self._material_rules = {
@@ -557,7 +579,8 @@ class BaseDataService:
             "machinery_rates": [
                 {
                     "id": r.record_id, "tag": r.tag, "model": r.model, "region": r.region,
-                    "monthly_rent": float(r.monthly_rent_and_fuel), "mobilization": float(r.mobilization_cost)
+                    "monthly_rent": float(r.monthly_rent_and_fuel), "mobilization": float(r.mobilization_cost),
+                    "is_overseas": r.is_overseas, "currency": r.currency
                 }
                 for r in self._mach_rates
             ],
