@@ -207,51 +207,56 @@
   <div class="flex flex-1 overflow-hidden">
 
     <!-- 2.1 左侧 HIS 模块导航栏 (Left Module Nav) -->
-    <aside class="w-48 bg-slate-800 text-slate-200 flex flex-col shrink-0 border-r border-slate-700 select-none">
-      <div class="p-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex justify-between items-center">
-        <span>HIS 模块导航</span>
-        <span class="text-[10px] text-blue-400">8 大工作台</span>
+    <aside id="leftSidebar" class="w-48 bg-slate-800 text-slate-200 flex flex-col shrink-0 border-r border-slate-700 select-none transition-all duration-300">
+      <div class="p-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex justify-between items-center border-b border-slate-700/60">
+        <span class="sidebar-label truncate">HIS 模块导航</span>
+        <button onclick="toggleSidebarCollapse()" id="btnToggleSidebar" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-700 transition" title="折叠/展开左侧导航">
+          <i id="sidebarToggleIcon" class="fa-solid fa-angles-left text-xs"></i>
+        </button>
       </div>
-      <nav class="flex-1 space-y-1 px-1.5 overflow-y-auto" id="leftNavMenu">
-        <a href="javascript:void(0)" onclick="switchNavModule('dashboard')" id="nav-dashboard" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-gauge-high w-4 text-center text-blue-400"></i><span>① 总览驾驶舱</span>
+      <nav class="flex-1 space-y-1 px-1.5 py-1.5 overflow-y-auto" id="leftNavMenu">
+        <a href="javascript:void(0)" onclick="switchNavModule('dashboard')" id="nav-dashboard" title="① 总览驾驶舱" class="flex items-center space-x-2 px-3 py-2 rounded nav-active transition">
+          <i class="fa-solid fa-gauge-high w-4 text-center text-white shrink-0"></i><span class="sidebar-label">① 总览驾驶舱</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('project')" id="nav-project" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-folder-tree w-4 text-center text-amber-400"></i><span>② 项目与版本</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('project')" id="nav-project" title="② 项目与版本" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-folder-tree w-4 text-center text-amber-400 shrink-0"></i><span class="sidebar-label">② 项目与版本</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('database')" id="nav-database" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-database w-4 text-center text-emerald-400"></i><span>③ 基础定额库</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('database')" id="nav-database" title="③ 基础定额库" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-database w-4 text-center text-emerald-400 shrink-0"></i><span class="sidebar-label">③ 基础定额库</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('takeoff')" id="nav-takeoff" class="flex items-center space-x-2 px-3 py-2 rounded nav-active transition">
-          <i class="fa-solid fa-ruler-combined w-4 text-center text-white"></i><span>④ 算量工作台 ⭐</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('takeoff')" id="nav-takeoff" title="④ 算量工作台 ⭐" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-ruler-combined w-4 text-center text-blue-400 shrink-0"></i><span class="sidebar-label">④ 算量工作台 ⭐</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('pricing')" id="nav-pricing" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-calculator w-4 text-center text-cyan-400"></i><span>⑤ 组价计算引擎</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('pricing')" id="nav-pricing" title="⑤ 组价计算引擎" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-calculator w-4 text-center text-cyan-400 shrink-0"></i><span class="sidebar-label">⑤ 组价计算引擎</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('mapping')" id="nav-mapping" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-table-cells-large w-4 text-center text-purple-400"></i><span>⑥ 甲方清单适配</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('mapping')" id="nav-mapping" title="⑥ 甲方清单适配" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-table-cells-large w-4 text-center text-purple-400 shrink-0"></i><span class="sidebar-label">⑥ 甲方清单适配</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('reports')" id="nav-reports" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-file-invoice-dollar w-4 text-center text-rose-400"></i><span>⑦ 报表输出中心</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('reports')" id="nav-reports" title="⑦ 报表输出中心" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-file-invoice-dollar w-4 text-center text-rose-400 shrink-0"></i><span class="sidebar-label">⑦ 报表输出中心</span>
         </a>
-        <a href="javascript:void(0)" onclick="switchNavModule('approval')" id="nav-approval" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
-          <i class="fa-solid fa-signature w-4 text-center text-indigo-400"></i><span>⑧ 审批流程中心</span>
+        <a href="javascript:void(0)" onclick="switchNavModule('approval')" id="nav-approval" title="⑧ 审批流程中心" class="flex items-center space-x-2 px-3 py-2 rounded text-slate-300 hover:bg-slate-700 hover:text-white transition">
+          <i class="fa-solid fa-signature w-4 text-center text-indigo-400 shrink-0"></i><span class="sidebar-label">⑧ 审批流程中心</span>
         </a>
       </nav>
 
       <!-- 底部系统健康自检栏 -->
-      <div class="p-2.5 border-t border-slate-700 text-[11px] text-slate-400 bg-slate-850 space-y-1">
-        <div class="flex justify-between items-center">
+      <div id="sidebarFooter" class="p-2.5 border-t border-slate-700 text-[11px] text-slate-400 bg-slate-850 space-y-1">
+        <div class="flex justify-between items-center sidebar-label">
           <span>闭式求解引擎:</span>
           <span class="text-emerald-400 font-mono">Closed-Form v1.0</span>
         </div>
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center sidebar-label">
           <span>xUnit 规则巡检:</span>
           <span class="text-emerald-400 font-semibold">12 项全通过 ✓</span>
         </div>
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center sidebar-label">
           <span>自动化测试集:</span>
-          <span class="text-emerald-400 font-semibold">13 项全通过 ✓</span>
+          <span class="text-emerald-400 font-semibold">14 项全通过 ✓</span>
+        </div>
+        <div class="sidebar-collapsed-indicator hidden text-center text-emerald-400 py-1" title="全部自检与巡检通过 ✓">
+          <i class="fa-solid fa-shield-halved text-sm"></i>
         </div>
       </div>
     </aside>
@@ -262,164 +267,443 @@
       <!-- ============================================== -->
       <!-- VIEW 1: ① 运营总览驾驶舱 (Dashboard View)       -->
       <!-- ============================================== -->
-      <section id="view-dashboard" class="flex-1 flex flex-col overflow-y-auto p-4 space-y-4 hidden">
-        <!-- 顶部指标卡片 -->
-        <div class="grid grid-cols-4 gap-3">
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-            <div class="text-slate-400 text-[11px]">累计在途钢构总吨位</div>
-            <div class="text-lg font-bold text-slate-900 mt-1">28,118.10 <span class="text-xs font-normal text-slate-500">t</span></div>
-            <div class="text-[10px] text-emerald-600 mt-1 flex items-center"><i class="fa-solid fa-arrow-trend-up mr-1"></i>环比上月 +18.5%</div>
+      <section id="view-dashboard" class="flex-1 overflow-y-auto p-4 lg:p-6 space-y-5 pb-32" style="scroll-behavior: smooth;">
+        
+        <!-- ==================================================== -->
+        <!-- 1. 顶部 Header: 岗位标识 + 口径切换下拉 + 数据时间戳 -->
+        <!-- ==================================================== -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-2 border-b border-slate-200 gap-2">
+          <div>
+            <div class="text-[10px] uppercase font-mono tracking-widest text-slate-400 font-semibold">POST COCKPIT</div>
+            <div class="flex items-center space-x-3 mt-0.5">
+              <h1 id="cockpitTitle" class="text-xl font-black text-slate-900 tracking-tight">岗位驾驶舱 · 商务经理</h1>
+              <!-- 口径下拉选择框 -->
+              <div class="relative inline-flex items-center">
+                <span class="text-xs bg-white border border-slate-300 rounded px-2.5 py-1 text-slate-700 flex items-center space-x-1.5 shadow-2xs">
+                  <span class="text-slate-400">口径:</span>
+                  <select id="cockpitScopeSelect" onchange="onCockpitScopeChange(this.value)" class="bg-transparent font-medium text-slate-800 focus:outline-none cursor-pointer">
+                    <option value="zhang_mgr" selected>张总 · 商务中心</option>
+                    <option value="sun_prep">孙烽 · 编制组</option>
+                    <option value="south_reg">广东区域口径</option>
+                    <option value="overseas_dept">海外事业部口径</option>
+                  </select>
+                </span>
+              </div>
+            </div>
           </div>
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-            <div class="text-slate-400 text-[11px]">累计在投标报价总额</div>
-            <div class="text-lg font-bold text-slate-900 mt-1">¥3.45 <span class="text-xs font-normal text-slate-500">亿元</span></div>
-            <div class="text-[10px] text-blue-600 mt-1">4 个重点投标活跃项目</div>
-          </div>
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-            <div class="text-slate-400 text-[11px]">全周期加权综合毛利率</div>
-            <div class="text-lg font-bold text-emerald-600 mt-1">+4.82%</div>
-            <div class="text-[10px] text-slate-500 mt-1">处于健康安全经营区间</div>
-          </div>
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-            <div class="text-slate-400 text-[11px]">特厚板 (≥60mm) 集采缺口</div>
-            <div class="text-lg font-bold text-amber-600 mt-1">2,840.00 <span class="text-xs font-normal text-slate-500">t</span></div>
-            <div class="text-[10px] text-amber-700 mt-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i>建议启动集中采购锁价谈判</div>
+          <div class="text-[11px] text-slate-400 font-mono flex items-center space-x-2">
+            <span><i class="fa-regular fa-clock mr-1"></i>数据截至 2026-11-18 14:20</span>
+            <span>·</span>
+            <span class="bg-slate-200/80 text-slate-600 px-1.5 py-0.5 rounded" id="cockpitAreaTag">广东区域口径</span>
           </div>
         </div>
 
-        <!-- 中部：重点在途项目卡片与行情看板 -->
-        <div class="grid grid-cols-3 gap-4 flex-1">
-          <!-- 左侧 2 列: 4 大在途项目卡片 -->
-          <div class="col-span-2 space-y-3">
-            <div class="flex justify-between items-center">
-              <h3 class="font-bold text-slate-800 text-xs flex items-center space-x-1.5">
-                <i class="fa-solid fa-diagram-project text-blue-600"></i>
-                <span>在途重点工程商务健康度看板 (4)</span>
-              </h3>
-              <div class="space-x-1 text-[11px]">
-                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">投标中 (2)</span>
-                <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">中标谈判 (1)</span>
-                <span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded">执行中 (1)</span>
-              </div>
+        <!-- ==================================================== -->
+        <!-- 2. 4 大核心 KPI 指标卡片 (支持点击穿透查看)              -->
+        <!-- ==================================================== -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          
+          <!-- KPI 1: 在投项目 (点击穿透查看在投全景) -->
+          <div onclick="openKpiModal('in_bid')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-blue-400 cursor-pointer transition flex flex-col justify-between group active:scale-[0.99]" title="点击查看在投 5 大项目全景与投标预算">
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span class="flex items-center space-x-1">
+                <span>在投项目</span>
+                <span class="text-[10px] text-blue-600 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>穿透</span>
+              </span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block" title="稳定统计"></span>
             </div>
-
-            <!-- 项目 1: 湛江北站 -->
-            <div class="bg-white p-3.5 rounded-xl border-2 border-blue-500 shadow-sm flex flex-col space-y-2">
-              <div class="flex justify-between items-start">
-                <div>
-                  <div class="flex items-center space-x-2">
-                    <span class="font-bold text-sm text-slate-900">广州至湛江高速铁路站房钢结构工程 (湛江北站)</span>
-                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[10px] font-semibold">国内·EPC全包</span>
-                    <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px]">V1.1 锁定 🔒</span>
-                  </div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">业主单位: 中国铁路广州局集团有限公司 | 高铁大型枢纽站房</div>
-                </div>
-                <button onclick="switchProject('ZJNORTH')" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1 rounded text-[11px] shadow">进入工作台</button>
-              </div>
-              <div class="grid grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-[11px] font-mono">
-                <div>钢构总重: <b class="text-slate-800">7,118.10 t</b></div>
-                <div>对外总报: <b class="text-emerald-700">¥8,313.76 万</b></div>
-                <div>对内成本: <b class="text-amber-700">¥7,637.54 万</b></div>
-                <div>综合毛利: <b class="text-amber-600">-7.15%</b> (机械费优势策略)</div>
-              </div>
+            <div class="my-2 flex items-baseline">
+              <span class="text-3xl font-black text-slate-900 font-mono tracking-tight group-hover:text-blue-600 transition" id="kpiInBidCount">5</span>
+              <span class="text-xs text-slate-500 ml-1.5 font-normal">个</span>
             </div>
-
-            <!-- 项目 2: 白云机场 -->
-            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs flex flex-col space-y-2">
-              <div class="flex justify-between items-start">
-                <div>
-                  <div class="flex items-center space-x-2">
-                    <span class="font-bold text-sm text-slate-900">广州白云国际机场三期扩建航站楼钢网架</span>
-                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[10px] font-semibold">国内·两票制</span>
-                    <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px]">V2.0 归档</span>
-                  </div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">业主单位: 广东省机场管理集团 | 超大型机场网架结构</div>
-                </div>
-                <button onclick="switchProject('BYAIRPORT')" class="bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1 rounded text-[11px]">切换并查看</button>
-              </div>
-              <div class="grid grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-[11px] font-mono">
-                <div>钢构总重: <b class="text-slate-800">12,000.00 t</b></div>
-                <div>对外总报: <b class="text-emerald-700">¥14,200.00 万</b></div>
-                <div>对内成本: <b class="text-amber-700">¥13,745.00 万</b></div>
-                <div>综合毛利: <b class="text-emerald-600">+3.20%</b> (健康盈利)</div>
-              </div>
-            </div>
-
-            <!-- 项目 3: 雅加达机场配套 -->
-            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs flex flex-col space-y-2">
-              <div class="flex justify-between items-start">
-                <div>
-                  <div class="flex items-center space-x-2">
-                    <span class="font-bold text-sm text-slate-900">印尼雅加达国际机场配套钢构出口工程</span>
-                    <span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded text-[10px] font-semibold">境外·FOB出口</span>
-                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[10px]">V1.0 编制中</span>
-                  </div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">交付边界: 上海港集港装船离岸交货 (EXW+集港离岸)</div>
-                </div>
-                <button onclick="switchProject('JAKARTA')" class="bg-slate-800 hover:bg-slate-700 text-white px-2.5 py-1 rounded text-[11px]">切换并查看</button>
-              </div>
-              <div class="grid grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-[11px] font-mono">
-                <div>钢构总重: <b class="text-slate-800">5,200.00 t</b></div>
-                <div>对外总报: <b class="text-emerald-700">¥5,800.00 万</b></div>
-                <div>对内成本: <b class="text-amber-700">¥5,307.00 万</b></div>
-                <div>综合毛利: <b class="text-emerald-600">+8.50%</b> (标准外贸出口)</div>
-              </div>
+            <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px] text-slate-500">
+              <span class="font-mono" id="kpiInBidAmount">合计 2.88 亿</span>
+              <span class="text-slate-400 font-mono" id="kpiInBidTrend">较上月 +1</span>
             </div>
           </div>
 
-          <!-- 右侧 1 列: 钢材行情大屏看板 & 集采汇总 -->
-          <div class="space-y-3">
-            <h3 class="font-bold text-slate-800 text-xs flex items-center space-x-1.5">
-              <i class="fa-solid fa-chart-line text-amber-600"></i>
-              <span>钢材行情看板与集采预警</span>
-            </h3>
+          <!-- KPI 2: 开标倒计时 (点击穿透开标日程与湛江北站自检) -->
+          <div onclick="openKpiModal('countdown')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-rose-400 cursor-pointer transition flex flex-col justify-between group active:scale-[0.99]" title="点击查看近期开标排期与封标前7项自检">
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span class="flex items-center space-x-1">
+                <span>开标倒计时</span>
+                <span class="text-[10px] text-rose-600 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>穿透</span>
+              </span>
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block animate-pulse" title="临界高危预警"></span>
+            </div>
+            <div class="my-2 flex items-baseline">
+              <span class="text-3xl font-black text-rose-600 font-mono tracking-tight group-hover:scale-105 transition origin-left" id="kpiCountdownDays">3</span>
+              <span class="text-xs text-slate-500 ml-1.5 font-normal">天</span>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px]">
+              <span class="text-rose-600 font-mono font-medium truncate mr-1" id="kpiCountdownTarget">湛江北站 11-21 09:30</span>
+              <span class="text-slate-400 shrink-0" id="kpiCountdownDesc">版本仍为草稿中</span>
+            </div>
+          </div>
 
-            <!-- 行情看板 -->
-            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs space-y-2.5">
-              <div class="flex justify-between items-center text-[11px]">
-                <span class="font-bold text-slate-700">中厚板市场主流价格 (我的钢铁网基准)</span>
-                <span class="text-slate-400 font-mono">2026-01-29 挂牌</span>
+          <!-- KPI 3: 限价空间预警 (点击穿透查看限价红线对冲) -->
+          <div onclick="openKpiModal('price_limit')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-amber-400 cursor-pointer transition flex flex-col justify-between group active:scale-[0.99]" title="点击查看限价空间紧逼项目与调价对冲表">
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span class="flex items-center space-x-1">
+                <span>限价空间预警</span>
+                <span class="text-[10px] text-amber-600 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>穿透</span>
+              </span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" title="指标越线预警"></span>
+            </div>
+            <div class="my-2 flex items-baseline">
+              <span class="text-3xl font-black text-amber-600 font-mono tracking-tight group-hover:scale-105 transition origin-left" id="kpiWarningCount">2</span>
+              <span class="text-xs text-slate-500 ml-1.5 font-normal">项</span>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px]">
+              <span class="text-amber-600 font-mono font-medium" id="kpiWarningCond">空间 &lt; 30 万</span>
+              <span class="text-slate-400 font-mono" id="kpiWarningMin">最小 3.29 万元</span>
+            </div>
+          </div>
+
+          <!-- KPI 4: 本月中标额 (点击穿透查看中标台账与下浮率) -->
+          <div onclick="openKpiModal('awarded')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-emerald-400 cursor-pointer transition flex flex-col justify-between group active:scale-[0.99]" title="点击查看本月已中标工程台账与平均下浮率分析">
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span class="flex items-center space-x-1">
+                <span>本月中标额</span>
+                <span class="text-[10px] text-emerald-600 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>穿透</span>
+              </span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" title="正常健康"></span>
+            </div>
+            <div class="my-2 flex items-baseline">
+              <span class="text-3xl font-black text-emerald-600 font-mono tracking-tight group-hover:scale-105 transition origin-left" id="kpiAwardedAmount">1.86</span>
+              <span class="text-xs text-slate-500 ml-1.5 font-normal">亿元</span>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px]">
+              <span class="text-emerald-600 font-mono font-medium" id="kpiAwardedYoy">同比 +12.4%</span>
+              <span class="text-slate-400 font-mono" id="kpiAwardedDiscount">平均下浮 14.7%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================== -->
+        <!-- 3. 我的急办队列 (My Urgent Queue)                     -->
+        <!-- ==================================================== -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs p-4">
+          <div class="flex justify-between items-center mb-3">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-bars-staggered text-slate-700"></i>
+              <h3 class="font-bold text-slate-900 text-xs">我的急办队列</h3>
+            </div>
+            <span class="text-[11px] text-slate-400 font-mono">4 项 · 按风险排序</span>
+          </div>
+
+          <div class="space-y-2.5" id="urgentTasksContainer">
+            <!-- 任务 1: 湛江北站 -->
+            <div onclick="handleUrgentAction('WORKBENCH', 'ZJNORTH')" class="group p-2.5 rounded-lg border border-slate-100 hover:border-blue-400 hover:bg-blue-50/30 transition flex items-start justify-between cursor-pointer border-l-4 border-l-rose-500 bg-slate-50/40">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono text-xs text-slate-400 font-semibold">01</span>
+                  <span class="font-bold text-slate-900 text-xs group-hover:text-blue-600 transition">湛江北站</span>
+                  <span class="px-1.5 py-0.2 border border-slate-300 text-slate-600 rounded text-[10px]">投标</span>
+                </div>
+                <div class="text-[11px] text-slate-500 pl-6">距离最高限价仅 3.29 万元，报价策略与不平衡系数待定</div>
               </div>
-              <div class="space-y-1.5 font-mono text-[11px]">
-                <div class="flex justify-between items-center p-1.5 bg-amber-50 rounded border border-amber-200">
-                  <span>Q355B 80mm 特厚板:</span>
-                  <span class="font-bold text-amber-800">¥4,982.30/t <i class="fa-solid fa-arrow-trend-up text-rose-600 ml-1"></i>↑3.2%</span>
-                </div>
-                <div class="flex justify-between items-center p-1.5 bg-slate-50 rounded border border-slate-200">
-                  <span>Q420GJC 高建钢板:</span>
-                  <span class="font-bold text-slate-800">¥5,247.00/t <i class="fa-solid fa-arrow-trend-up text-rose-600 ml-1"></i>↑1.8%</span>
-                </div>
-                <div class="flex justify-between items-center p-1.5 bg-slate-50 rounded border border-slate-200">
-                  <span>Q355B 16mm 普板:</span>
-                  <span class="font-bold text-slate-800">¥3,938.00/t <span class="text-slate-400">-0.0%</span></span>
-                </div>
-                <div class="flex justify-between items-center p-1.5 bg-slate-50 rounded border border-slate-200">
-                  <span>热轧 H 型钢:</span>
-                  <span class="font-bold text-slate-800">¥4,120.00/t <i class="fa-solid fa-arrow-trend-down text-emerald-600 ml-1"></i>↓0.5%</span>
-                </div>
-              </div>
-              <div class="text-[10px] text-slate-500 pt-1">
-                <i class="fa-solid fa-info-circle text-blue-500 mr-1"></i>湛江北站十字柱 80mm 板材成本已挂钩 MAT-2026-01-15 价格快照，受行情上涨影响微幅波动。
+              <div class="flex items-center space-x-2 text-[11px] shrink-0">
+                <span class="text-rose-600 font-mono font-medium">11-20 18:00</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
               </div>
             </div>
 
-            <!-- 跨项目特厚板集采汇总 -->
-            <div class="bg-blue-50/70 p-3.5 rounded-xl border border-blue-200 space-y-2">
-              <div class="font-bold text-blue-900 text-xs flex justify-between">
-                <span>跨项目特厚板 (≥60mm) 集采池</span>
-                <span class="badge-pill bg-blue-600 text-white text-[10px]">合计 2,840 t</span>
+            <!-- 任务 2: 前海塔楼 -->
+            <div onclick="handleUrgentAction('SPECIAL_APPROVAL', 'SZ_QH')" class="group p-2.5 rounded-lg border border-slate-100 hover:border-amber-400 hover:bg-amber-50/30 transition flex items-start justify-between cursor-pointer border-l-4 border-l-amber-500 bg-slate-50/40">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono text-xs text-slate-400 font-semibold">02</span>
+                  <span class="font-bold text-slate-900 text-xs group-hover:text-amber-700 transition">前海塔楼</span>
+                  <span class="px-1.5 py-0.2 border border-slate-300 text-slate-600 rounded text-[10px]">特批</span>
+                </div>
+                <div class="text-[11px] text-slate-500 pl-6">测算利润率 1.20%，需提请院长负利润特批</div>
               </div>
-              <div class="text-[11px] text-blue-800 space-y-1 font-mono">
-                <div>· 湛江北站十字钢柱 (80mm): 1,485.00 t</div>
-                <div>· 白云机场超大截面柱 (70mm): 950.00 t</div>
-                <div>· 雅加达机场重型转换梁 (60mm): 405.00 t</div>
+              <div class="flex items-center space-x-2 text-[11px] shrink-0">
+                <span class="text-amber-600 font-mono font-medium">11-19</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
               </div>
-              <button onclick="alert('已成功发起特厚板集采锁定询价函！将向宝武钢铁与南钢直采中心推送 2,840 吨询价单！')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-1.5 rounded text-xs shadow transition mt-1">
-                <i class="fa-solid fa-paper-plane mr-1"></i>发起大客户集中采购谈判
+            </div>
+
+            <!-- 任务 3: 珠海机场 T2 -->
+            <div onclick="handleUrgentAction('UNBALANCED_REVIEW', 'ZH_T2')" class="group p-2.5 rounded-lg border border-slate-100 hover:border-amber-400 hover:bg-amber-50/30 transition flex items-start justify-between cursor-pointer border-l-4 border-l-amber-400 bg-slate-50/40">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono text-xs text-slate-400 font-semibold">03</span>
+                  <span class="font-bold text-slate-900 text-xs group-hover:text-amber-700 transition">珠海机场 T2</span>
+                  <span class="px-1.5 py-0.2 border border-slate-300 text-slate-600 rounded text-[10px]">调价</span>
+                </div>
+                <div class="text-[11px] text-slate-500 pl-6">不平衡报价复核：钢柱调增、涂装调减方案</div>
+              </div>
+              <div class="flex items-center space-x-2 text-[11px] shrink-0">
+                <span class="text-amber-600 font-mono font-medium">11-21</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+              </div>
+            </div>
+
+            <!-- 任务 4: 广州白云站 -->
+            <div onclick="handleUrgentAction('CLAIM_AUDIT', 'GZ_BYZ')" class="group p-2.5 rounded-lg border border-slate-100 hover:border-emerald-400 hover:bg-emerald-50/30 transition flex items-start justify-between cursor-pointer border-l-4 border-l-emerald-500 bg-slate-50/40">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono text-xs text-slate-400 font-semibold">04</span>
+                  <span class="font-bold text-slate-900 text-xs group-hover:text-emerald-700 transition">广州白云站</span>
+                  <span class="px-1.5 py-0.2 border border-slate-300 text-slate-600 rounded text-[10px]">确权</span>
+                </div>
+                <div class="text-[11px] text-slate-500 pl-6">三季度产值确权与变更索赔上报 (+286 万)</div>
+              </div>
+              <div class="flex items-center space-x-2 text-[11px] shrink-0">
+                <span class="text-slate-600 font-mono">11-25</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================== -->
+        <!-- 3.5 驾驶舱经营与造价全景统计看板 (Analytics Hub)         -->
+        <!-- ==================================================== -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs p-4">
+          <div class="flex justify-between items-center mb-3">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-chart-pie text-blue-600"></i>
+              <h3 class="font-bold text-slate-900 text-xs">经营与造价全景统计看板 (14 个项目 · 全周期 ¥6.87 亿规模)</h3>
+            </div>
+            <button onclick="toggleStatisticsSection()" id="btnToggleStats" class="text-[11px] text-blue-600 hover:text-blue-800 font-medium flex items-center space-x-1">
+              <span id="txtToggleStats">收起图表看板</span>
+              <i id="iconToggleStats" class="fa-solid fa-chevron-up text-[10px]"></i>
+            </button>
+          </div>
+
+          <div id="statisticsHubContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 transition-all">
+            
+            <!-- 统计 1: 全生命周期阶段造价与规模分布 -->
+            <div class="p-3 bg-slate-50/70 rounded-xl border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center text-[11px] text-slate-500 mb-1">
+                  <span class="font-medium text-slate-700">阶段造价总额分布</span>
+                  <span class="font-mono text-blue-600 font-bold">¥6.87 亿</span>
+                </div>
+                <!-- 进度条组合 -->
+                <div class="w-full h-2 rounded-full bg-slate-200 overflow-hidden flex my-2">
+                  <div class="bg-amber-500 h-full" style="width: 43.6%" title="投标测算中: 43.6% (¥3.00亿)"></div>
+                  <div class="bg-blue-600 h-full" style="width: 30.6%" title="中标签约: 30.6% (¥2.10亿)"></div>
+                  <div class="bg-purple-600 h-full" style="width: 21.6%" title="施工执行: 21.6% (¥1.48亿)"></div>
+                  <div class="bg-emerald-600 h-full" style="width: 4.2%" title="竣工结算: 4.2% (¥0.29亿)"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-1 text-[10px] text-slate-600 font-mono mt-2">
+                  <div class="flex items-center space-x-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span><span>投标: ¥3.00亿 (44%)</span></div>
+                  <div class="flex items-center space-x-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span><span>签约: ¥2.10亿 (31%)</span></div>
+                  <div class="flex items-center space-x-1"><span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span><span>执行: ¥1.48亿 (22%)</span></div>
+                  <div class="flex items-center space-x-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span><span>结算: ¥0.29亿 (4%)</span></div>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-400 pt-2 border-t border-slate-200/60 mt-2">
+                投标与签约期占总盘 74.2%，前置控本是毛利生命线。
+              </div>
+            </div>
+
+            <!-- 统计 2: 全周期毛利盈亏与造价穿透统计 -->
+            <div class="p-3 bg-slate-50/70 rounded-xl border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center text-[11px] text-slate-500 mb-1">
+                  <span class="font-medium text-slate-700">毛利总池与亏损预警</span>
+                  <span class="font-mono text-emerald-600 font-bold">+¥3,604 万</span>
+                </div>
+                <div class="flex items-baseline space-x-2 my-1">
+                  <span class="text-xl font-bold font-mono text-slate-900">+5.26%</span>
+                  <span class="text-[10px] text-slate-500">加权平均毛利率</span>
+                </div>
+                <div class="p-1.5 rounded bg-rose-50 border border-rose-200 text-rose-800 text-[10px] space-y-0.5 mt-1 font-mono">
+                  <div class="font-bold flex justify-between">
+                    <span>亏损高危预警 (2项):</span>
+                    <span>负毛利 -¥614.24 万</span>
+                  </div>
+                  <div>· 湛江北站 (-7.15% · -¥594.68万 · 战略低价)</div>
+                  <div>· 汕头亚青会 (-0.60% · -¥19.56万 · 措施超支)</div>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-400 pt-1.5 border-t border-slate-200/60 mt-2 flex justify-between">
+                <span>健康: 9项</span>
+                <span>临界: 3项</span>
+                <span class="text-rose-600 font-semibold">亏损: 2项</span>
+              </div>
+            </div>
+
+            <!-- 统计 3: 钢构总吨位与量差分析 -->
+            <div class="p-3 bg-slate-50/70 rounded-xl border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center text-[11px] text-slate-500 mb-1">
+                  <span class="font-medium text-slate-700">总吨位与量差索赔空间</span>
+                  <span class="font-mono text-slate-800 font-bold">50,420 t</span>
+                </div>
+                <div class="space-y-1 font-mono text-[11px] text-slate-700 my-1">
+                  <div class="flex justify-between">
+                    <span class="text-slate-400">自算工程量:</span>
+                    <b class="text-slate-800">48,118.00 t</b>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-slate-400">综合单吨造价:</span>
+                    <b class="text-blue-700">¥13,620 元/t</b>
+                  </div>
+                  <div class="flex justify-between text-rose-600">
+                    <span>累计净负量差:</span>
+                    <b>-2,302.00 t</b>
+                  </div>
+                </div>
+              </div>
+              <div class="text-[10px] text-emerald-700 bg-emerald-50 p-1.5 rounded border border-emerald-200 pt-1 mt-2">
+                <i class="fa-solid fa-circle-check mr-1"></i>预计潜在变更签证索赔收益空间：<b>+¥1,980 万元</b>
+              </div>
+            </div>
+
+            <!-- 统计 4: 大宗钢材集中采购锁价敞口监控 -->
+            <div class="p-3 bg-slate-50/70 rounded-xl border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center text-[11px] text-slate-500 mb-1">
+                  <span class="font-medium text-slate-700">钢材锁价敞口监控</span>
+                  <span class="font-mono text-amber-700 font-bold">已锁 58.4%</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-amber-100 overflow-hidden flex my-2">
+                  <div class="bg-emerald-500 h-full" style="width: 58.4%" title="已锁定: 58.4%"></div>
+                  <div class="bg-rose-500 h-full" style="width: 41.6%" title="未锁敞口: 41.6%"></div>
+                </div>
+                <div class="space-y-1 font-mono text-[11px] my-1">
+                  <div class="flex justify-between text-slate-700">
+                    <span class="text-slate-400">已锁价吨位:</span>
+                    <b>29,446 t (58.4%)</b>
+                  </div>
+                  <div class="flex justify-between text-amber-800">
+                    <span class="text-slate-400">未锁风险敞口:</span>
+                    <b>20,974 t (41.6%)</b>
+                  </div>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 pt-1.5 border-t border-slate-200/60 mt-2">
+                <i class="fa-solid fa-bell text-amber-500 mr-1"></i>敏感度：钢材每涨 ¥100/t，冲击利润池 <b>¥209.7 万元</b>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================================================== -->
+        <!-- 4. 下半区: 全生命周期项目矩阵与阶段专属口径列表           -->
+        <!-- ==================================================== -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
+          
+          <!-- 4.1 阶段 Tabs 筛选条 + 视图切换 (紧凑 vs 全维造价) + 报表口径 -->
+          <div class="px-4 py-3 bg-slate-50/80 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center space-x-1.5" id="phaseTabContainer">
+              <button onclick="filterCockpitPhase('ALL')" id="tab-phase-ALL" class="px-3 py-1 rounded-md text-xs font-semibold bg-slate-900 text-white shadow-xs transition">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block mr-1.5"></span>全部项目 <span class="font-mono" id="cntAll">14</span>
+              </button>
+              <button onclick="filterCockpitPhase('BIDDING')" id="tab-phase-BIDDING" class="px-3 py-1 rounded-md text-xs font-medium text-slate-600 hover:bg-slate-200 transition">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block mr-1.5"></span>投标测算中 <span class="font-mono" id="cntBidding">6</span>
+              </button>
+              <button onclick="filterCockpitPhase('CONTRACTING')" id="tab-phase-CONTRACTING" class="px-3 py-1 rounded-md text-xs font-medium text-slate-600 hover:bg-slate-200 transition">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block mr-1.5"></span>中标签约 / 目标成本 <span class="font-mono" id="cntContracting">3</span>
+              </button>
+              <button onclick="filterCockpitPhase('EXECUTING')" id="tab-phase-EXECUTING" class="px-3 py-1 rounded-md text-xs font-medium text-slate-600 hover:bg-slate-200 transition">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-500 inline-block mr-1.5"></span>施工执行 / 动态管控 <span class="font-mono" id="cntExecuting">4</span>
+              </button>
+              <button onclick="filterCockpitPhase('SETTLING')" id="tab-phase-SETTLING" class="px-3 py-1 rounded-md text-xs font-medium text-slate-600 hover:bg-slate-200 transition">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-1.5"></span>竣工结算 <span class="font-mono" id="cntSettling">1</span>
+              </button>
+            </div>
+
+            <!-- 右侧：视图切换按钮 + 图例 -->
+            <div class="flex items-center space-x-3 text-[11px] text-slate-500">
+              <!-- 紧凑视图 vs 全维造价全景视图切换开关 -->
+              <div class="flex items-center space-x-1 bg-slate-200/80 p-0.5 rounded-lg">
+                <button onclick="switchCockpitTableView('compact')" id="btnViewCompact" class="px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition">标准紧凑</button>
+                <button onclick="switchCockpitTableView('rich')" id="btnViewRich" class="px-2.5 py-1 rounded text-xs font-bold bg-white text-blue-700 shadow-2xs transition"><i class="fa-solid fa-table-columns mr-1 text-blue-600"></i>全维造价全景 ⭐</button>
+              </div>
+
+              <span class="text-slate-300">|</span>
+              <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>健康</span></span>
+              <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span><span>临界</span></span>
+              <span class="flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span><span>亏损</span></span>
+              <span class="text-slate-300">|</span>
+              <button onclick="showToast('报表口径已按当前阶段动态刷新！')" class="text-slate-700 hover:text-blue-600 flex items-center space-x-1 font-medium transition">
+                <i class="fa-regular fa-file-lines text-slate-400"></i>
+                <span>报表口径切换</span>
               </button>
             </div>
           </div>
+
+          <!-- 4.2 阶段智能响应管控口径卡片 -->
+          <div class="p-3 bg-slate-50/50 border-b border-slate-200">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5" id="guidanceBannerCards">
+              <!-- 投标口径 -->
+              <div id="guide-card-BIDDING" class="p-2.5 rounded-lg border border-slate-200 bg-white text-slate-600 text-[11px] transition">
+                <div class="font-bold text-slate-800 flex items-center justify-between mb-1">
+                  <span>项目名称 x6 | 投标口径</span>
+                  <span class="text-[10px] text-blue-600 font-mono">阶段 1</span>
+                </div>
+                <div class="text-slate-500 line-clamp-2 leading-relaxed">
+                  量差、限价空间、测算利润，任何一项越线即触发经营黄线；自算量超清单需提请量差索赔或调整不平衡单价。
+                </div>
+              </div>
+
+              <!-- 签约口径 -->
+              <div id="guide-card-CONTRACTING" class="p-2.5 rounded-lg border border-slate-200 bg-white text-slate-600 text-[11px] transition">
+                <div class="font-bold text-slate-800 flex items-center justify-between mb-1">
+                  <span>项目名称 x3 | 签约口径</span>
+                  <span class="text-[10px] text-emerald-600 font-mono">阶段 2</span>
+                </div>
+                <div class="text-slate-500 line-clamp-2 leading-relaxed">
+                  合同数与目标成本的差额即项目余量，余量为负必须倒轧重置定额；明确施工图深化边界与甲供材锁定点。
+                </div>
+              </div>
+
+              <!-- 执行口径 -->
+              <div id="guide-card-EXECUTING" class="p-2.5 rounded-lg border border-slate-200 bg-white text-slate-600 text-[11px] transition">
+                <div class="font-bold text-slate-800 flex items-center justify-between mb-1">
+                  <span>项目名称 x4 | 执行口径</span>
+                  <span class="text-[10px] text-purple-600 font-mono">阶段 3</span>
+                </div>
+                <div class="text-slate-500 line-clamp-2 leading-relaxed">
+                  未锁价敞口越大，材价波动偏差越容易穿透毛利防线；严密监控大宗钢板集采锁定率与现场吊装措施费超支。
+                </div>
+              </div>
+
+              <!-- 结算口径 -->
+              <div id="guide-card-SETTLING" class="p-2.5 rounded-lg border border-slate-200 bg-white text-slate-600 text-[11px] transition">
+                <div class="font-bold text-slate-800 flex items-center justify-between mb-1">
+                  <span>项目名称 x1 | 结算口径</span>
+                  <span class="text-[10px] text-amber-600 font-mono">阶段 4</span>
+                </div>
+                <div class="text-slate-500 line-clamp-2 leading-relaxed">
+                  审定估与实际成本的差额沉淀为最终毛利，指标用于反哺下期定额库；核对三维扫描竣工复测及签证索赔款项。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4.3 14 个工程项目高密度全景表格 (自然向下延展) -->
+          <div class="overflow-x-auto" id="cockpitTableScrollContainer">
+            <table class="w-full text-left border-collapse text-xs" id="cockpitMainTable">
+              <thead id="cockpitTableHeader">
+                <!-- 动态由 JavaScript 切换紧凑视图或全维造价视图表头 -->
+              </thead>
+              <tbody id="cockpitProjectTableBody" class="divide-y divide-slate-100 font-normal text-slate-700">
+                <!-- 由 JavaScript 动态渲染 14 项真实工程列表 -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 表格底部汇总条 -->
+          <div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex flex-wrap justify-between items-center text-[11px] text-slate-500 font-mono">
+            <div>共加载 <b class="text-slate-800" id="footProjectCount">14</b> 个在途全生命周期重点工程，全周期造价总盘 <b class="text-blue-700">¥68,672.26 万元</b></div>
+            <div class="flex items-center space-x-4">
+              <span>加权毛利: <b class="text-emerald-700">+5.26%</b></span>
+              <span>净毛利额: <b class="text-emerald-700">+¥3,604.50 万</b></span>
+              <span class="text-rose-600">总亏损额: <b>-¥614.24 万 (2项)</b></span>
+            </div>
+          </div>
+
         </div>
+
       </section>
 
       <!-- ============================================== -->
@@ -645,7 +929,7 @@
       <!-- ============================================== -->
       <!-- VIEW 4: ④ 算量工作台 (Takeoff Workbench) ⭐    -->
       <!-- ============================================== -->
-      <section id="view-takeoff" class="flex-1 flex flex-col overflow-hidden">
+      <section id="view-takeoff" class="flex-1 flex flex-col overflow-hidden hidden">
         <!-- 4.1 操作控制栏 (4大视图切换、搜索、过滤) -->
         <div class="bg-white border-b border-slate-200 px-4 py-2 flex flex-wrap items-center justify-between gap-2 shadow-2xs shrink-0">
           <!-- 4 大视图 Tab -->
@@ -1286,14 +1570,455 @@
     </div>
   </div>
 
+    <!-- ========================================== -->
+  <!-- 3.1 项目全周期商务穿透抽屉 (Project Detail Drawer) -->
   <!-- ========================================== -->
-  <!-- 4. 全局交互逻辑脚本 (JavaScript Engine)    -->
+  <div id="drawerOverlay" onclick="closeProjectDrawer()" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 transition-opacity"></div>
+  <div id="drawerProjectDetail" class="fixed inset-y-0 right-0 w-full max-w-xl bg-white shadow-2xl border-l border-slate-200 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <!-- 抽屉顶部 -->
+    <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center shrink-0">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white text-sm font-bold">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+        <div>
+          <div class="font-bold text-sm tracking-wide flex items-center space-x-2">
+            <span id="drawerProjName">项目全周期商务台账</span>
+            <span id="drawerProjTag" class="bg-blue-800 text-blue-200 text-[10px] px-2 py-0.2 rounded font-mono">CODE</span>
+          </div>
+          <div class="text-[11px] text-slate-400 mt-0.5" id="drawerProjDept">所属部门与业务所</div>
+        </div>
+      </div>
+      <button onclick="closeProjectDrawer()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <!-- 抽屉主要内容区 -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-5 text-xs text-slate-700">
+      
+      <!-- 核心指标摘要看板 -->
+      <div class="grid grid-cols-3 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+        <div>
+          <div class="text-[11px] text-slate-400">总金额</div>
+          <div class="text-base font-bold text-slate-900 font-mono mt-0.5" id="drawerAmount">¥0.00 万</div>
+        </div>
+        <div>
+          <div class="text-[11px] text-slate-400">测算利润率</div>
+          <div class="text-base font-bold font-mono mt-0.5 flex items-center space-x-1" id="drawerProfit">
+            <span id="drawerProfitDot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="drawerProfitVal">+0.00%</span>
+          </div>
+        </div>
+        <div>
+          <div class="text-[11px] text-slate-400">当前阶段</div>
+          <div class="text-xs font-semibold text-blue-700 mt-1" id="drawerPhaseName">阶段名称</div>
+        </div>
+      </div>
+
+      <!-- 阶段专属指标口径穿透拆解 -->
+      <div class="space-y-2">
+        <h4 class="font-bold text-slate-900 flex items-center space-x-1.5 text-xs">
+          <i class="fa-solid fa-chart-pie text-blue-600"></i>
+          <span>阶段专属口径指标拆解</span>
+        </h4>
+        <div class="p-3.5 rounded-xl border border-blue-200 bg-blue-50/40 space-y-2 text-xs" id="drawerMetricsDetail">
+          <!-- 动态注入口径明细 -->
+        </div>
+      </div>
+
+      <!-- 承包模式与业务边界 -->
+      <div class="space-y-2">
+        <h4 class="font-bold text-slate-900 flex items-center space-x-1.5 text-xs">
+          <i class="fa-solid fa-file-contract text-amber-600"></i>
+          <span>承包范围与商务模式 (Rule 6 模式硬隔离)</span>
+        </h4>
+        <div class="p-3 rounded-lg border border-slate-200 bg-white space-y-1.5 text-[11px]">
+          <div class="flex justify-between">
+            <span class="text-slate-400">合同交易模式:</span>
+            <span class="font-semibold text-slate-800" id="drawerContractMode">国内·两票制EPC</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">核心构件与WBS特征:</span>
+            <span class="font-medium text-slate-700 text-right max-w-xs" id="drawerWbsSummary">实腹十字柱、空腹方钢柱</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 风险防范与关键阻断事项 -->
+      <div class="space-y-2">
+        <h4 class="font-bold text-slate-900 flex items-center space-x-1.5 text-xs">
+          <i class="fa-solid fa-shield-halved text-rose-600"></i>
+          <span>商务风控与重点待办</span>
+        </h4>
+        <div class="p-3 rounded-lg border border-rose-200 bg-rose-50/40 text-rose-800 text-[11px] space-y-1" id="drawerRiskNotice">
+          <div><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-600"></i>当前项目处于重要管控节点，请严格复核单价平衡与定额拉取。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 抽屉底部操作条 -->
+    <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex justify-between items-center shrink-0">
+      <button onclick="closeProjectDrawer()" class="px-3.5 py-1.5 border border-slate-300 rounded text-slate-600 hover:bg-slate-100 transition">关闭</button>
+      <div class="space-x-2">
+        <button onclick="drawerSwitchGlobalProject()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded transition shadow-xs">设为全局当前工程</button>
+        <button onclick="drawerJumpWorkbench()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium transition shadow-xs">进入算量工作台</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: 前海塔楼 院长负利润特批申请弹窗 -->
+  <div id="dlgSpecialApproval" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center">
+        <span class="font-bold flex items-center space-x-2"><i class="fa-solid fa-user-tie text-amber-400"></i><span>深圳前海金融中心塔楼 · 院长负利润特批申请</span></span>
+        <button onclick="closeDialog('dlgSpecialApproval')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-4 space-y-3 text-xs">
+        <div class="p-2.5 rounded bg-amber-50 border border-amber-200 text-amber-900 leading-relaxed">
+          <b>风险触发说明：</b>本项目自算自核利润率仅为 <b>+1.20%</b>，低于集团安全边际红线（4.00%）。按商务管理铁律，必须由院领导/分管副总签署特批意见方可封存定稿。
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1">特批申请事由与战略价值：</label>
+          <textarea class="w-full border rounded p-2 text-xs h-20 text-slate-700" readonly>作为深圳前海核心区超高层地标工程，具有重大战略品牌效应。前期钢柱制作由集团直属一厂承接，现场拼装通过提升机械优化可压缩措施费约 85 万元，建议特批放行。</textarea>
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1">审核意见与签字批复：</label>
+          <input type="text" id="inpSpecialApprovalNote" placeholder="请输入特批批复意见（如：同意按战略标段执行）" class="w-full border rounded px-2.5 py-1.5">
+        </div>
+      </div>
+      <div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgSpecialApproval')" class="px-3 py-1 border rounded text-slate-600">取消</button>
+        <button onclick="confirmSpecialApproval()" class="px-4 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded font-medium">确认特批签署</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: 珠海机场 T2 不平衡报价调价复核弹窗 -->
+  <div id="dlgUnbalancedReview" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-xl overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center">
+        <span class="font-bold flex items-center space-x-2"><i class="fa-solid fa-scale-balanced text-cyan-400"></i><span>珠海机场 T2 · 不平衡报价复核方案</span></span>
+        <button onclick="closeDialog('dlgUnbalancedReview')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-4 space-y-3 text-xs">
+        <div class="p-2.5 rounded bg-blue-50 border border-blue-200 text-blue-900">
+          <b>策略提示：</b>通过对早期确定性大、清单量预计增加的钢柱项调增单价，对后期涂装等易变更项调减单价，实现早回笼资金并提高实际收益。
+        </div>
+        <table class="w-full text-left border-collapse border border-slate-200">
+          <thead class="bg-slate-100 font-medium">
+            <tr>
+              <th class="p-2 border">清单科目</th>
+              <th class="p-2 border">原测算单价</th>
+              <th class="p-2 border">不平衡调整系数</th>
+              <th class="p-2 border">建议调整单价</th>
+              <th class="p-2 border">预计增益</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 border font-medium">实腹十字钢柱 (先期)</td>
+              <td class="p-2 border font-mono">¥8,847.58/t</td>
+              <td class="p-2 border font-mono text-emerald-600">+4.5%</td>
+              <td class="p-2 border font-mono font-bold text-slate-900">¥9,245.72/t</td>
+              <td class="p-2 border font-mono text-emerald-600">+¥118.5万</td>
+            </tr>
+            <tr>
+              <td class="p-2 border font-medium">氟碳防腐涂装 (后期)</td>
+              <td class="p-2 border font-mono">¥520.00/t</td>
+              <td class="p-2 border font-mono text-rose-600">-8.0%</td>
+              <td class="p-2 border font-mono font-bold text-slate-900">¥478.40/t</td>
+              <td class="p-2 border font-mono text-slate-500">-¥32.0万</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-[11px] text-slate-500">综合净收益增量预计：<b class="text-emerald-700 font-mono">+¥86.50 万元</b>，总投标价依然维持在限价线内。</div>
+      </div>
+      <div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgUnbalancedReview')" class="px-3 py-1 border rounded text-slate-600">关闭</button>
+        <button onclick="confirmUnbalancedReview()" class="px-4 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium">应用此调价方案</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: 广州白云站 产值确权与变更索赔上报弹窗 -->
+  <div id="dlgClaimAudit" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center">
+        <span class="font-bold flex items-center space-x-2"><i class="fa-solid fa-file-signature text-emerald-400"></i><span>广州白云站 · 三季度产值确权与索赔上报</span></span>
+        <button onclick="closeDialog('dlgClaimAudit')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-4 space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded border border-slate-200">
+          <div>
+            <div class="text-slate-400">本期申报产值额:</div>
+            <div class="text-sm font-bold text-slate-800 font-mono mt-0.5">¥3,450.00 万元</div>
+          </div>
+          <div>
+            <div class="text-slate-400">变更洽商追加款:</div>
+            <div class="text-sm font-bold text-emerald-600 font-mono mt-0.5">+¥286.00 万元</div>
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1">主要签证索赔明细：</label>
+          <div class="space-y-1.5 font-mono text-[11px] text-slate-700 bg-slate-50 p-2.5 rounded border border-slate-200">
+            <div>1. 光谷拱脚预埋段地质沉降导致的二次纠偏调校：+¥120.00 万元</div>
+            <div>2. 夜间高铁天窗点跨线吊装超期补偿费：+¥95.00 万元</div>
+            <div>3. Q420GJC 特厚钢板第三方加倍探伤与力学复检：+¥71.00 万元</div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex justify-end space-x-2">
+        <button onclick="closeDialog('dlgClaimAudit')" class="px-3 py-1 border rounded text-slate-600">取消</button>
+        <button onclick="confirmClaimAudit()" class="px-4 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-medium">确认上报业主审核</button>
+      </div>
+    </div>
+  </div>
+
+<!-- ========================================== -->
+  
+  <!-- ========================================== -->
+  <!-- 3.2 4 大 KPI 卡片穿透下钻弹窗体系             -->
+  <!-- ========================================== -->
+
+  <!-- Modal 1: 在投重点项目穿透看板 (dlgKpiInBid) -->
+  <div id="dlgKpiInBid" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center shrink-0">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-diagram-project text-blue-400"></i>
+          <span class="font-bold text-sm">在投重点项目全景穿透台账 (6 项 · 合计 ¥3.00 亿元)</span>
+        </div>
+        <button onclick="closeDialog('dlgKpiInBid')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-900 text-xs">
+          <b>商务调度提示：</b>当前 6 个重点投标工程处于编制与复核攻坚期。其中湛江北站与前海塔楼限价空间极度紧迫，白云机场三期超大吨位高建钢需启动集采锁价协同。
+        </div>
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-100 text-slate-600 font-semibold whitespace-nowrap">
+              <tr>
+                <th class="p-2 border-b">项目名称</th>
+                <th class="p-2 border-b">负责部门</th>
+                <th class="p-2 border-b font-mono">自算量/清单量 (t)</th>
+                <th class="p-2 border-b font-mono text-right">投标总价 (万元)</th>
+                <th class="p-2 border-b font-mono text-center">毛利率</th>
+                <th class="p-2 border-b font-mono text-right">限价空间 (万元)</th>
+                <th class="p-2 border-b text-center">状态</th>
+                <th class="p-2 border-b text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody id="tblInBidProjects" class="divide-y divide-slate-100 font-mono">
+              <!-- 动态注入 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2 shrink-0">
+        <button onclick="closeDialog('dlgKpiInBid')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: 开标倒计时与封标自检清单 (dlgKpiCountdown) -->
+  <div id="dlgKpiCountdown" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center shrink-0">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-clock text-rose-400"></i>
+          <span class="font-bold text-sm">开标倒计时与封标红线核验 (湛江北站标段)</span>
+        </div>
+        <button onclick="closeDialog('dlgKpiCountdown')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-center justify-between">
+          <div>
+            <div class="text-rose-900 font-bold text-sm">广州至湛江高速铁路站房 GZFJ-3 标 (湛江北站)</div>
+            <div class="text-rose-700 text-xs mt-0.5">截标开标时间：2026-11-21 09:30 · 广州公共资源交易中心</div>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-black font-mono text-rose-600">3 天</div>
+            <div class="text-[10px] text-rose-500">倒计时紧张</div>
+          </div>
+        </div>
+
+        <h4 class="font-bold text-slate-800 text-xs flex items-center space-x-1.5">
+          <i class="fa-solid fa-clipboard-check text-blue-600"></i>
+          <span>封标递交前 7 大红线自检清单 (Rule 19 xUnit)</span>
+        </h4>
+
+        <div class="space-y-2 font-mono text-xs">
+          <div class="p-2.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 flex justify-between items-center">
+            <span>1. 国内两票制制造13%+建安9%代数闭式无环平衡</span>
+            <span class="font-bold text-emerald-700">✓ 平衡误差 0.000046元 (通过)</span>
+          </div>
+          <div class="p-2.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 flex justify-between items-center">
+            <span>2. 制作费 9 项倒轧平衡安全边际阈值 (&gt;600元/t)</span>
+            <span class="font-bold text-emerald-700">✓ 倒轧后 1,181.90元/t (健康)</span>
+          </div>
+          <div class="p-2.5 rounded bg-amber-50 border border-amber-200 text-amber-900 flex justify-between items-center">
+            <span>3. 最高投标限价紧逼审查 (最高限价 8,317.05万)</span>
+            <span class="font-bold text-amber-700">⚠ 剩余空间仅 3.29 万元 (紧逼)</span>
+          </div>
+          <div class="p-2.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 flex justify-between items-center">
+            <span>4. 80mm Q355B 特厚板材料快照绑定 (MAT-2026-01-15)</span>
+            <span class="font-bold text-emerald-700">✓ 已锁定基准价 4,982.30元/t</span>
+          </div>
+          <div class="p-2.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 flex justify-between items-center">
+            <span>5. 编制人 (孙烽) 与专业审核人 (张君) 双签署确认</span>
+            <span class="font-bold text-emerald-700">✓ 已签署通过</span>
+          </div>
+          <div class="p-2.5 rounded bg-amber-50 border border-amber-200 text-amber-900 flex justify-between items-center">
+            <span>6. 商务总监 (李明) 最终不可篡改基线加锁审批</span>
+            <span class="font-bold text-amber-700">⏳ 待最终加锁 (草稿态)</span>
+          </div>
+          <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-700 flex justify-between items-center">
+            <span>7. 标书加密固化与 CA 数字签名证书导出</span>
+            <span class="font-bold text-slate-500">待批复后一键生成</span>
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-between items-center shrink-0">
+        <button onclick="navigateToBenchmarkWorkbench()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium shadow-xs transition">
+          <i class="fa-solid fa-arrow-right mr-1"></i>直达湛江北站算量工作台
+        </button>
+        <button onclick="closeDialog('dlgKpiCountdown')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: 限价空间预警穿透与调价对冲表 (dlgKpiPriceLimit) -->
+  <div id="dlgKpiPriceLimit" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center shrink-0">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+          <span class="font-bold text-sm">最高投标限价紧逼预警与对冲策略 (2 项 &lt; 30 万元)</span>
+        </div>
+        <button onclick="closeDialog('dlgKpiPriceLimit')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 leading-relaxed">
+          <b>限价越线风险提示：</b>《招标投标法实施条例》规定投标报价高于招标控制价（最高限价）属于实质性废标！当前系统自动巡检出 2 个工程报价临界逼近红线，必须采取对冲调控措施。
+        </div>
+
+        <!-- 项目 1: 湛江北站 -->
+        <div class="p-3.5 rounded-lg border border-slate-200 bg-white space-y-2">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="font-bold text-slate-900 text-xs">广湛高铁湛江北站 (空间结构所)</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">业主最高限价: ¥8,317.05 万元 | 当前对外总报: ¥8,313.76 万元</div>
+            </div>
+            <span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded font-mono font-bold">限价余量: 仅 ¥3.29 万元</span>
+          </div>
+          <div class="p-2 bg-slate-50 rounded text-slate-600 text-[11px] leading-relaxed">
+            <b>对冲方案：</b>自算量比清单少 709.35t（量差率 -8.93%），将实腹十字柱单价维持上限，而将清单量大但实际不会发生的防腐面漆适当下调，既保不超限，又最大化沉淀二次澄清变更收益。
+          </div>
+        </div>
+
+        <!-- 项目 2: 前海塔楼 -->
+        <div class="p-3.5 rounded-lg border border-slate-200 bg-white space-y-2">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="font-bold text-slate-900 text-xs">深圳前海金融中心塔楼 (建筑钢结构所)</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">业主最高限价: ¥6,940.00 万元 | 当前对外总报: ¥6,918.20 万元</div>
+            </div>
+            <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-mono font-bold">限价余量: ¥21.80 万元</span>
+          </div>
+          <div class="p-2 bg-slate-50 rounded text-slate-600 text-[11px] leading-relaxed">
+            <b>对冲方案：</b>现场狭窄场地改由直属大型履带吊替代租赁设备，压减措施费 85 万元；利润率调至 1.20% 保本抢标，已发起院长负利润特批程序。
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2 shrink-0">
+        <button onclick="closeDialog('dlgKpiPriceLimit')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: 本月中标台账与下浮率分析 (dlgKpiAwarded) -->
+  <div id="dlgKpiAwarded" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200 w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex justify-between items-center shrink-0">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-trophy text-emerald-400"></i>
+          <span class="font-bold text-sm">本月已中标工程台账与下浮率分析 (合计 ¥1.86 亿元)</span>
+        </div>
+        <button onclick="closeDialog('dlgKpiAwarded')" class="text-slate-400 hover:text-white p-1 rounded"><i class="fa-solid fa-xmark text-base"></i></button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        <div class="grid grid-cols-3 gap-3 bg-emerald-50/60 p-3 rounded-lg border border-emerald-200 text-emerald-900 font-mono">
+          <div>
+            <div class="text-[10px] text-emerald-600">本月中标总额</div>
+            <div class="text-base font-bold mt-0.5">¥18,600 万元</div>
+          </div>
+          <div>
+            <div class="text-[10px] text-emerald-600">同比上年同期</div>
+            <div class="text-base font-bold mt-0.5">+12.4% ↑</div>
+          </div>
+          <div>
+            <div class="text-[10px] text-emerald-600">平均中标下浮率</div>
+            <div class="text-base font-bold mt-0.5">14.7% (健康)</div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-100 text-slate-600 font-medium">
+              <tr class="whitespace-nowrap">
+                <th class="p-2 border-b">中标项目</th>
+                <th class="p-2 border-b font-mono text-right">中标额 (万元)</th>
+                <th class="p-2 border-b font-mono text-right">目标成本 (万元)</th>
+                <th class="p-2 border-b font-mono text-right">成本余量 (万元)</th>
+                <th class="p-2 border-b font-mono text-center">下浮率</th>
+                <th class="p-2 border-b text-center">交底状态</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-mono">
+              <tr>
+                <td class="p-2 font-medium">广州白云站综合交通枢纽</td>
+                <td class="p-2 font-bold text-slate-900 text-right whitespace-nowrap">12,860.00</td>
+                <td class="p-2 text-slate-700 text-right whitespace-nowrap">11,540.00</td>
+                <td class="p-2 text-emerald-700 font-bold text-right whitespace-nowrap">+1,320.00</td>
+                <td class="p-2 text-center text-blue-600 whitespace-nowrap">13.8%</td>
+                <td class="p-2 text-center whitespace-nowrap"><span class="px-1.5 py-0.2 bg-emerald-100 text-emerald-700 rounded text-[10px]">已交底</span></td>
+              </tr>
+              <tr>
+                <td class="p-2 font-medium">佛山地铁 3 号线车辆段</td>
+                <td class="p-2 font-bold text-slate-900 text-right whitespace-nowrap">4,320.00</td>
+                <td class="p-2 text-slate-700 text-right whitespace-nowrap">3,980.00</td>
+                <td class="p-2 text-emerald-700 font-bold text-right whitespace-nowrap">+340.00</td>
+                <td class="p-2 text-center text-blue-600 whitespace-nowrap">15.2%</td>
+                <td class="p-2 text-center whitespace-nowrap"><span class="px-1.5 py-0.2 bg-emerald-100 text-emerald-700 rounded text-[10px]">已交底</span></td>
+              </tr>
+              <tr>
+                <td class="p-2 font-medium">香港机场三跑道货运廊</td>
+                <td class="p-2 font-bold text-slate-900 text-right whitespace-nowrap">3,860.00</td>
+                <td class="p-2 text-slate-700 text-right whitespace-nowrap">3,540.00</td>
+                <td class="p-2 text-emerald-700 font-bold text-right whitespace-nowrap">+320.00</td>
+                <td class="p-2 text-center text-blue-600 whitespace-nowrap">14.5%</td>
+                <td class="p-2 text-center whitespace-nowrap"><span class="px-1.5 py-0.2 bg-blue-100 text-blue-700 rounded text-[10px]">交底中</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex justify-end space-x-2 shrink-0">
+        <button onclick="closeDialog('dlgKpiAwarded')" class="px-4 py-1.5 border rounded text-slate-600 hover:bg-slate-100">关闭</button>
+      </div>
+    </div>
+  </div>
+<!-- 4. 全局交互逻辑脚本 (JavaScript Engine)    -->
   <!-- ========================================== -->
   <script>
     // 1. 全局状态存储
     let masterData = null;
     let currentView = 'flat'; // 'flat' | 'tree' | 'phase' | 'bq'
-    let currentModule = 'takeoff'; // 'dashboard'|'project'|'database'|'takeoff'|'pricing'|'mapping'|'reports'|'approval'
+    let currentModule = 'dashboard';
+    let currentCockpitPhase = 'ALL';
+    let drawerActiveProjectCode = null; // 'dashboard'|'project'|'database'|'takeoff'|'pricing'|'mapping'|'reports'|'approval'
     let selectedRowIndex = 16;
     let currentRole = 'sunfeng'; // 'sunfeng'|'zhangjun'|'lizong'|'wangvp'
 
@@ -1309,6 +2034,7 @@
       .then(res => res.json())
       .then(data => {
         masterData = data;
+        initCockpitView();
         renderCurrentView();
         selectComponent(16);
       })
@@ -1348,6 +2074,26 @@
       document.getElementById('userAvatar').innerText = p.avatar;
       document.getElementById('userAvatar').className = `w-7 h-7 rounded-full text-white flex items-center justify-center font-bold text-xs ${p.color}`;
       document.getElementById('lblApprovalUser').innerText = p.name;
+      
+      // 动态自适应驾驶舱岗位视角
+      const titleEl = document.getElementById('cockpitTitle');
+      const scopeEl = document.getElementById('cockpitScopeSelect');
+      if (titleEl && scopeEl) {
+        if (currentRole === 'sunfeng') {
+          titleEl.innerText = '岗位驾驶舱 · 商务经理';
+          scopeEl.value = 'zhang_mgr';
+        } else if (currentRole === 'zhangjun') {
+          titleEl.innerText = '岗位驾驶舱 · 专业审核主管';
+          scopeEl.value = 'sun_prep';
+        } else if (currentRole === 'lizong') {
+          titleEl.innerText = '总览驾驶舱 · 商务决策委员会';
+          scopeEl.value = 'zhang_mgr';
+        } else if (currentRole === 'wangvp') {
+          titleEl.innerText = '高管驾驶舱 · 集团分管副总视点';
+          scopeEl.value = 'south_reg';
+        }
+      }
+
       closeLoginOverlay();
       showToast(`已成功登录！当前身份：${p.name} (${p.role})`);
     }
@@ -1788,6 +2534,531 @@
         toast.classList.add('opacity-0', 'pointer-events-none');
       }, 3500);
     }
+  
+    // ====================================================
+    // 12. 全生命周期驾驶舱 (Cockpit & Project Matrix Logic)
+    // ====================================================
+
+    function initCockpitView() {
+      if (!masterData) return;
+
+      // 1. KPI 数据同步
+      if (masterData.kpi_metrics) {
+        const kpi = masterData.kpi_metrics;
+        if (kpi.in_bid_projects) {
+          document.getElementById('kpiInBidCount').innerText = kpi.in_bid_projects.count;
+          document.getElementById('kpiInBidAmount').innerText = '合计 ' + kpi.in_bid_projects.total_amount;
+          document.getElementById('kpiInBidTrend').innerText = kpi.in_bid_projects.trend;
+        }
+        if (kpi.bid_countdown) {
+          document.getElementById('kpiCountdownDays').innerText = kpi.bid_countdown.days;
+          document.getElementById('kpiCountdownTarget').innerText = kpi.bid_countdown.project;
+          document.getElementById('kpiCountdownDesc').innerText = kpi.bid_countdown.status_desc;
+        }
+        if (kpi.price_limit_warning) {
+          document.getElementById('kpiWarningCount').innerText = kpi.price_limit_warning.count;
+          document.getElementById('kpiWarningCond').innerText = kpi.price_limit_warning.condition;
+          document.getElementById('kpiWarningMin').innerText = kpi.price_limit_warning.min_gap;
+        }
+        if (kpi.month_awarded) {
+          document.getElementById('kpiAwardedAmount').innerText = kpi.month_awarded.amount;
+          document.getElementById('kpiAwardedYoy').innerText = kpi.month_awarded.yoy;
+          document.getElementById('kpiAwardedDiscount').innerText = kpi.month_awarded.avg_discount;
+        }
+      }
+
+      // 2. 渲染项目列表与计数
+      renderCockpitProjectTable();
+    }
+
+    function renderCockpitProjectTable() {
+      const thead = document.getElementById('cockpitTableHeader');
+      const tbody = document.getElementById('cockpitProjectTableBody');
+      if (!tbody || !masterData || !masterData.cockpit_projects) return;
+
+      const projects = masterData.cockpit_projects;
+
+      // 更新阶段计数角标
+      const totalAll = projects.length;
+      const totalBidding = projects.filter(p => p.phase === 'BIDDING').length;
+      const totalContracting = projects.filter(p => p.phase === 'CONTRACTING').length;
+      const totalExecuting = projects.filter(p => p.phase === 'EXECUTING').length;
+      const totalSettling = projects.filter(p => p.phase === 'SETTLING').length;
+
+      document.getElementById('cntAll').innerText = totalAll;
+      document.getElementById('cntBidding').innerText = totalBidding;
+      document.getElementById('cntContracting').innerText = totalContracting;
+      document.getElementById('cntExecuting').innerText = totalExecuting;
+      document.getElementById('cntSettling').innerText = totalSettling;
+      document.getElementById('footProjectCount').innerText = totalAll;
+
+      // 渲染动态表头 (单位已在表头明确声明，单元格保持纯数值整洁展示，杜绝重复单位与折行)
+      if (currentCockpitTableView === 'rich') {
+        thead.innerHTML = `
+          <tr class="bg-slate-100 text-slate-700 border-b border-slate-200 font-semibold text-[11px] whitespace-nowrap">
+            <th class="py-2.5 px-3 w-10 text-center font-mono">#</th>
+            <th class="py-2.5 px-3 min-w-[210px]">项目名称 / 阶段 / 专业所</th>
+            <th class="py-2.5 px-3 min-w-[150px] font-mono">自算 / 清单量 (t)</th>
+            <th class="py-2.5 px-3 min-w-[100px] text-right font-mono">综合造价 (元/t)</th>
+            <th class="py-2.5 px-3 min-w-[110px] text-right font-mono">合同/投标 (万元)</th>
+            <th class="py-2.5 px-3 min-w-[105px] text-right font-mono">测算成本 (万元)</th>
+            <th class="py-2.5 px-3 min-w-[110px] text-right font-mono">毛利/亏损 (万元)</th>
+            <th class="py-2.5 px-3 min-w-[85px] text-center font-mono">毛利率</th>
+            <th class="py-2.5 px-3 min-w-[125px] font-mono">锁价 / 敞口</th>
+            <th class="py-2.5 px-3 min-w-[170px]">风险 / 亏损诊断</th>
+            <th class="py-2.5 px-3 min-w-[75px] text-center">状态</th>
+          </tr>
+        `;
+      } else {
+        thead.innerHTML = `
+          <tr class="bg-slate-100/90 text-slate-600 border-b border-slate-200 font-semibold text-[11px] whitespace-nowrap">
+            <th class="py-2.5 px-3 w-10 text-center font-mono">#</th>
+            <th class="py-2.5 px-3 min-w-[240px]">项目名称 / 阶段</th>
+            <th class="py-2.5 px-4 min-w-[280px]">阶段专属口径</th>
+            <th class="py-2.5 px-3 min-w-[110px] text-right font-mono">金额 (万元)</th>
+            <th class="py-2.5 px-3 min-w-[90px] text-center font-mono">利润率</th>
+            <th class="py-2.5 px-3 min-w-[80px] text-center">状态</th>
+          </tr>
+        `;
+      }
+
+      // 剥离重复单位与币种符号的辅助清洗函数
+      const cleanNum = (val) => {
+        if (val === null || val === undefined) return '-';
+        let s = String(val).trim();
+        s = s.replace(/[¥￥\$]/g, '');
+        s = s.replace(/\s*(元\/t|元|万元|万|t|吨)\s*$/gi, '');
+        return s.trim() || '-';
+      };
+
+      const cleanTonnageDiff = (val) => {
+        if (!val) return '-';
+        let s = String(val).trim();
+        s = s.replace(/\s*t(?=\s*\()/gi, '');
+        s = s.replace(/\s*t\s*$/gi, '');
+        return s.trim();
+      };
+
+      const cleanExposure = (val) => {
+        if (!val) return '-';
+        let s = String(val).trim();
+        s = s.replace(/[¥￥\$]/g, '');
+        s = s.replace(/约/g, '');
+        return s.trim();
+      };
+
+      // 按当前过滤阶段筛选
+      const filtered = (currentCockpitPhase === 'ALL')
+        ? projects
+        : projects.filter(p => p.phase === currentCockpitPhase);
+
+      tbody.innerHTML = filtered.map(p => {
+        // 利润率健康颜色点
+        let dotColor = 'bg-emerald-500';
+        let textProfitColor = 'text-slate-800';
+        if (p.profit_health === 'critical') {
+          dotColor = 'bg-rose-500';
+          textProfitColor = 'text-rose-600 font-bold';
+        } else if (p.profit_health === 'warning') {
+          dotColor = 'bg-amber-500';
+          textProfitColor = 'text-amber-700 font-bold';
+        } else {
+          textProfitColor = 'text-emerald-700 font-bold';
+        }
+
+        // 状态徽标样式
+        let statusBadge = 'bg-slate-100 text-slate-700 border-slate-200';
+        if (p.status_tag === 'draft') statusBadge = 'bg-slate-100 text-slate-600 border-slate-300';
+        else if (p.status_tag === 'submitted') statusBadge = 'bg-blue-50 text-blue-700 border-blue-200';
+        else if (p.status_tag === 'reviewing') statusBadge = 'bg-amber-50 text-amber-700 border-amber-200';
+        else if (p.status_tag === 'pending_special') statusBadge = 'bg-rose-50 text-rose-700 border-rose-200 font-semibold';
+        else if (p.status_tag === 'signed') statusBadge = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        else if (p.status_tag === 'in_control') statusBadge = 'bg-cyan-50 text-cyan-700 border-cyan-200';
+        else if (p.status_tag === 'loss_alert') statusBadge = 'bg-red-100 text-red-800 border-red-300 font-bold';
+        else if (p.status_tag === 'archived') statusBadge = 'bg-slate-100 text-slate-400 border-slate-200';
+
+        // 阶段点颜色
+        let phaseDotColor = 'text-blue-500';
+        if (p.phase === 'BIDDING') phaseDotColor = 'text-amber-500';
+        else if (p.phase === 'CONTRACTING') phaseDotColor = 'text-blue-500';
+        else if (p.phase === 'EXECUTING') phaseDotColor = 'text-purple-500';
+        else if (p.phase === 'SETTLING') phaseDotColor = 'text-emerald-500';
+
+        const isZhanjiang = p.code === 'ZJNORTH';
+        const clickAction = isZhanjiang ? `navigateToBenchmarkWorkbench()` : `openProjectDrawer('${p.code}')`;
+
+        if (currentCockpitTableView === 'rich') {
+          // 渲染全维造价全景行 (数值纯净展示，单行不折行)
+          const profitAmountColor = p.profit_is_negative ? 'text-rose-600 bg-rose-50 px-2 py-0.5 rounded font-bold' : 'text-emerald-700 font-bold';
+          const tagsHtml = (p.risk_tags || []).map(t => `<span class="bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.2 rounded text-[10px] mr-1 shrink-0">${t}</span>`).join('');
+
+          return `
+            <tr class="hover:bg-blue-50/40 transition cursor-pointer group text-[11px]" onclick="${clickAction}">
+              <td class="py-3 px-3 text-center font-mono text-slate-400">${p.index}</td>
+              <td class="py-3 px-3">
+                <div class="flex items-center space-x-1.5">
+                  <span class="font-bold text-slate-900 group-hover:text-blue-600 transition text-xs">${p.name}</span>
+                  <i class="fa-solid fa-angle-right text-[10px] text-slate-400 group-hover:translate-x-0.5 group-hover:text-blue-600 transition"></i>
+                </div>
+                <div class="text-[10px] text-slate-400 flex items-center space-x-1 mt-0.5 whitespace-nowrap">
+                  <i class="fa-solid fa-circle ${phaseDotColor} text-[6px]"></i>
+                  <span>${p.phase_name} · ${p.dept}</span>
+                  <span class="text-slate-300">|</span>
+                  <span class="text-slate-500">${p.contract_mode}</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 font-mono text-slate-700 whitespace-nowrap">
+                <div>${cleanNum(p.tonnage_self || p.detail_metrics.self_weight)} / ${cleanNum(p.tonnage_bq || p.detail_metrics.bq_weight)}</div>
+                <div class="text-[10px] ${p.profit_health === 'critical' ? 'text-rose-600' : 'text-slate-500'} mt-0.5 font-semibold">${cleanTonnageDiff(p.tonnage_diff)}</div>
+              </td>
+              <td class="py-3 px-3 text-right font-mono text-blue-700 font-bold whitespace-nowrap">
+                ${cleanNum(p.quote_per_ton)}
+              </td>
+              <td class="py-3 px-3 text-right font-mono font-bold text-slate-900 whitespace-nowrap">
+                ${cleanNum(p.quote_total || p.amount)}
+              </td>
+              <td class="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
+                ${cleanNum(p.cost_total || (p.detail_metrics.internal_cost || p.detail_metrics.target_cost || '-'))}
+              </td>
+              <td class="py-3 px-3 text-right font-mono whitespace-nowrap">
+                <span class="${profitAmountColor}">${cleanNum(p.profit_amount)}</span>
+              </td>
+              <td class="py-3 px-3 text-center whitespace-nowrap">
+                <div class="inline-flex items-center space-x-1 font-mono ${textProfitColor}">
+                  <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+                  <span>${p.profit_rate}</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 font-mono text-[11px] text-slate-700 whitespace-nowrap">
+                <div class="font-semibold text-slate-800">${p.locked_ratio || '-'}</div>
+                <div class="text-slate-400 text-[10px] mt-0.5">敞口: ${cleanExposure(p.unlocked_exposure)}</div>
+              </td>
+              <td class="py-3 px-3">
+                <div class="flex flex-wrap gap-1 max-w-xs">
+                  ${tagsHtml}
+                </div>
+              </td>
+              <td class="py-3 px-3 text-center whitespace-nowrap">
+                <span class="px-2 py-0.5 rounded border text-[11px] ${statusBadge}">${p.status}</span>
+              </td>
+            </tr>
+          `;
+        } else {
+          // 渲染标准紧凑行 (纯数值整洁对齐)
+          return `
+            <tr class="hover:bg-blue-50/40 transition cursor-pointer group" onclick="${clickAction}">
+              <td class="py-2.5 px-3 text-center font-mono text-slate-400">${p.index}</td>
+              <td class="py-2.5 px-3">
+                <div class="flex items-center space-x-1.5">
+                  <span class="font-bold text-slate-900 group-hover:text-blue-600 transition">${p.name}</span>
+                  <i class="fa-solid fa-angle-right text-[11px] text-slate-400 group-hover:translate-x-0.5 group-hover:text-blue-600 transition"></i>
+                </div>
+                <div class="text-[11px] text-slate-400 flex items-center space-x-1 mt-0.5 whitespace-nowrap">
+                  <i class="fa-solid fa-circle ${phaseDotColor} text-[7px]"></i>
+                  <span>${p.phase_name} · ${p.dept}</span>
+                </div>
+              </td>
+              <td class="py-2.5 px-4 font-mono text-slate-600">
+                ${p.metrics_summary}
+              </td>
+              <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900 whitespace-nowrap">
+                ${cleanNum(p.amount)}
+              </td>
+              <td class="py-2.5 px-3 text-center whitespace-nowrap">
+                <div class="inline-flex items-center space-x-1 font-mono ${textProfitColor}">
+                  <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+                  <span>${p.profit_rate}</span>
+                </div>
+              </td>
+              <td class="py-2.5 px-3 text-center whitespace-nowrap">
+                <span class="px-2 py-0.5 rounded border text-[11px] ${statusBadge}">${p.status}</span>
+              </td>
+            </tr>
+          `;
+        }
+      }).join('');
+    }
+
+    function filterCockpitPhase(phaseKey) {
+      currentCockpitPhase = phaseKey;
+
+      // 1. 更新 Tab 状态
+      const phases = ['ALL', 'BIDDING', 'CONTRACTING', 'EXECUTING', 'SETTLING'];
+      phases.forEach(k => {
+        const btn = document.getElementById('tab-phase-' + k);
+        if (btn) {
+          if (k === phaseKey) {
+            btn.className = 'px-3 py-1 rounded-md text-xs font-semibold bg-slate-900 text-white shadow-xs transition';
+          } else {
+            btn.className = 'px-3 py-1 rounded-md text-xs font-medium text-slate-600 hover:bg-slate-200 transition';
+          }
+        }
+      });
+
+      // 2. 阶段智能响应联动卡片
+      const guideCards = ['BIDDING', 'CONTRACTING', 'EXECUTING', 'SETTLING'];
+      guideCards.forEach(k => {
+        const card = document.getElementById('guide-card-' + k);
+        if (card) {
+          if (phaseKey === 'ALL') {
+            card.className = 'p-2.5 rounded-lg border border-slate-200 bg-white text-slate-600 text-[11px] transition';
+          } else if (phaseKey === k) {
+            card.className = 'p-2.5 rounded-lg border-2 border-blue-500 bg-blue-50/70 text-blue-900 text-[11px] shadow-xs font-medium transition';
+          } else {
+            card.className = 'p-2.5 rounded-lg border border-slate-200 bg-white/60 text-slate-400 text-[11px] opacity-60 transition';
+          }
+        }
+      });
+
+      // 3. 重新渲染表格
+      renderCockpitProjectTable();
+    }
+
+    function openProjectDrawer(projCode) {
+      if (!masterData || !masterData.cockpit_projects) return;
+      const proj = masterData.cockpit_projects.find(p => p.code === projCode);
+      if (!proj) return;
+
+      drawerActiveProjectCode = projCode;
+
+      document.getElementById('drawerProjName').innerText = proj.name;
+      document.getElementById('drawerProjTag').innerText = proj.code;
+      document.getElementById('drawerProjDept').innerText = `${proj.dept} · ${proj.phase_name}`;
+      document.getElementById('drawerAmount').innerText = proj.amount;
+      document.getElementById('drawerProfitVal').innerText = proj.profit_rate;
+      document.getElementById('drawerPhaseName').innerText = proj.phase_name;
+      document.getElementById('drawerContractMode').innerText = proj.contract_mode;
+      document.getElementById('drawerWbsSummary').innerText = proj.wbs_summary;
+
+      // 利润率圆点
+      const dot = document.getElementById('drawerProfitDot');
+      if (proj.profit_health === 'critical') dot.className = 'w-2 h-2 rounded-full bg-rose-500';
+      else if (proj.profit_health === 'warning') dot.className = 'w-2 h-2 rounded-full bg-amber-500';
+      else dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+
+      // 阶段指标明细渲染
+      const metricsContainer = document.getElementById('drawerMetricsDetail');
+      let htmlMetrics = `<div class="font-mono text-slate-700 pb-1.5 border-b border-blue-200/60 font-semibold">${proj.metrics_summary}</div>`;
+      if (proj.detail_metrics) {
+        htmlMetrics += `<div class="grid grid-cols-2 gap-2 pt-1 font-mono text-[11px]">`;
+        for (const [k, v] of Object.entries(proj.detail_metrics)) {
+          let label = k;
+          if (k === 'self_weight') label = '自算工程量';
+          else if (k === 'bq_weight') label = '清单工程量';
+          else if (k === 'limit_gap') label = '限价剩余空间';
+          else if (k === 'bid_quote') label = '对外部投标报价';
+          else if (k === 'internal_cost') label = '对内部测算成本';
+          else if (k === 'target_cost') label = '工程目标成本';
+          else if (k === 'cost_margin') label = '目标成本余量';
+          else if (k === 'contract_amount') label = '合同签约总额';
+          else if (k === 'locked_ratio') label = '材料已锁价比例';
+          else if (k === 'cost_deviation') label = '材料价格波动偏差';
+          else if (k === 'unlocked_exposure') label = '敞口风险吨位/金额';
+          else if (k === 'cost_saved') label = '累计净成本节约';
+          else if (k === 'measure_cost_per_ton') label = '单吨措施费指标';
+          else if (k === 'settled_amount') label = '最终审定结算额';
+          htmlMetrics += `<div><span class="text-slate-400">${label}:</span> <b class="text-slate-800">${v}</b></div>`;
+        }
+        htmlMetrics += `</div>`;
+      }
+      metricsContainer.innerHTML = htmlMetrics;
+
+      // 呼出抽屉
+      document.getElementById('drawerOverlay').classList.remove('hidden');
+      document.getElementById('drawerProjectDetail').classList.remove('translate-x-full');
+    }
+
+    function closeProjectDrawer() {
+      document.getElementById('drawerProjectDetail').classList.add('translate-x-full');
+      document.getElementById('drawerOverlay').classList.add('hidden');
+    }
+
+    function drawerSwitchGlobalProject() {
+      if (!drawerActiveProjectCode) return;
+      switchProject(drawerActiveProjectCode);
+      closeProjectDrawer();
+      showToast(`已将全局工程切换为：[${drawerActiveProjectCode}]`);
+    }
+
+    function drawerJumpWorkbench() {
+      if (!drawerActiveProjectCode) return;
+      if (drawerActiveProjectCode === 'ZJNORTH') {
+        navigateToBenchmarkWorkbench();
+      } else {
+        switchProject(drawerActiveProjectCode);
+        switchNavModule('takeoff');
+        closeProjectDrawer();
+        showToast(`已载入工程 [${drawerActiveProjectCode}] 并打开算量工作台！`);
+      }
+    }
+
+    function navigateToBenchmarkWorkbench() {
+      switchProject('ZJNORTH');
+      switchNavModule('takeoff');
+      closeProjectDrawer();
+      showToast('已穿透进入标杆工程【广湛高铁湛江北站】算量工作台，已加载 81 个真实构件！');
+    }
+
+    function handleUrgentAction(actionType, projCode) {
+      if (actionType === 'WORKBENCH') {
+        navigateToBenchmarkWorkbench();
+      } else if (actionType === 'SPECIAL_APPROVAL') {
+        openDialog('dlgSpecialApproval');
+      } else if (actionType === 'UNBALANCED_REVIEW') {
+        openDialog('dlgUnbalancedReview');
+      } else if (actionType === 'CLAIM_AUDIT') {
+        openDialog('dlgClaimAudit');
+      }
+    }
+
+    function confirmSpecialApproval() {
+      const note = document.getElementById('inpSpecialApprovalNote').value || '同意按集团战略标段特批执行。';
+      closeDialog('dlgSpecialApproval');
+      showToast(`特批成功！已签署意见："${note}"，前海塔楼已获放行！`);
+    }
+
+    function confirmUnbalancedReview() {
+      closeDialog('dlgUnbalancedReview');
+      showToast('调价成功！珠海机场 T2 实腹十字钢柱已调增4.5%、防腐涂装已调减8.0%，预计增益 +86.5 万元！');
+    }
+
+    function confirmClaimAudit() {
+      closeDialog('dlgClaimAudit');
+      showToast('申报成功！广州白云站三季度产值确权与变更索赔款 286.00 万元已呈报监理与业主审核！');
+    }
+
+    function onCockpitScopeChange(scopeVal) {
+      const tag = document.getElementById('cockpitAreaTag');
+      if (scopeVal === 'zhang_mgr') {
+        tag.innerText = '广东区域口径';
+        showToast('已切换至：张总 · 商务中心（广东区域口径）');
+      } else if (scopeVal === 'sun_prep') {
+        tag.innerText = '湛江北站专班口径';
+        showToast('已切换至：孙烽 · 编制组（湛江北站专班）');
+      } else if (scopeVal === 'south_reg') {
+        tag.innerText = '华南大区全量口径';
+        showToast('已切换至：华南大区综合口径');
+      } else if (scopeVal === 'overseas_dept') {
+        tag.innerText = '境外出口自营口径';
+        showToast('已切换至：海外事业部出口离岸口径');
+      }
+    }
+
+  
+    // ====================================================
+    // 13. 导航栏折叠与多维造价全景视图控制
+    // ====================================================
+
+    let isSidebarCollapsed = false;
+    let currentCockpitTableView = 'rich'; // 'compact' | 'rich'
+
+    function toggleSidebarCollapse() {
+      isSidebarCollapsed = !isSidebarCollapsed;
+      const sidebar = document.getElementById('leftSidebar');
+      const toggleIcon = document.getElementById('sidebarToggleIcon');
+      const labels = document.querySelectorAll('.sidebar-label');
+      const collapsedInd = document.querySelector('.sidebar-collapsed-indicator');
+      const navLinks = document.querySelectorAll('#leftNavMenu a');
+
+      if (isSidebarCollapsed) {
+        sidebar.classList.remove('w-48');
+        sidebar.classList.add('w-14');
+        labels.forEach(el => el.classList.add('hidden'));
+        navLinks.forEach(link => {
+          link.classList.remove('space-x-2', 'px-3');
+          link.classList.add('justify-center', 'px-0');
+        });
+        toggleIcon.classList.remove('fa-angles-left');
+        toggleIcon.classList.add('fa-angles-right');
+        if (collapsedInd) collapsedInd.classList.remove('hidden');
+        showToast('已折叠左侧导航栏，全屏开阔展示驾驶舱！');
+      } else {
+        sidebar.classList.remove('w-14');
+        sidebar.classList.add('w-48');
+        labels.forEach(el => el.classList.remove('hidden'));
+        navLinks.forEach(link => {
+          link.classList.add('space-x-2', 'px-3');
+          link.classList.remove('justify-center', 'px-0');
+        });
+        toggleIcon.classList.remove('fa-angles-right');
+        toggleIcon.classList.add('fa-angles-left');
+        if (collapsedInd) collapsedInd.classList.add('hidden');
+        showToast('已展开左侧导航栏');
+      }
+    }
+
+    function switchCockpitTableView(viewMode) {
+      currentCockpitTableView = viewMode;
+      const btnCompact = document.getElementById('btnViewCompact');
+      const btnRich = document.getElementById('btnViewRich');
+
+      if (viewMode === 'rich') {
+        btnRich.className = 'px-2.5 py-1 rounded text-xs font-bold bg-white text-blue-700 shadow-2xs transition';
+        btnCompact.className = 'px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition';
+        showToast('已切换至：全维造价全景视图 ⭐ (多维造价/成本/盈亏/锁价敞口)');
+      } else {
+        btnCompact.className = 'px-2.5 py-1 rounded text-xs font-bold bg-white text-slate-900 shadow-2xs transition';
+        btnRich.className = 'px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition';
+        showToast('已切换至：标准紧凑视图');
+      }
+      renderCockpitProjectTable();
+    }
+
+    function toggleStatisticsSection() {
+      const hub = document.getElementById('statisticsHubContent');
+      const txt = document.getElementById('txtToggleStats');
+      const icon = document.getElementById('iconToggleStats');
+
+      if (hub.classList.contains('hidden')) {
+        hub.classList.remove('hidden');
+        txt.innerText = '收起图表看板';
+        icon.className = 'fa-solid fa-chevron-up text-[10px]';
+      } else {
+        hub.classList.add('hidden');
+        txt.innerText = '展开图表看板';
+        icon.className = 'fa-solid fa-chevron-down text-[10px]';
+      }
+    }
+
+    function openKpiModal(kpiType) {
+      if (kpiType === 'in_bid') {
+        renderInBidModalTable();
+        openDialog('dlgKpiInBid');
+      } else if (kpiType === 'countdown') {
+        openDialog('dlgKpiCountdown');
+      } else if (kpiType === 'price_limit') {
+        openDialog('dlgKpiPriceLimit');
+      } else if (kpiType === 'awarded') {
+        openDialog('dlgKpiAwarded');
+      }
+    }
+
+    function renderInBidModalTable() {
+      const tbody = document.getElementById('tblInBidProjects');
+      if (!tbody || !masterData || !masterData.cockpit_projects) return;
+
+      const cleanVal = (val) => {
+        if (!val) return '-';
+        return String(val).replace(/[¥￥\$]/g, '').replace(/\s*(元\/t|元|万元|万|t|吨)\s*$/gi, '').trim() || '-';
+      };
+
+      const inBids = masterData.cockpit_projects.filter(p => p.phase === 'BIDDING');
+      tbody.innerHTML = inBids.map(p => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-2 font-medium text-slate-900 whitespace-nowrap">${p.name}</td>
+          <td class="p-2 text-slate-500 whitespace-nowrap">${p.dept}</td>
+          <td class="p-2 text-slate-600 font-mono whitespace-nowrap">${cleanVal(p.tonnage_self || p.detail_metrics.self_weight)} / ${cleanVal(p.tonnage_bq || p.detail_metrics.bq_weight)}</td>
+          <td class="p-2 text-right font-bold text-slate-900 font-mono whitespace-nowrap">${cleanVal(p.amount)}</td>
+          <td class="p-2 text-center whitespace-nowrap ${p.profit_health === 'critical' ? 'text-rose-600 font-bold' : (p.profit_health === 'warning' ? 'text-amber-600 font-bold' : 'text-emerald-600 font-bold')}">${p.profit_rate}</td>
+          <td class="p-2 font-mono text-slate-600 text-right whitespace-nowrap">${cleanVal(p.detail_metrics.limit_gap)}</td>
+          <td class="p-2 text-center whitespace-nowrap"><span class="px-1.5 py-0.2 rounded border text-[10px]">${p.status}</span></td>
+          <td class="p-2 text-center whitespace-nowrap">
+            <button onclick="closeDialog('dlgKpiInBid'); ${p.code === 'ZJNORTH' ? 'navigateToBenchmarkWorkbench()' : 'openProjectDrawer(\'' + p.code + '\')'}" class="text-blue-600 hover:text-blue-800 underline text-xs font-semibold">查看</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
   </script>
 </body>
 </html>

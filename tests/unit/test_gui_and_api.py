@@ -96,3 +96,53 @@ def test_api_router_endpoints():
     assert overseas["total_preliminaries_cost"] == 398000.0
 
 
+def test_cockpit_assets_and_data_integrity():
+    """验证重构后的岗位驾驶舱与全生命周期项目列表资产完整性"""
+    with open(DATA_JSON_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    # 1. 验证新增的驾驶舱数据集
+    assert "cockpit_projects" in data, "cockpit_projects 缺失"
+    assert "urgent_tasks" in data, "urgent_tasks 缺失"
+    assert "kpi_metrics" in data, "kpi_metrics 缺失"
+
+    assert len(data["cockpit_projects"]) == 14, "应包含 14 个全周期工程项目"
+    assert len(data["urgent_tasks"]) == 4, "应包含 4 项高危急办任务"
+
+    # 2. 验证湛江北站标杆数据
+    zj = next(p for p in data["cockpit_projects"] if p["code"] == "ZJNORTH")
+    assert zj["name"] == "广湛高铁湛江北站"
+    assert zj["amount"] == "8,313.76 万"
+    assert zj["profit_health"] == "critical"
+
+    # 3. 验证 4 阶段覆盖性
+    phases = {p["phase"] for p in data["cockpit_projects"]}
+    assert phases == {"BIDDING", "CONTRACTING", "EXECUTING", "SETTLING"}
+
+    # 4. 验证 app.html 包含必要 UI 元素与交互组件
+    with open(APP_HTML_PATH, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    assert "岗位驾驶舱 · 商务经理" in html
+    assert "id=\"view-dashboard\"" in html
+    assert "id=\"drawerProjectDetail\"" in html
+    assert "id=\"dlgSpecialApproval\"" in html
+    assert "id=\"dlgUnbalancedReview\"" in html
+    assert "id=\"dlgClaimAudit\"" in html
+    assert "filterCockpitPhase" in html
+    assert "openProjectDrawer" in html
+
+    # 5. 验证新增的统计看板、可折叠侧边栏、KPI 穿透弹窗与多维造价模式
+    assert "cockpit_analytics" in data, "cockpit_analytics 缺失"
+    assert "total_contract_amount" in data["cockpit_analytics"]
+    assert "toggleSidebarCollapse" in html, "缺少侧边栏折叠函数"
+    assert "openKpiModal" in html, "缺少 KPI 穿透下钻函数"
+    assert "switchCockpitTableView" in html, "缺少多维造价视图切换函数"
+    assert "id=\"dlgKpiInBid\"" in html, "缺少在投穿透弹窗"
+    assert "id=\"dlgKpiCountdown\"" in html, "缺少倒计时自检弹窗"
+    assert "id=\"dlgKpiPriceLimit\"" in html, "缺少限价空间弹窗"
+    assert "id=\"dlgKpiAwarded\"" in html, "缺少中标台账弹窗"
+
+
+
+

@@ -33,6 +33,11 @@ class QuietHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             sys.stderr.write(f"[GUI HTTP 404] {format % args}\n")
 
 
+class ThreadingServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    daemon_threads = True
+    allow_reuse_address = True
+
+
 def launch_server(port: int = 8765, open_browser: bool = True):
     """启动本地 GUI 服务并在独立线程中唤起浏览器"""
     if not WORKBENCH_DIR.exists() or not (WORKBENCH_DIR / "app.html").exists():
@@ -54,7 +59,7 @@ def launch_server(port: int = 8765, open_browser: bool = True):
             webbrowser.open(url)
         threading.Thread(target=_open, daemon=True).start()
 
-    with socketserver.TCPServer(("", port), handler) as httpd:
+    with ThreadingServer(("", port), handler) as httpd:
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
