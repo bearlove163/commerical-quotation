@@ -231,5 +231,67 @@ class SteelBidApiRouter:
             "equivalent_355b_benchmark": float(res.equivalent_355b_benchmark)
         }
 
+    def list_subcontract_catalog(self, category: Optional[str] = None) -> List[Dict[str, Any]]:
+        """获取专业分包产品目录与基准报价"""
+        from src.services.base_data_service import BaseDataService
+        from src.database.models.master_data_models import SubcontractCategory
+        svc = BaseDataService()
+        cat_enum = None
+        if category:
+            try:
+                cat_enum = SubcontractCategory(category)
+            except ValueError:
+                pass
+        items = svc.list_subcontract_products(cat_enum)
+        return [
+            {
+                "id": p.item_id, "category": p.category.value, "name": p.name,
+                "spec": p.spec_model, "unit": p.unit, "unit_price": float(p.standard_unit_price),
+                "price_min": float(p.price_min), "price_max": float(p.price_max),
+                "specs": p.technical_specs, "formula": p.pricing_formula, "vendors": p.preferred_vendors
+            }
+            for p in items
+        ]
+
+    def add_subcontract_item(self, item_dict: Dict[str, Any]) -> Dict[str, Any]:
+        """录入新增专业分包产品"""
+        from src.services.base_data_service import BaseDataService
+        from src.database.models.master_data_models import SubcontractProductItem, SubcontractCategory
+        svc = BaseDataService()
+        cat = SubcontractCategory(item_dict.get("category", "CABLE"))
+        new_item = SubcontractProductItem(
+            item_id=item_dict.get("id", f"SUB-CUSTOM-{int(Decimal('100'))}"),
+            category=cat,
+            name=item_dict.get("name", "自定义分包项"),
+            spec_model=item_dict.get("spec", "-"),
+            unit=item_dict.get("unit", "t"),
+            standard_unit_price=Decimal(str(item_dict.get("unit_price", 0))),
+            price_min=Decimal(str(item_dict.get("price_min", 0))),
+            price_max=Decimal(str(item_dict.get("price_max", 0))),
+            technical_specs=item_dict.get("specs", ""),
+            pricing_formula=item_dict.get("formula", "市场包干价"),
+            preferred_vendors=item_dict.get("vendors", [])
+        )
+        svc.add_subcontract_product(new_item)
+        return {
+            "id": new_item.item_id,
+            "name": new_item.name,
+            "unit_price": float(new_item.standard_unit_price),
+            "status": "ADDED"
+        }
+
+    def pull_external_subcontract_data(self) -> Dict[str, Any]:
+        """从外部集采与协会名录拉取拓展数据"""
+        from src.services.base_data_service import BaseDataService
+        svc = BaseDataService()
+        added_subs = svc.pull_external_market_subcontracts()
+        added_vens = svc.pull_external_market_vendors()
+        return {
+            "status": "SUCCESS",
+            "added_subcontracts": len(added_subs),
+            "added_vendors": len(added_vens),
+            "message": f"成功拉取 {len(added_subs)} 项外部前沿分包产品及 {len(added_vens)} 家特级供应商"
+        }
+
 
 

@@ -459,11 +459,71 @@ class BaseDataService:
             return [p for p in self._subcontract_products if p.category == category]
         return self._subcontract_products
 
+    def add_subcontract_product(self, item: SubcontractProductItem) -> SubcontractProductItem:
+        """录入新增专业分包产品"""
+        existing = [p for p in self._subcontract_products if p.item_id == item.item_id]
+        if existing:
+            self._subcontract_products.remove(existing[0])
+        self._subcontract_products.append(item)
+        return item
+
     def list_qualified_vendors(self, category: Optional[SubcontractCategory] = None) -> List[QualifiedVendorItem]:
         """列出合格分包商与供应商名录"""
         if category:
             return [v for v in self._qualified_vendors if v.category == category]
         return self._qualified_vendors
+
+    def add_qualified_vendor(self, vendor: QualifiedVendorItem) -> QualifiedVendorItem:
+        """录入新增合格分包商"""
+        existing = [v for v in self._qualified_vendors if v.vendor_id == vendor.vendor_id]
+        if existing:
+            self._qualified_vendors.remove(existing[0])
+        self._qualified_vendors.append(vendor)
+        return vendor
+
+    def pull_external_market_subcontracts(self) -> List[SubcontractProductItem]:
+        """模拟从中国钢结构协会 (CSCA) 与外部集采平台智能拉取基线拓展数据"""
+        external_items = [
+            SubcontractProductItem(
+                "SUB-CABLE-05", SubcontractCategory.CABLE, "碳纤维高强复合拉索",
+                "Φ40mm CFRP Cable", "t", Decimal("45000.00"), Decimal("42000.00"), Decimal("52000.00"),
+                "超轻量化超高耐腐蚀碳纤维复合拉索，适用于近海及高盐雾极端腐蚀环境",
+                "成品包干单价 (含锚具配套)", ["中建科工外部创新技术库", "江苏连云港碳谷"]
+            ),
+            SubcontractProductItem(
+                "SUB-COAT-06", SubcontractCategory.COATING, "纳米超疏水自洁面漆",
+                "Nano-Fluorocarbon (50μm)", "kg", Decimal("95.00"), Decimal("85.00"), Decimal("115.00"),
+                "纳米二氧化钛光催化自洁面漆，水滴接触角>150°，终身抗重度灰尘沉积",
+                "理论涂布率 0.15kg/㎡", ["中国钢结构协会推荐名录", "中远关西涂料"]
+            ),
+            SubcontractProductItem(
+                "SUB-BEAR-03", SubcontractCategory.BEARING, "三维隔震橡胶摩擦摆支座",
+                "FPB-12000kN (双曲面摩擦摆)", "套", Decimal("68000.00"), Decimal("62000.00"), Decimal("78000.00"),
+                "9度设防高烈度区大型枢纽站房主支承，具备自动复位与位移自限位",
+                "含出厂三维动载疲劳试验与CMA检测报告", ["国家抗震试验中心推荐", "株洲时代新材"]
+            )
+        ]
+        for it in external_items:
+            self.add_subcontract_product(it)
+        return external_items
+
+    def pull_external_market_vendors(self) -> List[QualifiedVendorItem]:
+        """模拟从行业权威合格名录拉取特级优质分包供应商"""
+        external_vendors = [
+            QualifiedVendorItem(
+                "VEN-COAT-03", "中远佐敦船舶涂料（青岛）有限公司", SubcontractCategory.COATING,
+                "国家级特种工业防护特级", "重度海洋与极端气候防腐涂料研发生产",
+                Decimal("480.00"), "山东青岛", ["全国全区域", "海外一带一路"], "AAA", Decimal("0.96")
+            ),
+            QualifiedVendorItem(
+                "VEN-BEAR-02", "衡水双林橡胶制品有限公司", SubcontractCategory.BEARING,
+                "铁路客专与大跨度站房一级", "铁路站房抗震球型钢支座、铅芯减震垫研发生产",
+                Decimal("160.00"), "河北衡水", ["华北", "华南", "中南", "西北"], "AA", Decimal("0.93")
+            )
+        ]
+        for v in external_vendors:
+            self.add_qualified_vendor(v)
+        return external_vendors
 
     def export_master_data_dict(self) -> Dict[str, Any]:
         """序列化输出全量基础数据字典 (供前端 data.json 消费注入)"""
