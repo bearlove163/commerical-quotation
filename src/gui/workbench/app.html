@@ -2879,14 +2879,21 @@
       wangvp: { name: '王振华', role: '集团分管副总', dept: '集团高管决策层', avatar: '王', color: 'bg-purple-600' }
     };
 
-    // 2. 初始化加载数据
-    fetch('data.json')
+    // 2. 初始化加载数据 (带时间戳防浏览器缓存)
+    fetch('data.json?t=' + new Date().getTime())
       .then(res => res.json())
       .then(data => {
         masterData = data;
         initCockpitView();
         renderSectionFamiliesTable();
         renderShapeFamilyOptions();
+        renderLogisticsMatrixTable();
+        renderFabricationQuotasTable();
+        renderInstallationQuotasTable();
+        renderSubcontractTable();
+        renderVendorsCards();
+        renderMachineryRatesTable();
+        runSimMaterialCalc();
         renderCurrentView();
         selectComponent(16);
       })
